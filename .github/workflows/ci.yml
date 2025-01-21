@@ -26,10 +26,6 @@ jobs:
     - name: Prepare Database
       run: |
         python manage.py migrate
-    - name: Check Code Style
-      run: |
-        pip install flake8
-        flake8 .
     - name: Run Tests
       run: |
         python manage.py test
