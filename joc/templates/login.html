@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sessió</title>
+</head>
+<body>
+    <h1>Iniciar Sessió al Joc de l'Espàrrek</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.code }}
+        {{ form.birth_date }}
+        <button type="submit">Iniciar Sessió</button>
+    </form>
+</body>
+</html>
