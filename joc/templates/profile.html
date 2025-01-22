@@ -6,18 +6,16 @@
     <title>Perfil</title>
 </head>
 <body>
-    <h1>Benvingut/da, {{ user.username }}</h1>
-    <p>Codi: {{ user.code }}</p>
-    <p>Data de naixement: {{ user.birth_date }}</p>
+    <h1>Benvingut/da, {{ user.first_name }} {{ user.last_name }}</h1>
     {% if user.profile_picture %}
-        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil">
+        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil", width="600px">
     {% else %}
         <p>No has pujat una foto de perfil.</p>
     {% endif %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Actualitzar perfil</button>
+        <button type="submit">Actualitzar la foto de perfil</button>
     </form>
 </body>
 </html>
