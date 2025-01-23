@@ -22,8 +22,8 @@ from joc import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.login_view, name='login'),
-    path('profile/', views.profile, name='profile'),
+    path('', views.index, name='index'),
+    path('logout/', views.logout_view, name='logout'),
 ]
 
 if settings.DEBUG:

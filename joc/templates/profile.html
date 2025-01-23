@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Perfil d'Usuari</title>
 </head>
 <body>
     <h1>Benvingut/da, {{ user.first_name }} {{ user.last_name }}</h1>
+    <p>Aquesta és la teva pàgina de perfil.</p>
+    <a href="{% url 'logout' %}">Tancar Sessió</a>
     {% if user.profile_picture %}
-        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil", width="600px">
+        <br><img src="{{ user.profile_picture.url }}" alt="Foto de perfil", width="600px">
     {% else %}
         <p>No has pujat una foto de perfil.</p>
     {% endif %}

@@ -7,7 +7,7 @@ from datetime import datetime
 from django.utils.timezone import now
 
 class Player(AbstractUser):
-    code = models.CharField(max_length=50, unique=True)  # Codi únic
+    code = models.CharField(max_length=5, unique=True)  # Codi únic
     birth_date = models.DateField()  # Data de naixement
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Foto de perfil
     groups = models.ManyToManyField(
