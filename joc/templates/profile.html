@@ -9,6 +9,8 @@
     <h1>Benvingut/da, {{ user.first_name }} {{ user.last_name }}</h1>
     <p>Aquesta és la teva pàgina de perfil.</p>
     <a href="{% url 'logout' %}">Tancar Sessió</a>
+    <p>Esplai: {{ user.esplai }}</p>
+    <p>Territori/Zona: {{ user.territori_zona }}</p>
     {% if user.profile_picture %}
         <br><img src="{{ user.profile_picture.url }}" alt="Foto de perfil", width="600px">
     {% else %}

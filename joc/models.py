@@ -10,6 +10,8 @@ class Player(AbstractUser):
     code = models.CharField(max_length=5, unique=True)  # Codi únic
     birth_date = models.DateField()  # Data de naixement
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Foto de perfil
+    esplai = models.CharField(max_length=100, default="")  # Esplai
+    territori_zona = models.CharField(max_length=50, default="")  # Territori o zona
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='player_set',  # Add related_name to avoid clash
@@ -43,7 +45,9 @@ class Player(AbstractUser):
                     first_name=row['Name'],
                     last_name=row['Surname'],
                     birth_date=datetime.strptime(row['Birthday'], '%d/%m/%Y').date(),
-                    code=row['Code']
+                    code=row['Code'],
+                    esplai=row['Esplai'],
+                    territori_zona=row['Territori'],
                 )
                 player.save()
             except ValidationError as e:
