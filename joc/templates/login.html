@@ -9,10 +9,18 @@
     <h1>Iniciar Sessió al Joc de l'Espàrrek</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.code }}
-        {{ form.birth_date }}
+        <div>
+            <label for="{{ form.code.id_for_label }}">Codi:</label>
+            {{ form.code }}
+        </div>
+        <div>
+            <label for="{{ form.birth_date.id_for_label }}">Data de Naixement:</label>
+            {{ form.birth_date }}
+        </div>
         <input type="hidden" name="session_cookie" id="session_cookie">
-        <button type="submit">Iniciar Sessió</button>
+        <div>
+            <button type="submit">Iniciar Sessió</button>
+        </div>
     </form>
     <script>
         document.getElementById('session_cookie').value = document.cookie.replace(/(?:(?:^|.*;\s*)sessionid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
