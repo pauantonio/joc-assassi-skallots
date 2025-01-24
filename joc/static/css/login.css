@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
+    background: linear-gradient(135deg, #7ba973, #c9d6b8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,12 +11,12 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #2e4620;
     margin-bottom: 1rem;
 }
 
 form {
-    background: white;
+    background: #f4f8f1;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -32,27 +32,28 @@ label {
     display: block;
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: #555;
+    color: #3e5632;
 }
 
 input[type="text"], input[type="date"], button {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ccc;
+    border: 1px solid #9cb88a;
     border-radius: 4px;
     font-size: 1rem;
     box-sizing: border-box;
     transition: border-color 0.3s;
+    font-family: Arial, sans-serif;
 }
 
 input[type="text"]:focus, input[type="date"]:focus {
-    border-color: #6a9ae1;
+    border-color: #5f7d46;
     outline: none;
     box-shadow: 0 0 0 3px rgba(106, 154, 225, 0.3);
 }
 
 button {
-    background: #6a9ae1;
+    background: #5f7d46;
     color: white;
     border: none;
     font-size: 1rem;
@@ -62,11 +63,11 @@ button {
 }
 
 button:hover {
-    background: #557bbf;
+    background: #4b6234;
 }
 
 button:active {
-    background: #4363a1;
+    background: #394d28;
 }
 
 input[type="hidden"] {
@@ -74,18 +75,22 @@ input[type="hidden"] {
 }
 
 p {
-    background: #f0f8ff;
-    border-left: 4px solid #6a9ae1;
+    background: #e6efde;
+    border-left: 4px solid #5f7d46;
     padding: 1rem;
     margin-bottom: 1.5rem;
-    color: #333;
+    color: #2e4620;
     font-size: 1rem;
     border-radius: 4px;
 }
 
 @media (max-width: 768px) {
     body {
-        height: 100vh;
+        height: 100dvh;
         margin: 0;
+    }
+    form {
+        width: 85%;
+        padding: 1rem;
     }
 }
