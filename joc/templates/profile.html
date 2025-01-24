@@ -16,10 +16,24 @@
     {% else %}
         <p>No has pujat una foto de perfil.</p>
     {% endif %}
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="profile-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Actualitzar la foto de perfil</button>
+        <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input">
+        <button type="submit" id="submit-button" disabled>
+            {% if user.profile_picture %}
+                Actualitzar la foto de perfil
+            {% else %}
+                Penjar la foto de perfil
+            {% endif %}
+        </button>
+        {% if user.profile_picture %}
+            <button type="submit" name="remove_picture" id="remove-button">Eliminar la foto de perfil</button>
+        {% endif %}
     </form>
+    <script>
+        document.getElementById('profile-picture-input').addEventListener('change', function() {
+            document.getElementById('submit-button').disabled = !this.files.length;
+        });
+    </script>
 </body>
 </html>

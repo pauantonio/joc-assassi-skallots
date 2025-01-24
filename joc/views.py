@@ -32,6 +32,10 @@ def handle_login_post(request):
 @login_required
 def profile_view(request):
     if request.method == 'POST':
+        if 'remove_picture' in request.POST:
+            request.user.profile_picture.delete()
+            request.user.save()
+            return redirect('index')
         return handle_profile_post(request)
     else:
         form = PlayerProfileForm(instance=request.user)
