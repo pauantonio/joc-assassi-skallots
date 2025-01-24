@@ -11,7 +11,7 @@
 <body>
     <form method="post">
         <h1>Joc de l'Espàrrek</h1>
-        <p>Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
+        <p class="info-message">Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
         {% csrf_token %}
         <div>
             <label for="{{ form.code.id_for_label }}">Codi:</label>

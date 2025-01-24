@@ -3,36 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil d'Usuari</title>
+    <title>Joc de l'Espàrrek</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
-    <h1>Benvingut/da, {{ user.first_name }} {{ user.last_name }}</h1>
-    <p>Aquesta és la teva pàgina de perfil.</p>
-    <a href="{% url 'logout' %}">Tancar Sessió</a>
-    <p>Esplai: {{ user.esplai }}</p>
-    <p>Territori/Zona: {{ user.territori_zona }}</p>
-    {% if user.profile_picture %}
-        <br><img src="{{ user.profile_picture.url }}" alt="Foto de perfil", width="600px">
-    {% else %}
-        <p>No has pujat una foto de perfil.</p>
-    {% endif %}
     <form method="post" enctype="multipart/form-data" id="profile-form">
+        <h1>Perfil del Jugador</h1>
+        <div id="player-info">
+            <p>Nom: {{ user.first_name }} {{ user.last_name }}</p>
+            <p>Esplai: {{ user.esplai }}</p>
+            <p>Territori/Zona: {{ user.territori_zona }}</p>
+        </div>
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
+        {% endif %}
         {% csrf_token %}
         <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input">
-        <button type="submit" id="submit-button" disabled>
+        {% comment %} <button type="submit" id="submit-button">
             {% if user.profile_picture %}
                 Actualitzar la foto de perfil
             {% else %}
                 Penjar la foto de perfil
             {% endif %}
-        </button>
-        {% if user.profile_picture %}
-            <button type="submit" name="remove_picture" id="remove-button">Eliminar la foto de perfil</button>
-        {% endif %}
+        </button> {% endcomment %}
+        <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
     </form>
     <script>
         document.getElementById('profile-picture-input').addEventListener('change', function() {
-            document.getElementById('submit-button').disabled = !this.files.length;
+            if (this.files.length) {
+                document.getElementById('profile-form').submit();
+            }
         });
     </script>
 </body>

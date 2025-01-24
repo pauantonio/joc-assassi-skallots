@@ -1,0 +1,147 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #7ba973, #c9d6b8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #2e4620;
+    margin-bottom: 1rem;
+}
+
+form {
+    background: #f4f8f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 1rem auto;
+    font-size: 1rem;
+    color: #3e5632;
+    border: 1px solid #9cb88a;
+    border-radius: 4px;
+    padding: 0.75rem;
+    cursor: pointer;
+}
+
+button {
+    background: #5f7d46;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #4b6234;
+}
+
+button:active {
+    background: #394d28;
+}
+
+button:disabled {
+    background: #9cb88a;
+    cursor: not-allowed;
+}
+
+#profile-picture-input {
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#profile-picture-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+#profile-picture-input::before {
+    content: 'Penjar fotografia de perfil';
+    display: inline-block;
+    background: #5f7d46;
+    border: 1px solid #5f7d46;
+    border-radius: 5px;
+    padding: 10px 20px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+}
+
+#profile-picture-input:hover::before {
+    background: #4b6234;
+    border-color: #4b6234;
+}
+
+#profile-picture-input:active::before {
+    background: #394d28;
+    border-color: #394d28;
+}
+
+img {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.logout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    color: white;
+    background-color: #ff4c4c;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #ff1a1a;
+}
+
+.logout-button:active {
+    background-color: #cc1414;
+}
+
+@media (max-width: 768px) {
+    body {
+        height: 100dvh;
+        margin: 0;
+    }
+    form {
+        width: 85%;
+        padding: 1rem;
+    }
+}
