@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+form {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+}
+
+form div {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+input[type="text"], input[type="date"], button {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="date"]:focus {
+    border-color: #6a9ae1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(106, 154, 225, 0.3);
+}
+
+button {
+    background: #6a9ae1;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #557bbf;
+}
+
+button:active {
+    background: #4363a1;
+}
+
+input[type="hidden"] {
+    display: none;
+}
+
+p {
+    background: #f0f8ff;
+    border-left: 4px solid #6a9ae1;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    body {
+        height: 100vh;
+        margin: 0;
+    }
+}

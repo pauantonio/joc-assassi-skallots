@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sessió</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <h1>Iniciar Sessió al Joc de l'Espàrrek</h1>
     <form method="post">
+        <h1>Joc de l'Espàrrek</h1>
+        <p>Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
         {% csrf_token %}
         <div>
             <label for="{{ form.code.id_for_label }}">Codi:</label>
@@ -22,8 +25,6 @@
             <button type="submit">Iniciar Sessió</button>
         </div>
     </form>
-    <script>
-        document.getElementById('session_cookie').value = document.cookie.replace(/(?:(?:^|.*;\s*)sessionid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    </script>
+    <script src="{% static 'ts/login.ts' %}"></script>
 </body>
 </html>
