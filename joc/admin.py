@@ -11,7 +11,7 @@ class CsvImportForm(forms.Form):
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     change_list_template = "admin/player_changelist.html"
-    list_display = ('username', 'first_name', 'last_name', 'code')
+    list_display = ('code', 'first_name', 'last_name', 'birth_date', 'esplai', 'territori_zona')
 
     def get_urls(self):
         urls = super().get_urls()

@@ -7,25 +7,23 @@ from datetime import datetime
 from django.utils.timezone import now
 
 class Player(AbstractUser):
+    password = None
+    is_staff = None
+    is_active = None
+    email = None
+    groups = None
+    user_permissions = None
+    last_login = None
+    date_joined = None
+    is_superuser = None
+    username = None
+    first_name = models.CharField(max_length=30, null=False)  # Nom
+    last_name = models.CharField(max_length=150, null=False)  # Cognoms
     code = models.CharField(max_length=5, unique=True)  # Codi únic
     birth_date = models.DateField()  # Data de naixement
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Foto de perfil
     esplai = models.CharField(max_length=100, default="")  # Esplai
     territori_zona = models.CharField(max_length=50, default="")  # Territori o zona
-    groups = models.ManyToManyField(
-        'auth.Group',
-        related_name='player_set',  # Add related_name to avoid clash
-        blank=True,
-        help_text=_('The groups this user belongs to. A user will get all permissions granted to each of their groups.'),
-        related_query_name='player',
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name='player_set',  # Add related_name to avoid clash
-        blank=True,
-        help_text=_('Specific permissions for this user.'),
-        related_query_name='player',
-    )
 
     def save(self, *args, **kwargs):
         if self.pk and self.profile_picture:
@@ -41,7 +39,6 @@ class Player(AbstractUser):
         for row in reader:
             try:
                 player = cls(
-                    username=f"{row['Name']}_{row['Surname']}_{row['Code']}",
                     first_name=row['Name'],
                     last_name=row['Surname'],
                     birth_date=datetime.strptime(row['Birthday'], '%d/%m/%Y').date(),
@@ -56,4 +53,4 @@ class Player(AbstractUser):
                 print(f"Error parsing date for player {row['Name']}: {e}")
 
     def __str__(self):
-        return self.username
+        return self.code
