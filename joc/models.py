@@ -13,7 +13,6 @@ class Player(AbstractUser):
     email = None
     groups = None
     user_permissions = None
-    last_login = None
     date_joined = None
     is_superuser = None
     username = None
