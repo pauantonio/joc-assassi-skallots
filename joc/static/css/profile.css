@@ -27,14 +27,13 @@ form {
 }
 
 input[type="file"] {
-    display: block;
-    margin: 1rem auto;
     font-size: 1rem;
     color: #3e5632;
     border: 1px solid #9cb88a;
     border-radius: 4px;
-    padding: 0.75rem;
     cursor: pointer;
+    width: 240px;
+    margin: 10px;
 }
 
 button {
@@ -67,7 +66,6 @@ button:disabled {
     border: none;
     font-size: 1rem;
     font-weight: bold;
-    padding: 0.75rem 1.5rem;
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s;
@@ -86,11 +84,12 @@ button:disabled {
     padding: 10px 20px;
     outline: none;
     white-space: nowrap;
-    -webkit-user-select: none;
     user-select: none;
     cursor: pointer;
     font-size: 16px;
     color: white;
+    width: -webkit-fill-available;
+    text-align: center;
 }
 
 #profile-picture-input:hover::before {
@@ -108,31 +107,33 @@ img {
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .logout-button {
     display: inline-block;
     padding: 10px 20px;
-    margin-top: 10px;
     color: white;
     background-color: #ff4c4c;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid #ff4c4c;
+    border-radius: 4px;
     text-decoration: none;
     text-align: center;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     transition: color 0.3s;
+    margin: 10px;
 }
 
 .logout-button:hover {
     background-color: #ff1a1a;
+    border-color: #ff1a1a;
 }
 
 .logout-button:active {
     background-color: #cc1414;
+    border-color: #cc1414;
 }
 
 @media (max-width: 768px) {

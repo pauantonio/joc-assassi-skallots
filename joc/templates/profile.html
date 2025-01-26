@@ -13,22 +13,17 @@
         <h1>Perfil del Jugador</h1>
         <div id="player-info">
             <p>Nom: {{ user.first_name }} {{ user.last_name }}</p>
-            <p>Esplai: {{ user.esplai }}</p>
-            <p>Territori/Zona: {{ user.territori_zona }}</p>
+            <p>Centre: {{ user.esplai }}</p>
+            <p>Zona/Territori: {{ user.territori_zona }}</p>
         </div>
         {% if user.profile_picture %}
             <img src="{{ user.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
         {% endif %}
         {% csrf_token %}
-        <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input">
-        {% comment %} <button type="submit" id="submit-button">
-            {% if user.profile_picture %}
-                Actualitzar la foto de perfil
-            {% else %}
-                Penjar la foto de perfil
-            {% endif %}
-        </button> {% endcomment %}
-        <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
+        <div>
+            <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input">
+            <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
+        </div>
     </form>
     <script>
         document.getElementById('profile-picture-input').addEventListener('change', function() {
