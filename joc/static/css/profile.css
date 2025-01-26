@@ -32,7 +32,7 @@ input[type="file"] {
     border: 1px solid #9cb88a;
     border-radius: 4px;
     cursor: pointer;
-    width: 240px;
+    width: 210px;
     margin: 10px;
 }
 
@@ -76,7 +76,7 @@ button:disabled {
 }
 
 #profile-picture-input::before {
-    content: 'Penjar fotografia de perfil';
+    content: attr(data-content);
     display: inline-block;
     background: #5f7d46;
     border: 1px solid #5f7d46;
@@ -124,6 +124,7 @@ img {
     cursor: pointer;
     transition: color 0.3s;
     margin: 10px;
+    width: calc(210px - 40px - 2px);
 }
 
 .logout-button:hover {
@@ -144,5 +145,8 @@ img {
     form {
         width: 85%;
         padding: 1rem;
+    }
+    .logout-button {
+        width: auto;
     }
 }

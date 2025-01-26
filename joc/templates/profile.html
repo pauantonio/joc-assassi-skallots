@@ -22,7 +22,7 @@
         {% endif %}
         {% csrf_token %}
         <div>
-            <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input">
+            <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input" data-content="{% if user.profile_picture %}Actualitzar{% else %}Penjar{% endif %} Fotografia">
             <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
         </div>
     </form>
