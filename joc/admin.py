@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import path
 from django.shortcuts import render
 from django import forms
+import random
 
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
@@ -19,6 +20,14 @@ class PlayerAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['birth_date'].input_formats = ['%d/%m/%Y']
+        if not self.instance.pk:
+            self.fields['code'].initial = self.generate_unique_code()
+
+    def generate_unique_code(self):
+        while True:
+            code = str(random.randint(00000, 99999))
+            if not Player.objects.filter(code=code).exists():
+                return code
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
