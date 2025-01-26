@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <script src="{% static 'ts/profile.ts' %}" defer></script>
 </head>
 <body>
     <form method="post" enctype="multipart/form-data" id="profile-form">
@@ -25,12 +26,5 @@
             <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
         </div>
     </form>
-    <script>
-        document.getElementById('profile-picture-input').addEventListener('change', function() {
-            if (this.files.length) {
-                document.getElementById('profile-form').submit();
-            }
-        });
-    </script>
 </body>
 </html>
