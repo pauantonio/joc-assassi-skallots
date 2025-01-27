@@ -100,7 +100,7 @@ p.message {
     }
 }
 
-img {
+.logo {
     display: block;
     max-width: 250px;
     height: auto;
@@ -116,7 +116,7 @@ img {
         width: 85%;
         padding: 1.5rem;
     }
-    img {
+    .logo {
         max-width: 50%;
     }
 }

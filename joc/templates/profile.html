@@ -7,24 +7,27 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-    <script src="{% static 'ts/profile.ts' %}" defer></script>
+    <script src="{% static 'js/profile.js' %}" defer></script>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data" id="profile-form">
-        <h1>Perfil del Jugador</h1>
-        <div id="player-info">
-            <p>Nom: {{ user.first_name }} {{ user.last_name }}</p>
-            <p>Centre: {{ user.esplai }}</p>
-            <p>Zona/Territori: {{ user.territori_zona }}</p>
-        </div>
-        {% if user.profile_picture %}
-            <img src="{{ user.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
-        {% endif %}
-        {% csrf_token %}
-        <div>
-            <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input" data-content="{% if user.profile_picture %}Actualitzar{% else %}Penjar{% endif %} Fotografia">
-            <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
-        </div>
-    </form>
+    <div>
+        <form method="post" enctype="multipart/form-data" id="profile-form">
+            <h1>Perfil del Jugador</h1>
+            <div id="player-info">
+                <p>Nom: {{ user.first_name }} {{ user.last_name }}</p>
+                <p>Centre: {{ user.esplai }}</p>
+                <p>Zona/Territori: {{ user.territori_zona }}</p>
+            </div>
+            {% if user.profile_picture %}
+                <img class="profile-picture" src="{{ user.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
+            {% endif %}
+            {% csrf_token %}
+            <div>
+                <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input" data-content="{% if user.profile_picture %}Actualitzar{% else %}Penjar{% endif %} Fotografia">
+                <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
+            </div>
+        </form>
+        <img class="logo" src="{% static 'img/logo_mcecc.png' %}" alt="Logo MCECC">
+    </div>
 </body>
 </html>

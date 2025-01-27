@@ -9,9 +9,16 @@ body {
     height: 100vh;
 }
 
+body>div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 h1 {
     text-align: center;
     color: #2e4620;
+    margin-top: 0;
     margin-bottom: 1rem;
 }
 
@@ -102,12 +109,19 @@ button:disabled {
     border-color: #394d28;
 }
 
-img {
+.profile-picture {
     max-width: 50%;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
+}
+
+.logo {
+    display: block;
+    max-width: 250px;
+    height: auto;
+    margin: 2rem auto 0 auto;
 }
 
 .logout-button {
@@ -144,7 +158,10 @@ img {
     }
     form {
         width: 85%;
-        padding: 1rem;
+        padding: 1.5rem;
+    }
+    .logo {
+        max-width: 50%;
     }
     .logout-button {
         width: auto;
