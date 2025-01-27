@@ -12,7 +12,10 @@
     <div>
         <form method="post">
             <h1>Joc de l'Espàrrek</h1>
-            <p class="info-message">Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
+            <p class="message" id="login-info">Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
+            {% if form.non_field_errors %}
+            <p class="message" id="login-error">{{ form.non_field_errors|join:" " }}</p>
+            {% endif %}
             {% csrf_token %}
             <div>
                 <label for="{{ form.code.id_for_label }}">Codi:</label>
@@ -27,6 +30,6 @@
         </form>
         <img src="{% static 'img/logo_mcecc.png' %}" alt="Logo MCECC">
     </div>
-    <script src="{% static 'ts/login.ts' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
 </body>
 </html>

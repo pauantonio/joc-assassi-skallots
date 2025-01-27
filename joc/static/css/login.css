@@ -81,14 +81,23 @@ input[type="hidden"] {
     display: none;
 }
 
-p.info-message {
-    background: #e6efde;
-    border-left: 4px solid #5f7d46;
+p.message {
     padding: 1rem;
     margin-bottom: 1.5rem;
-    color: #2e4620;
     font-size: 1rem;
     border-radius: 4px;
+
+    &#login-info {
+        background: #e6efde;
+        border-left: 4px solid #5f7d46;
+        color: #2e4620;
+    }
+
+    &#login-error {
+        background: #f8d7da;
+        border-left: 4px solid #721c24;
+        color: #721c24;
+    }
 }
 
 img {

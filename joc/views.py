@@ -11,22 +11,19 @@ def index(request):
 
 def login_view(request):
     if request.method == 'POST':
-        return handle_login_post(request)
+        form = PlayerLoginForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            birth_date = form.cleaned_data['birth_date']
+            player = authenticate(request, code=code, birth_date=birth_date)
+            if player is not None:
+                login(request, player)
+                return redirect('index')
+            else:
+                form.add_error(None, 'Codi o data de naixement incorrectes. Comprova que les dades són correctes i torna a intentar-ho.')
     else:
         form = PlayerLoginForm()
-    return render(request, 'login.html', {'form': form})
 
-def handle_login_post(request):
-    form = PlayerLoginForm(request.POST)
-    if form.is_valid():
-        code = form.cleaned_data['code']
-        birth_date = form.cleaned_data['birth_date']
-        player = authenticate(request, code=code, birth_date=birth_date)
-        if player is not None:
-            login(request, player)
-            return redirect('index')
-        else:
-            form.add_error(None, 'Invalid code or birth date')
     return render(request, 'login.html', {'form': form})
 
 @login_required
