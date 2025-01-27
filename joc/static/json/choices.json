@@ -1,0 +1,28 @@
+{
+    "TERRITORIS": [
+        {
+            "zona": "zona1",
+            "nom": "Zona 1",
+            "esplais": [
+                {"id": "esplai1", "nom": "Esplai 1"},
+                {"id": "esplai2", "nom": "Esplai 2"}
+            ]
+        },
+        {
+            "zona": "zona2",
+            "nom": "Zona 2",
+            "esplais": [
+                {"id": "esplai3", "nom": "Esplai 3"},
+                {"id": "esplai4", "nom": "Esplai 4"}
+            ]
+        },
+        {
+            "zona": "zona3",
+            "nom": "Zona 3",
+            "esplais": [
+                {"id": "esplai5", "nom": "Esplai 5"},
+                {"id": "esplai6", "nom": "Esplai 6"}
+            ]
+        }
+    ]
+}

@@ -5,6 +5,10 @@ import csv
 from django.core.exceptions import ValidationError
 from datetime import datetime
 from django.utils.timezone import now
+import json
+
+with open('joc/static/json/choices.json') as data:
+    choices = json.load(data)
 
 class Player(AbstractUser):
     password = None
@@ -16,20 +20,20 @@ class Player(AbstractUser):
     date_joined = None
     is_superuser = None
     username = None
-    first_name = models.CharField(max_length=30, null=False)  # Nom
-    last_name = models.CharField(max_length=150, null=False)  # Cognoms
-    code = models.CharField(max_length=5, unique=True)  # Codi únic
-    birth_date = models.DateField()  # Data de naixement
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)  # Foto de perfil
-    esplai = models.CharField(max_length=100, default="")  # Esplai
-    territori_zona = models.CharField(max_length=50, default="")  # Territori o zona
+    code = models.CharField(max_length=5, unique=True)
+    first_name = models.CharField(max_length=30, null=False)
+    last_name = models.CharField(max_length=150, null=False)
+    birth_date = models.DateField()
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    territori_zona = models.CharField(max_length=50, default="", choices=[(t['zona'], t['nom']) for t in choices['TERRITORIS']])
+    esplai = models.CharField(max_length=100, default="")
 
     def save(self, *args, **kwargs):
         if self.pk and self.profile_picture:
             # Get the original file extension
             ext = self.profile_picture.name.split('.')[-1]
             # Set the new filename using user ID and timestamp
-            self.profile_picture.name = f"{self.pk}_{now().strftime('%Y%m%d%H%M%S')}.{ext}"
+            self.profile_picture.name = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}.{ext}"
         super().save(*args, **kwargs)
 
     @classmethod
