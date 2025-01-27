@@ -5,25 +5,28 @@ from .forms import PlayerProfileForm, PlayerLoginForm
 
 def index(request):
     if request.user.is_authenticated:
-        return profile_view(request)
+        return redirect('perfil')
     else:
         return login_view(request)
 
 def login_view(request):
     if request.method == 'POST':
-        form = PlayerLoginForm(request.POST)
-        if form.is_valid():
-            code = form.cleaned_data['code']
-            birth_date = form.cleaned_data['birth_date']
-            player = authenticate(request, code=code, birth_date=birth_date)
-            if player is not None:
-                login(request, player)
-                return redirect('index')
-            else:
-                form.add_error(None, 'Codi o data de naixement incorrectes. Comprova que les dades són correctes i torna a intentar-ho.')
+        return handle_login_post(request)
     else:
         form = PlayerLoginForm()
+    return render(request, 'login.html', {'form': form})
 
+def handle_login_post(request):
+    form = PlayerLoginForm(request.POST)
+    if form.is_valid():
+        code = form.cleaned_data['code']
+        birth_date = form.cleaned_data['birth_date']
+        player = authenticate(request, code=code, birth_date=birth_date)
+        if player is not None:
+            login(request, player)
+            return redirect('index')
+        else:
+            form.add_error(None, 'Codi o data de naixement incorrectes. Comprova que les dades són correctes i torna a intentar-ho.')
     return render(request, 'login.html', {'form': form})
 
 @login_required

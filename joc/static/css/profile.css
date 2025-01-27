@@ -114,8 +114,8 @@ img {
     display: inline-block;
     padding: 10px 20px;
     color: white;
-    background-color: #ff4c4c;
-    border: 1px solid #ff4c4c;
+    background-color: #cc0000;
+    border: 1px solid #cc0000;
     border-radius: 4px;
     text-decoration: none;
     text-align: center;
@@ -128,13 +128,13 @@ img {
 }
 
 .logout-button:hover {
-    background-color: #ff1a1a;
-    border-color: #ff1a1a;
+    background-color: #990000;
+    border-color: #990000;
 }
 
 .logout-button:active {
-    background-color: #cc1414;
-    border-color: #cc1414;
+    background-color: #660000;
+    border-color: #660000;
 }
 
 @media (max-width: 768px) {
