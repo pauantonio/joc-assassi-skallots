@@ -25,7 +25,8 @@ class Player(AbstractUser):
     last_name = models.CharField(max_length=150, null=False)
     birth_date = models.DateField()
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
-    territori_zona = models.CharField(max_length=50, default="", choices=[(t['zona'], t['nom']) for t in choices['TERRITORIS']])
+    territori_zona = models.CharField(max_length=50, default="")
+    # territori_zona = models.CharField(max_length=50, default="", choices=[(t['zona'], t['nom']) for t in choices['TERRITORIS']])
     esplai = models.CharField(max_length=100, default="")
 
     def save(self, *args, **kwargs):

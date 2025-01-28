@@ -35,10 +35,10 @@ class PlayerAdminForm(forms.ModelForm):
         self.fields['birth_date'].input_formats = ['%Y-%m-%d']
         if not self.instance.pk:
             self.fields['code'].initial = self.generate_unique_code()
-        self.fields['territori_zona'].widget.attrs.update({'onchange': 'updateEsplaiChoices()'})
-        self.fields['esplai'].widget = forms.Select(choices=self.get_esplai_choices())
-        if not self.instance.territori_zona:
-            self.fields['esplai'].widget.attrs.update({'disabled': 'disabled'})
+        # self.fields['territori_zona'].widget.attrs.update({'onchange': 'updateEsplaiChoices()'})
+        # self.fields['esplai'].widget = forms.Select(choices=self.get_esplai_choices())
+        # if not self.instance.territori_zona:
+        #     self.fields['esplai'].widget.attrs.update({'disabled': 'disabled'})
 
     def generate_unique_code(self):
         while True:
@@ -53,8 +53,8 @@ class PlayerAdminForm(forms.ModelForm):
                 return [(esplai['id'], esplai['nom']) for esplai in territori['esplais']]
         return []
 
-    class Media:
-        js = ('admin/js/player_admin.js',)
+    # class Media:
+    #     js = ('admin/js/player_admin.js',)
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
