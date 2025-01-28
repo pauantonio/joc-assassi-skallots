@@ -135,3 +135,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'joc.authentication.CodeBirthDateBackend',
 ]
+
+LOGIN_URL = '/'

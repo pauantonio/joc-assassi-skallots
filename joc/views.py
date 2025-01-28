@@ -24,6 +24,8 @@ def handle_login_post(request):
         player = authenticate(request, code=code, birth_date=birth_date)
         if player is not None:
             login(request, player)
+            if request.GET.get('next'):
+                return redirect(request.GET['next'])
             return redirect('index')
         else:
             form.add_error(None, 'Codi o data de naixement incorrectes. Comprova que les dades són correctes i torna a intentar-ho.')
