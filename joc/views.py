@@ -5,7 +5,7 @@ from .forms import PlayerProfileForm, PlayerLoginForm
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect('perfil')
+        return redirect('menu')
     else:
         return login_view(request)
 
@@ -30,6 +30,10 @@ def handle_login_post(request):
         else:
             form.add_error(None, 'Codi o data de naixement incorrectes. Comprova que les dades són correctes i torna a intentar-ho.')
     return render(request, 'login.html', {'form': form})
+
+@login_required
+def menu_view(request):
+    return render(request, 'menu.html')
 
 @login_required
 def profile_view(request):

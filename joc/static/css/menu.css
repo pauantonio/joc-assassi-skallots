@@ -1,0 +1,54 @@
+.menu-container {
+    max-width: 400px;
+    text-align: center;
+}
+
+.buttons-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+button {
+    padding: 1rem 2rem;
+    width: 10rem;
+}
+
+.victim {
+    background: #721c24;
+}
+
+.victim:hover {
+    background: #5f141b;
+}
+
+.victim:active {
+    background: #4b1015;
+}
+
+.ranking {
+    background: #004085
+}
+
+.ranking:hover {
+    background: #003366;
+}
+
+.ranking:active {
+    background: #00264d;
+}
+
+.cemetery {
+    background: #333;
+}
+
+.cemetery:hover {
+    background: #292929;
+}
+
+.cemetery:active {
+    background: #1f1f1f;
+}
