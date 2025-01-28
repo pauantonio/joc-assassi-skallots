@@ -63,7 +63,7 @@ footer {
 
 .logo {
     display: block;
-    max-width: 250px;
+    max-width: 200px;
     height: auto;
 }
 
@@ -73,10 +73,10 @@ footer {
         margin: 0;
     }
     form {
-        width: 85%;
+        width: 75%;
         padding: 1.5rem;
     }
     .logo {
-        max-width: 50%;
+        max-width: 40%;
     }
 }

@@ -66,6 +66,26 @@ button {
     margin-bottom: 1rem;
 }
 
+.profile-picture-placeholder {
+    max-width: 40%;
+    height: 10rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    align-content: center;
+    background-color: #fff5e6;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+
+    p {
+        padding: 2em;
+    }
+}
+
 .logout-button {
     display: inline-block;
     padding: 10px 20px;
@@ -94,6 +114,13 @@ button {
 }
 
 @media (max-width: 768px) {
+    .profile-picture-placeholder {
+        max-width: 75%;
+
+        p {
+            padding: 1em;
+        }
+    }
     .logout-button {
         width: auto;
     }
