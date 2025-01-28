@@ -1,35 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include 'header.html' %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joc de l'Espàrrek</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <script src="{% static 'js/login.js' %}" defer></script>
 </head>
 <body>
-    <div>
-        <form method="post">
-            <h1>Joc de l'Espàrrek</h1>
-            <p class="message" id="login-info">Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
-            {% if form.non_field_errors %}
-            <p class="message" id="login-error">{{ form.non_field_errors|join:" " }}</p>
-            {% endif %}
-            {% csrf_token %}
-            <div>
-                <label for="{{ form.code.id_for_label }}">Codi:</label>
-                {{ form.code }}
-            </div>
-            <div>
-                <label for="{{ form.birth_date.id_for_label }}">Data de Naixement:</label>
-                {{ form.birth_date }}
-            </div>
-            <input type="hidden" name="session_cookie" id="session_cookie">
-            <button type="submit">Iniciar Sessió</button>
-        </form>
-        <img class="logo" src="{% static 'img/logo_mcecc.png' %}" alt="Logo MCECC">
-    </div>
+    <form method="post">
+        <h1>Joc de l'Espàrrek</h1>
+        <p class="message" id="login-info">Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
+        {% if form.non_field_errors %}
+        <p class="message" id="login-error">{{ form.non_field_errors|join:" " }}</p>
+        {% endif %}
+        {% csrf_token %}
+        <div>
+            <label for="{{ form.code.id_for_label }}">Codi:</label>
+            {{ form.code }}
+        </div>
+        <div>
+            <label for="{{ form.birth_date.id_for_label }}">Data de Naixement:</label>
+            {{ form.birth_date }}
+        </div>
+        <input type="hidden" name="session_cookie" id="session_cookie">
+        <button type="submit">Iniciar Sessió</button>
+    </form>
 </body>
-</html>
+{% include 'footer.html' %}

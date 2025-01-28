@@ -1,35 +1,5 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #7ba973, #c9d6b8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-body>div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    text-align: center;
-    color: #2e4620;
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
 form {
-    background: #f4f8f1;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    width: 100%;
     max-width: 600px;
-    margin: 0 auto;
     text-align: center;
 }
 
@@ -44,28 +14,7 @@ input[type="file"] {
 }
 
 button {
-    background: #5f7d46;
-    color: white;
-    border: none;
-    font-size: 1rem;
-    font-weight: bold;
     padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #4b6234;
-}
-
-button:active {
-    background: #394d28;
-}
-
-button:disabled {
-    background: #9cb88a;
-    cursor: not-allowed;
 }
 
 #profile-picture-input {
@@ -117,13 +66,6 @@ button:disabled {
     margin-bottom: 1rem;
 }
 
-.logo {
-    display: block;
-    max-width: 250px;
-    height: auto;
-    margin: 2rem auto 0 auto;
-}
-
 .logout-button {
     display: inline-block;
     padding: 10px 20px;
@@ -152,17 +94,6 @@ button:disabled {
 }
 
 @media (max-width: 768px) {
-    body {
-        height: 100dvh;
-        margin: 0;
-    }
-    form {
-        width: 85%;
-        padding: 1.5rem;
-    }
-    .logo {
-        max-width: 50%;
-    }
     .logout-button {
         width: auto;
     }
