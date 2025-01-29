@@ -51,15 +51,30 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 6. Executa el servidor de desenvolupament
+### 6. Crea el fitxer .env
+
+Crea un fitxer `.env` al directori arrel del projecte amb el següent contingut:
+
+```
+DEBUG=True
+SECRET_KEY="your-secret-key"
+```
+
+### 7. Executa el servidor de desenvolupament
 
 ```bash
 python manage.py runserver
 ```
 
+Per executar el servidor a `0.0.0.0:8000`, utilitza la següent comanda:
+
+```sh
+python manage.py runserver 0.0.0.0:8000
+```
+
 Accedeix al projecte al navegador: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-### 7. Crea un superusuari (opcional)
+### 8. Crea un superusuari (opcional)
 
 Per accedir al panell d'administració:
 
