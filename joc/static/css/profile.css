@@ -113,6 +113,25 @@ button {
     border-color: #660000;
 }
 
+.go-back-button {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.go-back-button:hover {
+    background-color: #0056b3;
+}
+
+.go-back-button:active {
+    background-color: #004286;
+}
+
 @media (max-width: 768px) {
     .profile-picture-placeholder {
         max-width: 75%;
