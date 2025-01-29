@@ -23,7 +23,7 @@ h2 {
     margin-bottom: 1rem;
 }
 
-form, .menu-container, .error-page {
+.container {
     background: #f4f8f1;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -89,7 +89,7 @@ footer {
 }
 
 @media (max-width: 768px) {
-    form, .menu-container, .error-page{
+    .container {
         width: 75%;
         padding: 1.5rem;
     }
