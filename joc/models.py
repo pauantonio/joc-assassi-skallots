@@ -58,3 +58,16 @@ class Player(AbstractUser):
 
     def __str__(self):
         return self.code
+
+class GameSettings(models.Model):
+    GAME_STATUS_CHOICES = [
+        ('playing', 'Playing'),
+        ('disabled_until_time', 'Disabled Until Time'),
+        ('paused', 'Paused'),
+    ]
+    
+    disable_until = models.DateTimeField(default=datetime(2025, 3, 22, 12, 0, 0))
+    game_status = models.CharField(max_length=20, choices=GAME_STATUS_CHOICES, default='playing')
+    
+    def __str__(self):
+        return "Game Settings"

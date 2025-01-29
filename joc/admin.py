@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Player
+from .models import Player, GameSettings
 from django.http import HttpResponseRedirect
 from django.urls import path
 from django.shortcuts import render
@@ -119,3 +119,9 @@ class PlayerAdmin(admin.ModelAdmin):
         extra_context['show_save_and_add_another'] = False
         extra_context['show_save_and_continue'] = False
         return super().add_view(request, form_url, extra_context=extra_context)
+
+@admin.register(GameSettings)
+class GameSettingsAdmin(admin.ModelAdmin):
+    list_display = ('disable_until', 'game_status')
+    list_editable = ('disable_until', 'game_status')
+    list_display_links = None  # Disable links to avoid conflict with list_editable

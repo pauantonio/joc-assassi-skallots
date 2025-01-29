@@ -50,7 +50,7 @@ button:active {
     background: #394d28;
 }
 
-button:disabled {
+button:disabled, button:disabled:hover, button:disabled:active {
     background: #9c9c9c;
     cursor: not-allowed;
 }
