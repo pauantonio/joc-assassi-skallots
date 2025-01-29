@@ -7,7 +7,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100dvh;
 }
 
 h1 {
@@ -55,6 +55,27 @@ button:disabled, button:disabled:hover, button:disabled:active {
     cursor: not-allowed;
 }
 
+.go-back-button {
+    display: inline-block;
+    margin: 20px 0 10px 0;
+    padding: 10px 20px;
+    background-color: #f4f8f1;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+}
+
+.go-back-button:hover {
+    background-color: #fff5e6;
+}
+
+.go-back-button:active {
+    background-color: #e6d7c0;
+}
+
 footer {
     padding: 1.5rem;
     display: flex;
@@ -68,10 +89,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-    body {
-        height: 100dvh;
-        margin: 0;
-    }
     form, .menu-container, .error-page{
         width: 75%;
         padding: 1.5rem;
