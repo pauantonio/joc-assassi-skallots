@@ -84,6 +84,14 @@ python manage.py createsuperuser
 
 Segueix les instruccions per crear un usuari administrador.
 
+## Mode de Debug
+
+Si vols establir la configuració `DEBUG` a `False`, utilitza el flag `--insecure` en `runserver` per poder carregar el contingut estàtic:
+
+```sh
+python manage.py runserver --insecure
+```
+
 ## Estrutura del projecte
 
 ```
