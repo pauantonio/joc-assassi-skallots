@@ -18,7 +18,7 @@ def game_not_paused(view_func):
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect('menu')
+        return menu_view(request)
     else:
         return login_view(request)
 

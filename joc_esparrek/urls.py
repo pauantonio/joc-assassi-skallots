@@ -23,7 +23,6 @@ from joc import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('menu/', views.menu_view, name='menu'),
     path('perfil/', views.profile_view, name='profile'),
     path('victim/', views.victim_view, name='victim'),
     path('logout/', views.logout_view, name='logout'),
