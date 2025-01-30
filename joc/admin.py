@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django import forms
 import random
 from .models import Player, GameSettings
+from django.utils.timezone import localtime
 
 # Form for CSV import
 class CsvImportForm(forms.Form):
@@ -119,3 +120,9 @@ class GameSettingsAdmin(admin.ModelAdmin):
     list_display = ('disable_until', 'game_status')
     list_editable = ('disable_until', 'game_status')
     list_display_links = None  # Disable links to avoid conflict with list_editable
+
+    def has_add_permission(self, request):
+        return not GameSettings.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
