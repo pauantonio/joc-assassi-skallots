@@ -1,8 +1,10 @@
+/* Container Styles */
 .container {
     max-width: 400px;
     text-align: center;
 }
 
+/* Buttons List Styles */
 .buttons-list {
     display: flex;
     flex-direction: column;
@@ -12,6 +14,7 @@
     margin-top: 1.5rem;
 }
 
+/* Buttons Styles */
 button {
     padding: 1rem 2rem;
     width: 10rem;
@@ -30,7 +33,7 @@ button {
 }
 
 .ranking {
-    background: #004085
+    background: #004085;
 }
 
 .ranking:hover {

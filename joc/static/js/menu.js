@@ -12,10 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
                      && ['victim', 'ranking', 'cemetery'].includes(button.className)) {
                     button.disabled = true;
                 }
-                button.addEventListener('click', function() {
-                    const url = button.getAttribute('data-url');
-                    window.location.href = url;
-                });
             });
         });
+
+    document.querySelectorAll('.buttons-list button').forEach(button => {
+        button.addEventListener('click', () => {
+            window.location.href = button.getAttribute('data-url');
+        });
+    });
 });
