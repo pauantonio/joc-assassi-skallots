@@ -1,7 +1,7 @@
-const sessionCookieInput = document.getElementById('session_cookie');
-sessionCookieInput.value = document.cookie.replace(/(?:(?:^|.*;\s*)sessionid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-
 document.addEventListener('DOMContentLoaded', function() {
+    const sessionCookieInput = document.getElementById('session_cookie');
+    sessionCookieInput.value = document.cookie.replace(/(?:(?:^|.*;\s*)sessionid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
     const errorElement = document.getElementById('login-error');
     const infoElement = document.getElementById('login-info');
     const codeInputs = document.querySelectorAll('.code-inputs input');
@@ -11,43 +11,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('login-form');
     const loginButton = loginForm.querySelector('button[type="submit"]');
 
-    checkFormValidity();
-
     function checkFormValidity() {
-        let allFilled = true;
-        codeInputs.forEach(input => {
-            if (!input.value) {
-                allFilled = false;
-            }
-        });
-        if (birthDateInputs[0].value.length !== 2 || birthDateInputs[1].value.length !== 2 || birthDateInputs[2].value.length !== 4) {
-            allFilled = false;
-        }
+        const allCodeInputsFilled = [...codeInputs].every(input => input.value);
+        const dayFilled = birthDateInputs[0].value.length === 2;
+        const monthFilled = birthDateInputs[1].value.length === 2;
+        const yearFilled = birthDateInputs[2].value.length === 4;
+
+        const allFilled = allCodeInputsFilled && dayFilled && monthFilled && yearFilled;
         loginButton.disabled = !allFilled;
     }
 
     function validateInput(input) {
-        input.value = input.value.replace(/\D/g, '');
-        if (input.value.length > input.maxLength) {
-            input.value = input.value.slice(0, input.maxLength);
-        }
+        input.value = input.value.replace(/\D/g, '').slice(0, input.maxLength);
     }
 
     function preventPaste(event) {
         event.preventDefault();
     }
 
-    if (errorElement) {
-        infoElement.style.display = 'none';
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                errorElement.style.display = 'none';
-                infoElement.style.display = 'block';
-            });
-        });
-
-        // Restore code input values from hidden input
+    function restoreInputValues() {
         const codeValue = codeHiddenInput.value;
         if (codeValue) {
             codeInputs.forEach((input, index) => {
@@ -55,68 +37,65 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Restore birth date input values from hidden input
         const birthDateValue = birthDateHiddenInput.value;
         if (birthDateValue) {
             const [year, month, day] = birthDateValue.split('-');
-            birthDateInputs[0].value = day;
-            birthDateInputs[1].value = month;
-            birthDateInputs[2].value = year;
+            birthDateInputs[0].value = day || '';
+            birthDateInputs[1].value = month || '';
+            birthDateInputs[2].value = year || '';
         }
     }
 
+    function handleInputEvent(input, index, inputsArray, nextFocusElement) {
+        validateInput(input);
+        checkFormValidity();
+        const isLastInput = index === inputsArray.length - 1;
+        const isInputFilled = input.value.length === input.maxLength;
+
+        if (isInputFilled && !isLastInput) {
+            inputsArray[index + 1].focus();
+        } else if (isInputFilled && nextFocusElement) {
+            nextFocusElement.focus();
+        }
+    }
+
+    function handleKeyDownEvent(event, input, index, inputsArray) {
+        checkFormValidity();
+        if (event.key === 'Backspace' && input.value === '' && index > 0) {
+            inputsArray[index - 1].focus();
+        }
+    }
+
+    if (errorElement) {
+        infoElement.style.display = 'none';
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                errorElement.style.display = 'none';
+                infoElement.style.display = 'block';
+            });
+        });
+        restoreInputValues();
+    }
+
     codeInputs.forEach((input, index) => {
-        input.addEventListener('input', () => {
-            validateInput(input);
-            if (input.value.length === 1) {
-                if (index < codeInputs.length - 1) {
-                    codeInputs[index + 1].focus();
-                } else {
-                    birthDateInputs[0].focus();
-                }
-            }
-            checkFormValidity();
-        });
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && input.value === '' && index > 0) {
-                codeInputs[index - 1].focus();
-            }
-            checkFormValidity();
-        });
+        input.addEventListener('input', () => handleInputEvent(input, index, codeInputs, birthDateInputs[0]));
+        input.addEventListener('keydown', (e) => handleKeyDownEvent(e, input, index, codeInputs));
         input.addEventListener('paste', preventPaste);
     });
 
     birthDateInputs.forEach((input, index) => {
-        input.addEventListener('input', () => {
-            validateInput(input);
-            if (input.value.length === input.maxLength) {
-                if (index < birthDateInputs.length - 1) {
-                    birthDateInputs[index + 1].focus();
-                } else {
-                    loginButton.focus();
-                }
-            }
-            checkFormValidity();
-        });
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && input.value === '' && index > 0) {
-                birthDateInputs[index - 1].focus();
-            }
-            checkFormValidity();
-        });
+        input.addEventListener('input', () => handleInputEvent(input, index, birthDateInputs, loginButton));
+        input.addEventListener('keydown', (e) => handleKeyDownEvent(e, input, index, birthDateInputs));
         input.addEventListener('paste', preventPaste);
     });
 
     loginForm.addEventListener('submit', (e) => {
-        let codeValue = '';
-        codeInputs.forEach(input => {
-            codeValue += input.value;
-        });
-        codeHiddenInput.value = codeValue;
-
+        codeHiddenInput.value = [...codeInputs].map(input => input.value).join('');
         const year = birthDateInputs[2].value;
         const month = birthDateInputs[1].value.padStart(2, '0');
         const day = birthDateInputs[0].value.padStart(2, '0');
         birthDateHiddenInput.value = `${year}-${month}-${day}`;
     });
+
+    checkFormValidity();
 });
