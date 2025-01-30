@@ -5,10 +5,6 @@ import csv
 from django.core.exceptions import ValidationError
 from datetime import datetime
 from django.utils.timezone import now
-import json
-
-with open('joc/static/json/choices.json') as data:
-    choices = json.load(data)
 
 class Player(AbstractUser):
     password = None
@@ -26,7 +22,6 @@ class Player(AbstractUser):
     birth_date = models.DateField()
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     territori_zona = models.CharField(max_length=50, default="")
-    # territori_zona = models.CharField(max_length=50, default="", choices=[(t['zona'], t['nom']) for t in choices['TERRITORIS']])
     esplai = models.CharField(max_length=100, default="")
 
     def save(self, *args, **kwargs):

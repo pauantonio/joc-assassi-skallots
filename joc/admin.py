@@ -1,18 +1,16 @@
 from django.contrib import admin
-from .models import Player, GameSettings
 from django.http import HttpResponseRedirect
 from django.urls import path
 from django.shortcuts import render
 from django import forms
 import random
-import json
+from .models import Player, GameSettings
 
-with open('joc/static/json/choices.json') as data:
-    choices = json.load(data)
-
+# Form for CSV import
 class CsvImportForm(forms.Form):
     csv_file = forms.FileField()
 
+# Custom form for Player model
 class PlayerAdminForm(forms.ModelForm):
     class Meta:
         model = Player
@@ -35,10 +33,6 @@ class PlayerAdminForm(forms.ModelForm):
         self.fields['birth_date'].input_formats = ['%Y-%m-%d']
         if not self.instance.pk:
             self.fields['code'].initial = self.generate_unique_code()
-        # self.fields['territori_zona'].widget.attrs.update({'onchange': 'updateEsplaiChoices()'})
-        # self.fields['esplai'].widget = forms.Select(choices=self.get_esplai_choices())
-        # if not self.instance.territori_zona:
-        #     self.fields['esplai'].widget.attrs.update({'disabled': 'disabled'})
 
     def generate_unique_code(self):
         while True:
@@ -46,22 +40,17 @@ class PlayerAdminForm(forms.ModelForm):
             if not Player.objects.filter(code=code).exists():
                 return code
 
-    def get_esplai_choices(self):
-        territori_zona = self.data.get('territori_zona') or self.instance.territori_zona
-        for territori in choices['TERRITORIS']:
-            if territori['zona'] == territori_zona:
-                return [(esplai['id'], esplai['nom']) for esplai in territori['esplais']]
-        return []
-
-    # class Media:
-    #     js = ('admin/js/player_admin.js',)
-
+# Admin configuration for Player model
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     change_list_template = "admin/player_changelist.html"
-    list_display = ('code_display', 'first_name_display', 'last_name_display', 'birth_date_display', 'territori_zona_display', 'esplai_display')
+    list_display = (
+        'code_display', 'first_name_display', 'last_name_display', 
+        'birth_date_display', 'territori_zona_display', 'esplai_display'
+    )
     form = PlayerAdminForm
 
+    # Display methods for list_display fields
     def code_display(self, obj):
         return obj.code
     code_display.short_description = 'Codi'
@@ -86,6 +75,7 @@ class PlayerAdmin(admin.ModelAdmin):
         return obj.esplai
     esplai_display.short_description = 'Centre'
 
+    # Custom admin URLs
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
@@ -93,6 +83,7 @@ class PlayerAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
+    # CSV import view
     def import_csv(self, request):
         if request.method == "POST":
             csv_file = request.FILES["csv_file"]
@@ -104,6 +95,7 @@ class PlayerAdmin(admin.ModelAdmin):
         payload = {"form": form}
         return render(request, "admin/csv_form.html", payload)
 
+    # Custom change view
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
         player = self.get_object(request, object_id)
@@ -113,6 +105,7 @@ class PlayerAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = False
         return super().change_view(request, object_id, form_url, extra_context=extra_context)
 
+    # Custom add view
     def add_view(self, request, form_url='', extra_context=None):
         extra_context = extra_context or {}
         extra_context['title'] = "Afegir Jugador"
@@ -120,6 +113,7 @@ class PlayerAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = False
         return super().add_view(request, form_url, extra_context=extra_context)
 
+# Admin configuration for GameSettings model
 @admin.register(GameSettings)
 class GameSettingsAdmin(admin.ModelAdmin):
     list_display = ('disable_until', 'game_status')

@@ -1,3 +1,4 @@
+/* Body Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -10,6 +11,7 @@ body {
     min-height: 100dvh;
 }
 
+/* Heading Styles */
 h1 {
     text-align: center;
     color: #2e4620;
@@ -23,6 +25,7 @@ h2 {
     margin-bottom: 1rem;
 }
 
+/* Container Styles */
 .container {
     background: #f4f8f1;
     border-radius: 8px;
@@ -31,6 +34,7 @@ h2 {
     width: 100%;
 }
 
+/* Button Styles */
 button {
     background: #5f7d46;
     color: white;
@@ -55,6 +59,7 @@ button:disabled, button:disabled:hover, button:disabled:active {
     cursor: not-allowed;
 }
 
+/* Go Back Button Styles */
 .go-back-button {
     display: inline-block;
     margin: 20px 0 10px 0;
@@ -76,18 +81,21 @@ button:disabled, button:disabled:hover, button:disabled:active {
     background-color: #e6d7c0;
 }
 
+/* Footer Styles */
 footer {
     padding: 1.5rem;
     display: flex;
     justify-content: center;
 }
 
+/* Logo Styles */
 .logo {
     display: block;
     max-width: 200px;
     height: auto;
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
     .container {
         width: 75%;
