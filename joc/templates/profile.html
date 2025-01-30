@@ -5,16 +5,21 @@
     <script src="{% static 'js/profile.js' %}" defer></script>
 </head>
 <body>
+    <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
     </div>
     <form method="post" enctype="multipart/form-data" id="profile-form" class="container">
         <h1>Perfil del Jugador</h1>
+
+        <!-- Player Information Section -->
         <div id="player-info">
             <h2>{{ user.first_name }} {{ user.last_name }}</h2>
             <p>{{ user.esplai }}</p>
             <p>{{ user.territori_zona }}</p>
         </div>
+
+        <!-- Profile Picture Section -->
         {% if user.profile_picture %}
             <img class="profile-picture" src="{{ user.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
         {% else %}
@@ -23,6 +28,8 @@
             </div>
         {% endif %}
         {% csrf_token %}
+        
+        <!-- File Input and Logout Button Section -->
         <div>
             <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input" data-content="{% if user.profile_picture %}Actualitzar{% else %}Penjar{% endif %} Fotografia">
             <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>

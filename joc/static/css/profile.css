@@ -1,12 +1,15 @@
+/* Container Styles */
 .container {
     max-width: 600px;
     text-align: center;
 }
 
+/* Go Back Container Styles */
 .go-back-container {
     width: calc(600px + 4rem); /* form width = 600px + 2rem padding on each side */
 }
 
+/* File Input Styles */
 input[type="file"] {
     font-size: 1rem;
     color: #3e5632;
@@ -17,10 +20,12 @@ input[type="file"] {
     margin: 10px;
 }
 
+/* Button Styles */
 button {
     padding: 0.75rem 1.5rem;
 }
 
+/* Profile Picture Input Styles */
 #profile-picture-input {
     color: white;
     border: none;
@@ -62,6 +67,7 @@ button {
     border-color: #394d28;
 }
 
+/* Profile Picture and Placeholder Styles */
 .profile-picture {
     max-width: 50%;
     height: auto;
@@ -84,12 +90,13 @@ button {
     font-weight: bold;
     color: #333;
     display: inline-block;
-
-    p {
-        padding: 2em;
-    }
 }
 
+.profile-picture-placeholder p {
+    padding: 2em;
+}
+
+/* Logout Button Styles */
 .logout-button {
     display: inline-block;
     padding: 10px 20px;
@@ -117,16 +124,16 @@ button {
     border-color: #660000;
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
     .go-back-container {
         width: calc(75% + 3rem); /* form width = 75% + 1.5rem padding on each side */
     }
     .profile-picture-placeholder {
         max-width: 75%;
-
-        p {
-            padding: 1em;
-        }
+    }
+    .profile-picture-placeholder p {
+        padding: 1em;
     }
     .logout-button {
         width: auto;
