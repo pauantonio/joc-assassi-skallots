@@ -30,11 +30,13 @@ class Player(AbstractUser):
     esplai = models.CharField(max_length=100, default="")
 
     def save(self, *args, **kwargs):
-        if self.pk and self.profile_picture:
-            # Get the original file extension
-            ext = self.profile_picture.name.split('.')[-1]
-            # Set the new filename using user ID and timestamp
-            self.profile_picture.name = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}.{ext}"
+        if self.pk:
+            old_instance = Player.objects.get(pk=self.pk)
+            if old_instance.profile_picture != self.profile_picture:
+                # Get the original file extension
+                ext = self.profile_picture.name.split('.')[-1]
+                # Set the new filename using user ID and timestamp
+                self.profile_picture.name = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}.{ext}"
         super().save(*args, **kwargs)
 
     @classmethod
