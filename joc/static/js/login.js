@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     birthDateInputs.forEach((input, index) => {
-        input.addEventListener('input', () => handleInputEvent(input, index, birthDateInputs, loginButton));
+        input.addEventListener('input', () => handleInputEvent(input, index, birthDateInputs, null));
         input.addEventListener('keydown', (e) => handleKeyDownEvent(e, input, index, birthDateInputs));
         input.addEventListener('paste', preventPaste);
     });

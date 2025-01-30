@@ -84,15 +84,15 @@ p#login-error {
 }
 
 .code-inputs input {
-    width: 3rem;
+    width: 20%;
     text-align: center;
 }
 
 .birth-date-inputs input {
-    width: 4.5rem;
+    width: 27.5%;
     text-align: center;
 }
 
 input#birth-date-input-3 {
-    width: 7rem;
+    width: 45%;
 }
