@@ -5,7 +5,7 @@
     <script src="{% static 'js/login.js' %}" defer></script>
 </head>
 <body>
-    <form method="post" class="container">
+    <form method="post" class="container" id="login-form">
         <h1>Joc de l'Espàrrek</h1>
         <p class="message" id="login-info">Introdueix el codi que trobaràs a la teva acreditació i la teva data de naixement per iniciar sessió.</p>
         {% if form.non_field_errors %}
@@ -13,12 +13,24 @@
         {% endif %}
         {% csrf_token %}
         <div>
-            <label for="{{ form.code.id_for_label }}">Codi:</label>
-            {{ form.code }}
+            <label for="code-input-1">Codi:</label>
+            <div class="code-inputs">
+                <input type="number" id="code-input-1" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:":1" }}">
+                <input type="number" id="code-input-2" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"1:2" }}">
+                <input type="number" id="code-input-3" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"2:3" }}">
+                <input type="number" id="code-input-4" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"3:4" }}">
+                <input type="number" id="code-input-5" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"4:5" }}">
+            </div>
+            <input type="hidden" name="code" id="code" value="{{ form.code.value|default_if_none:'' }}">
         </div>
         <div>
-            <label for="{{ form.birth_date.id_for_label }}">Data de Naixement:</label>
-            {{ form.birth_date }}
+            <label for="birth-date-input-1">Data de Naixement:</label>
+            <div class="birth-date-inputs">
+                <input type="number" id="birth-date-input-1" maxlength="2" placeholder="dd">
+                <input type="number" id="birth-date-input-2" maxlength="2" placeholder="mm">
+                <input type="number" id="birth-date-input-3" maxlength="4" placeholder="aaaa">
+            </div>
+            <input type="hidden" name="birth_date" id="birth_date" value="{{ form.birth_date.value|default_if_none:'' }}">
         </div>
         <input type="hidden" name="session_cookie" id="session_cookie">
         <button type="submit">Iniciar Sessió</button>
