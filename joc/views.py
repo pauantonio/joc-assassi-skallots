@@ -60,7 +60,7 @@ def handle_profile_post(request):
     form = PlayerProfileForm(request.POST, request.FILES, instance=request.user)
     if form.is_valid():
         form.save()
-        return redirect('index')
+        return redirect('profile')
     return render(request, 'profile.html', {'form': form})
 
 @login_required
