@@ -1,11 +1,14 @@
+/* Container Styles */
 .container {
     max-width: 400px;
 }
 
+/* Form Element Styles */
 form div {
     margin-bottom: 1.5rem;
 }
 
+/* Label Styles */
 label {
     display: block;
     font-weight: bold;
@@ -13,6 +16,7 @@ label {
     color: #3e5632;
 }
 
+/* Input Styles */
 input[type="number"] {
     padding: 0.75rem;
     border: 1px solid #9cb88a;
@@ -37,6 +41,7 @@ input[type="hidden"] {
     display: none;
 }
 
+/* Button Styles */
 button {
     padding: 0.75rem;
     width: 100%;
@@ -52,25 +57,27 @@ button:disabled {
     border-color: #9c9c9c;
 }
 
+/* Message Styles */
 p.message {
     padding: 1rem;
     margin-bottom: 1.5rem;
     font-size: 1rem;
     border-radius: 4px;
-
-    &#login-info {
-        background: #e6efde;
-        border-left: 4px solid #5f7d46;
-        color: #2e4620;
-    }
-
-    &#login-error {
-        background: #f8d7da;
-        border-left: 4px solid #721c24;
-        color: #721c24;
-    }
 }
 
+p#login-info {
+    background: #e6efde;
+    border-left: 4px solid #5f7d46;
+    color: #2e4620;
+}
+
+p#login-error {
+    background: #f8d7da;
+    border-left: 4px solid #721c24;
+    color: #721c24;
+}
+
+/* Input Group Styles */
 .code-inputs, .birth-date-inputs {
     display: flex;
     gap: 0.5rem;
@@ -84,8 +91,8 @@ p.message {
 .birth-date-inputs input {
     width: 4.5rem;
     text-align: center;
+}
 
-    &#birth-date-input-3 {
-        width: 7rem;
-    }
+input#birth-date-input-3 {
+    width: 7rem;
 }

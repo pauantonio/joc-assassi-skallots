@@ -12,17 +12,19 @@
         <p class="message" id="login-error">{{ form.non_field_errors|join:" " }}</p>
         {% endif %}
         {% csrf_token %}
+        
+        <!-- Code Input Section -->
         <div>
             <label for="code-input-1">Codi:</label>
             <div class="code-inputs">
-                <input type="number" id="code-input-1" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:":1" }}">
-                <input type="number" id="code-input-2" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"1:2" }}">
-                <input type="number" id="code-input-3" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"2:3" }}">
-                <input type="number" id="code-input-4" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"3:4" }}">
-                <input type="number" id="code-input-5" maxlength="1" value="{{ form.code.value|default_if_none:''|slice:"4:5" }}">
+                {% for i in "12345" %}
+                <input type="number" id="code-input-{{ i }}" maxlength="1" value="{{ form.code.value|default_if_none:'' }}">
+                {% endfor %}
             </div>
             <input type="hidden" name="code" id="code" value="{{ form.code.value|default_if_none:'' }}">
         </div>
+        
+        <!-- Birth Date Input Section -->
         <div>
             <label for="birth-date-input-1">Data de Naixement:</label>
             <div class="birth-date-inputs">
@@ -32,8 +34,9 @@
             </div>
             <input type="hidden" name="birth_date" id="birth_date" value="{{ form.birth_date.value|default_if_none:'' }}">
         </div>
+        
         <input type="hidden" name="session_cookie" id="session_cookie">
-        <button type="submit">Iniciar Sessió</button>
+        <button type="submit" disabled>Iniciar Sessió</button>
     </form>
 </body>
 {% include 'footer.html' %}

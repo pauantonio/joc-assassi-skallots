@@ -54,8 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isInputFilled && !isLastInput) {
             inputsArray[index + 1].focus();
+            inputsArray[index + 1].select();
         } else if (isInputFilled && nextFocusElement) {
             nextFocusElement.focus();
+            nextFocusElement.select();
         }
     }
 
