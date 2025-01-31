@@ -1,0 +1,40 @@
+{% include 'header.html' %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}?v=1.0">
+</head>
+<body>
+    <!-- Go Back Button Section -->
+    <div class="go-back-container">
+        <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+    </div>
+    <div class="container">
+        <h1>Ranking</h1>
+        <table class="ranking-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Assassí</th>
+                    <th>Morts</th>
+                    <th>Punts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in player_details %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        <a href="{% url 'profile' %}">{{ entry.full_name }}</a>
+                        {% if entry.player.status == "dead" %}
+                        <span class="dead-player">✝</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ entry.total_victims }}</td>
+                    <td><b>{{ entry.total_points }}</b></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% include 'footer.html' %}

@@ -3,10 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .forms import PlayerProfileForm, PlayerLoginForm
-from .models import GameConfig, AssassinationCircle, Assassination
+from .models import GameConfig, AssassinationCircle, Assassination, Player
 from django.utils.timezone import localtime, now
 from functools import wraps
 from django.views.decorators.http import require_POST
+from django.db.models import Count, Q, F, Sum
 
 def game_not_paused(view_func):
     @wraps(view_func)
@@ -102,6 +103,28 @@ def confirm_death(request):
         return redirect('victim')
     except AssassinationCircle.DoesNotExist:
         return JsonResponse({'error': 'No assassination circle found.'}, status=400)
+
+@login_required
+def ranking_view(request):
+    assassinations = Assassination.objects.values('killer').annotate(
+        victims=Count('victim'),
+        total_points=Sum('points'),
+        centre_victims=Count('killer', filter=Q(killer__esplai=F('victim__esplai'))),
+        territori_victims=Count('killer', filter=Q(killer__territori_zona=F('victim__territori_zona'))),
+        mcecc_victims=Count('killer', filter=~Q(killer__esplai=F('victim__esplai')) & ~Q(killer__territori_zona=F('victim__territori_zona')))
+    ).order_by('-total_points')
+
+    player_details = []
+    for entry in assassinations:
+        player = Player.objects.get(id=entry['killer'])
+        player_details.append({
+            'player': player,
+            'full_name': f"{player.first_name} {player.last_name}",
+            'total_victims': entry['victims'],
+            'total_points': entry['total_points'],
+        })
+
+    return render(request, 'ranking.html', {'player_details': player_details})
 
 def logout_view(request):
     logout(request)

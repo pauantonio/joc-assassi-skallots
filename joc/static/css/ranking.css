@@ -1,0 +1,50 @@
+/* Container Styles */
+.container {
+    max-width: 600px;
+    max-height: 600px;
+    text-align: center;
+}
+
+/* Go Back Container Styles */
+.go-back-container {
+    width: calc(600px + 4rem); /* form width = 600px + 2rem padding on each side */
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.ranking-table th, .ranking-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.ranking-table th {
+    background-color: #c9d6b8;
+}
+
+.ranking-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.ranking-table tr:hover {
+    background-color: #fff5e6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dead-player {
+    color: orange;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .go-back-container {
+        width: calc(75% + 3rem); /* form width = 75% + 1.5rem padding on each side */
+    }
+}
