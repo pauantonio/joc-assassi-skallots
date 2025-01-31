@@ -27,6 +27,8 @@ urlpatterns = [
     path('victim/', views.victim_view, name='victim'),
     path('logout/', views.logout_view, name='logout'),
     path('api/game-settings/', views.game_settings, name='game-settings'),
+    path('request_kill/', views.request_kill, name='request_kill'),
+    path('confirm_death/', views.confirm_death, name='confirm_death'),
 ]
 
 if settings.DEBUG:

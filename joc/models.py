@@ -9,6 +9,12 @@ import random
 
 # Custom Player model extending AbstractUser
 class Player(AbstractUser):
+    PLAYER_STATUS_CHOICES = [
+        ('alive', _('Viu')),
+        ('pending_death_confirmation', _('Pendent de confirmació de mort')),
+        ('dead', _('Mort')),
+    ]
+
     # Remove unused fields from AbstractUser
     password = None
     is_staff = None
@@ -28,6 +34,7 @@ class Player(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     territori_zona = models.CharField(max_length=50, default="")
     esplai = models.CharField(max_length=100, default="")
+    status = models.CharField(max_length=30, choices=PLAYER_STATUS_CHOICES, default='alive')
 
     def save(self, *args, **kwargs):
         # Validate code length
@@ -62,10 +69,10 @@ class Player(AbstractUser):
                 print(f"Error parsing date for player {row['Nom']} {row['Cognoms']}: {e}")
 
     def __str__(self):
-        return self.code
+        return f"{self.first_name} {self.last_name} ({self.esplai} - {self.territori_zona})"
 
 # Game settings model
-class GameSettings(models.Model):
+class GameConfig(models.Model):
     GAME_STATUS_CHOICES = [
         ('playing', 'Playing'),
         ('disabled_until_time', 'Disabled Until Time'),
@@ -76,8 +83,8 @@ class GameSettings(models.Model):
     game_status = models.CharField(max_length=20, choices=GAME_STATUS_CHOICES, default='playing')
     
     def save(self, *args, **kwargs):
-        if not self.pk and GameSettings.objects.exists():
-            raise ValidationError('There can be only one GameSettings instance')
+        if not self.pk and GameConfig.objects.exists():
+            raise ValidationError('There can be only one GameConfig instance')
         super().save(*args, **kwargs)
     
     def __str__(self):
@@ -103,16 +110,38 @@ class AssassinationCircle(models.Model):
     @classmethod
     def update_circle(cls, killer):
         killer_circle = cls.objects.get(player=killer)
-        victim_circle = cls.objects.get(player=killer_circle.target)
+        victim = killer_circle.target
+        if victim.status == 'alive':
+            victim.status = 'pending_death_confirmation'
+            victim.save()
+            Assassination.objects.create(killer=killer, victim=victim)
+        else:
+            raise ValidationError('Your victim is already dead or pending death confirmation.')
+
+    @classmethod
+    def confirm_death(cls, victim):
+        victim_circle = cls.objects.get(player=victim)
+        killer_circle = cls.objects.get(target=victim)
         killer_circle.target = victim_circle.target
-        killer_circle.save()
         victim_circle.delete()
+        killer_circle.save()
+        victim.status = 'dead'
+        victim.save()
+
+class Assassination(models.Model):
+    killer = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='kills')
+    victim = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='deaths')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.killer} killed {self.victim} on {self.timestamp}"
 
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 
-# Ensure a GameSettings instance is created after migrations
+# Ensure a GameConfig instance is created after migrations
 @receiver(post_migrate)
 def create_game_settings(sender, **kwargs):
-    if not GameSettings.objects.exists():
-        GameSettings.objects.create()
+    if not GameConfig.objects.exists():
+        GameConfig.objects.create()

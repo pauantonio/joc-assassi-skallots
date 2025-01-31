@@ -4,9 +4,8 @@ from django.urls import path
 from django.shortcuts import render
 from django import forms
 import random
-from .models import Player, GameSettings, AssassinationCircle
+from .models import Player, GameConfig, AssassinationCircle, Assassination
 from django.core.exceptions import ValidationError
-from django.utils.timezone import localtime
 
 # Form for CSV import
 class CsvImportForm(forms.Form):
@@ -115,15 +114,15 @@ class PlayerAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = False
         return super().add_view(request, form_url, extra_context=extra_context)
 
-# Admin configuration for GameSettings model
-@admin.register(GameSettings)
-class GameSettingsAdmin(admin.ModelAdmin):
+# Admin configuration for GameConfig model
+@admin.register(GameConfig)
+class GameConfigAdmin(admin.ModelAdmin):
     list_display = ('disable_until', 'game_status')
     list_editable = ('disable_until', 'game_status')
     list_display_links = None  # Disable links to avoid conflict with list_editable
 
     def has_add_permission(self, request):
-        return not GameSettings.objects.exists()
+        return not GameConfig.objects.exists()
 
     def has_delete_permission(self, request, obj=None):
         return False
@@ -133,6 +132,7 @@ class GameSettingsAdmin(admin.ModelAdmin):
 class AssassinationCircleAdmin(admin.ModelAdmin):
     change_list_template = "admin/assassinationcircle_changelist.html"
     list_display = ('player', 'target')
+    search_fields = ('player', 'player__first_name', 'player__last_name', 'target', 'target__first_name', 'target__last_name')
 
     def has_add_permission(self, request):
         return False
@@ -161,3 +161,15 @@ class AssassinationCircleAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['generate_circle_url'] = 'admin:generate_circle'
         return super().changelist_view(request, extra_context=extra_context)
+    
+@admin.register(Assassination)
+class AssassinationAdmin(admin.ModelAdmin):
+    list_display = ('killer', 'victim', 'timestamp', 'points')
+    search_fields = ('killer', 'killer__first_name', 'killer__last_name', 'victim__code', 'victim__first_name', 'victim__last_name')
+    readonly_fields = ('timestamp',)
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

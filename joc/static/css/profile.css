@@ -96,6 +96,10 @@ button {
     padding: 2em;
 }
 
+.victim-picture {
+    box-shadow: none;
+}
+
 /* Logout Button Styles */
 .logout-button {
     display: inline-block;

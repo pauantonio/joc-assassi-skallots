@@ -10,26 +10,54 @@
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
     </div>
     <div class="container">
-        <h1>Perfil de la Víctima</h1>
 
-        <!-- Victim Information Section -->
-        {% if victim %}
-            <div id="player-info">
-                <h2>{{ victim.first_name }} {{ victim.last_name }}</h2>
-                <p>{{ victim.esplai }}</p>
-                <p>{{ victim.territori_zona }}</p>
-            </div>
+        <!-- Player Alive - Victim Information Section -->
+        {% if status == "alive" and victim %}
+          <h1>Perfil de la Víctima</h1>
+          <div id="player-info">
+              <h2>{{ victim.first_name }} {{ victim.last_name }}</h2>
+              <p>{{ victim.esplai }}</p>
+              <p>{{ victim.territori_zona }}</p>
+          </div>
 
-            <!-- Profile Picture Section -->
-            {% if victim.profile_picture %}
-                <img class="profile-picture" src="{{ victim.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
-            {% else %}
-                <div class="profile-picture-placeholder">
-                    <p>La víctima no té una fotografia de perfil.</p>
-                </div>
-            {% endif %}
-        {% else %}
-            <p>No tens una víctima assignada.</p>
+          <!-- Profile Picture Section -->
+          {% if victim.profile_picture %}
+              <img class="profile-picture" src="{{ victim.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
+          {% else %}
+              <div class="profile-picture-placeholder">
+                  <p>La víctima no té una fotografia de perfil.</p>
+              </div>
+          {% endif %}
+          
+          <!-- Kill Confirmation Section -->
+          {% if victim.status == "alive" %}
+            <form method="post" action="{% url 'request_kill' %}">
+                {% csrf_token %}
+                <button type="submit" class="request-kill-button">Confirmar Assassinat</button>
+            </form>
+          {% else %}
+            <button type="submit" class="request-kill-button" disabled>Esperant Confirmació d'Assassinat</button>
+          {% endif %}
+
+        <!-- Profile Pending Death Confirmation Section -->
+        {% elif status == "pending_death_confirmation" or status == "dead" %}
+          {% if status == "pending_death_confirmation" %}
+            <h1>Assassinat pendent de confirmació...</h1>
+          {% else %}
+            <h1>Oops! Estàs mort...</h1>
+          {% endif %}
+          <div class="no-victim">
+              <img class="profile-picture victim-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
+          </div>
+          <div id="killer-info">
+              <h2>Assassí: {{ killer.first_name }} {{ killer.last_name }}</h2>
+          </div>
+          {% if status == "pending_death_confirmation" %}
+            <form method="post" action="{% url 'confirm_death' %}">
+                {% csrf_token %}
+                <button type="submit" class="confirm-death-button">Confirmar Mort</button>
+            </form>
+          {% endif %}
         {% endif %}
     </div>
 </body>
