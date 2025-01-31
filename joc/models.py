@@ -128,11 +128,28 @@ class AssassinationCircle(models.Model):
         victim.status = 'dead'
         victim.save()
 
+        # Assign points based on the specified criteria
+        killer = killer_circle.player
+        if killer.esplai == victim.esplai:
+            points = 100
+        elif killer.territori_zona == victim.territori_zona:
+            points = 150
+        else:
+            points = 200
+
+        Assassination.objects.create(killer=killer, victim=victim, points=points)
+
 class Assassination(models.Model):
+    ASSASSINATION_POINTS_CHOICES = [
+        (100, '100 - Esplai'),
+        (150, '150 - Territori/Zona'),
+        (200, '200 - MCECC'),
+    ]
+
     killer = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='kills')
     victim = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='deaths')
     timestamp = models.DateTimeField(auto_now_add=True)
-    points = models.IntegerField(default=0)
+    points = models.IntegerField(default=200, choices=ASSASSINATION_POINTS_CHOICES)
 
     def __str__(self):
         return f"{self.killer} killed {self.victim} on {self.timestamp}"
