@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
+    <script src="{% static 'js/profile.js' %}" defer></script>
+</head>
+<body>
+    <!-- Go Back Button Section -->
+    <div class="go-back-container">
+        <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+    </div>
+    <div class="container">
+        <h1>Perfil de la Víctima</h1>
+
+        <!-- Victim Information Section -->
+        {% if victim %}
+            <div id="player-info">
+                <h2>{{ victim.first_name }} {{ victim.last_name }}</h2>
+                <p>{{ victim.esplai }}</p>
+                <p>{{ victim.territori_zona }}</p>
+            </div>
+
+            <!-- Profile Picture Section -->
+            {% if victim.profile_picture %}
+                <img class="profile-picture" src="{{ victim.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
+            {% else %}
+                <div class="profile-picture-placeholder">
+                    <p>La víctima no té una fotografia de perfil.</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>No tens una víctima assignada.</p>
+        {% endif %}
+    </div>
+</body>
+{% include 'footer.html' %}

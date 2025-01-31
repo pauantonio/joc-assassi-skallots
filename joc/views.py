@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .forms import PlayerProfileForm, PlayerLoginForm
-from .models import GameSettings
+from .models import GameSettings, AssassinationCircle
 from django.utils.timezone import localtime, now
 from functools import wraps
 
@@ -66,7 +66,12 @@ def handle_profile_post(request):
 @login_required
 @game_not_paused
 def victim_view(request):
-    return render(request, 'profile.html')
+    player = request.user
+    try:
+        victim = AssassinationCircle.objects.get(player=player).target
+    except AssassinationCircle.DoesNotExist:
+        victim = None
+    return render(request, 'victim.html', {'victim': victim})
 
 def logout_view(request):
     logout(request)
