@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 import csv
 from datetime import datetime
+import random
 
 # Custom Player model extending AbstractUser
 class Player(AbstractUser):
@@ -81,6 +82,31 @@ class GameSettings(models.Model):
     
     def __str__(self):
         return "Game Settings"
+
+class AssassinationCircle(models.Model):
+    player = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='assassin')
+    target = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='targeted_by')
+
+    def __str__(self):
+        return f"{self.player} -> {self.target}"
+
+    @classmethod
+    def create_circle(cls):
+        players = list(Player.objects.all())
+        if len(players) < 2:
+            raise ValidationError('At least two players are required to create an assassination circle.')
+        
+        random.shuffle(players)
+        for i in range(len(players)):
+            cls.objects.create(player=players[i], target=players[(i + 1) % len(players)])
+
+    @classmethod
+    def update_circle(cls, killer):
+        killer_circle = cls.objects.get(player=killer)
+        victim_circle = cls.objects.get(player=killer_circle.target)
+        killer_circle.target = victim_circle.target
+        killer_circle.save()
+        victim_circle.delete()
 
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver

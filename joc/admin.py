@@ -4,7 +4,8 @@ from django.urls import path
 from django.shortcuts import render
 from django import forms
 import random
-from .models import Player, GameSettings
+from .models import Player, GameSettings, AssassinationCircle
+from django.core.exceptions import ValidationError
 from django.utils.timezone import localtime
 
 # Form for CSV import
@@ -126,3 +127,37 @@ class GameSettingsAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+# Admin configuration for AssassinationCircle model
+@admin.register(AssassinationCircle)
+class AssassinationCircleAdmin(admin.ModelAdmin):
+    change_list_template = "admin/assassinationcircle_changelist.html"
+    list_display = ('player', 'target')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('generate-circle/', self.admin_site.admin_view(self.generate_circle), name='generate_circle'),
+        ]
+        return custom_urls + urls
+
+    def generate_circle(self, request):
+        if request.method == "POST":
+            try:
+                AssassinationCircle.create_circle()
+                self.message_user(request, "Assassination circle generated successfully")
+            except ValidationError as e:
+                self.message_user(request, f"Error: {e}", level='error')
+            return HttpResponseRedirect("../")
+        return render(request, "admin/generate_circle.html")
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['generate_circle_url'] = 'admin:generate_circle'
+        return super().changelist_view(request, extra_context=extra_context)
