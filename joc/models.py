@@ -29,6 +29,9 @@ class Player(AbstractUser):
     esplai = models.CharField(max_length=100, default="")
 
     def save(self, *args, **kwargs):
+        # Validate code length
+        if len(self.code) != 5:
+            raise ValidationError('Code must be exactly 5 characters long')
         # Rename profile picture if it has changed
         if self.pk:
             old_instance = Player.objects.get(pk=self.pk)
@@ -44,18 +47,18 @@ class Player(AbstractUser):
         for row in reader:
             try:
                 player = cls(
-                    first_name=row['Name'],
-                    last_name=row['Surname'],
-                    birth_date=datetime.strptime(row['Birthday'], '%d/%m/%Y').date(),
-                    code=row['Code'],
-                    esplai=row['Esplai'],
-                    territori_zona=row['Territori'],
+                    first_name=row['Nom'],
+                    last_name=row['Cognoms'],
+                    birth_date=datetime.strptime(row['Data de Naixement'], '%d/%m/%Y').date(),
+                    code=row['Codi'],
+                    esplai=row['Centre'],
+                    territori_zona=row['Territori/Zona'],
                 )
                 player.save()
             except ValidationError as e:
-                print(f"Error saving player {row['Name']}: {e}")
+                print(f"Error saving player {row['Nom']} {row['Cognoms']}: {e}")
             except ValueError as e:
-                print(f"Error parsing date for player {row['Name']}: {e}")
+                print(f"Error parsing date for player {row['Nom']} {row['Cognoms']}: {e}")
 
     def __str__(self):
         return self.code

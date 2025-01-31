@@ -2,6 +2,8 @@
 
 {% block content %}
   <h2>Import CSV</h2>
+  <p>Please ensure your CSV file contains the following columns: Nom, Cognoms, Data de Naixement, Codi, Centre, Territori/Zona.</p>
+  <p>Note: The 'Codi' field must be unique for each player.</p>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
