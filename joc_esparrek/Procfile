@@ -1,0 +1,1 @@
+web: gunicorn joc_esparrek.wsgi:application --log-file -
