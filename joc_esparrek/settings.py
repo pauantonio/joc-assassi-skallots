@@ -2,6 +2,8 @@ from pathlib import Path
 import os
 import sqlite3
 from dotenv import load_dotenv
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,6 +19,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -28,6 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,21 +63,27 @@ WSGI_APPLICATION = 'joc_esparrek.wsgi.application'
 
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.getenv('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True, default=config('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
-# Enable WAL mode for better performance
-def enable_wal_mode():
-    db_path = BASE_DIR / 'db.sqlite3'
-    if db_path.exists():
-        with sqlite3.connect(db_path) as conn:
-            conn.execute("PRAGMA journal_mode=WAL;")
+# Enable WAL mode for better performance (only for SQLite)
+if not os.getenv('DATABASE_URL'):
+    def enable_wal_mode():
+        db_path = BASE_DIR / 'db.sqlite3'
+        if db_path.exists():
+            with sqlite3.connect(db_path) as conn:
+                conn.execute("PRAGMA journal_mode=WAL;")
 
-enable_wal_mode()
+    enable_wal_mode()
 
 
 # Password validation
@@ -101,8 +111,9 @@ USE_TZ = True
 
 
 # Static and media files
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
