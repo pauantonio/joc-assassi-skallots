@@ -22,7 +22,7 @@
 
           <!-- Profile Picture Section -->
           {% if victim.profile_picture %}
-              <img class="profile-picture" src="{{ victim.profile_picture.url }}" alt="Imatge de Perfil" loading="lazy">
+              <img class="profile-picture" src="{{ victim.profile_picture_url }}" alt="Imatge de Perfil" loading="lazy">
           {% else %}
               <div class="profile-picture-placeholder">
                   <p>La víctima no té una fotografia de perfil.</p>

@@ -6,6 +6,9 @@ from django.utils.timezone import now
 import csv
 from datetime import datetime
 import random
+import cloudinary
+from cloudinary.utils import cloudinary_url
+import os
 
 # Custom Player model extending AbstractUser
 class Player(AbstractUser):
@@ -32,6 +35,7 @@ class Player(AbstractUser):
     last_name = models.CharField(max_length=150, null=False)
     birth_date = models.DateField()
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    profile_picture_url = models.URLField(blank=True, null=True)
     territori_zona = models.CharField(max_length=50, default="")
     esplai = models.CharField(max_length=100, default="")
     status = models.CharField(max_length=30, choices=PLAYER_STATUS_CHOICES, default='alive')
@@ -46,6 +50,13 @@ class Player(AbstractUser):
             if old_instance.profile_picture != self.profile_picture:
                 ext = self.profile_picture.name.split('.')[-1]
                 self.profile_picture.name = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}.{ext}"
+                if os.getenv('CLOUDINARY_CLOUD_NAME'):
+                    public_id = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}"
+                    upload_result = cloudinary.uploader.upload(self.profile_picture, public_id=public_id)
+                    optimized_url, _ = cloudinary_url(upload_result['public_id'], fetch_format="auto", quality="auto")
+                    self.profile_picture_url = optimized_url
+                else:
+                    self.profile_picture_url = self.profile_picture.url
         super().save(*args, **kwargs)
 
     @classmethod
