@@ -76,7 +76,7 @@ def victim_view(request):
             victim = AssassinationCircle.objects.get(player=player).target
         elif player.status == 'pending_death_confirmation':
             killer = AssassinationCircle.objects.get(target=player).player
-        else: # player.status == 'dead'
+        elif player.status == 'dead':
             killer = Assassination.objects.get(victim=player).killer
     except AssassinationCircle.DoesNotExist:
         pass
@@ -88,7 +88,7 @@ def victim_view(request):
 def request_kill(request):
     player = request.user
     try:
-        AssassinationCircle.update_circle(player)
+        AssassinationCircle.request_kill(player)
         return redirect('victim')
     except AssassinationCircle.DoesNotExist:
         return JsonResponse({'error': 'No assassination circle found.'}, status=400)
@@ -109,9 +109,6 @@ def ranking_view(request):
     assassinations = Assassination.objects.values('killer').annotate(
         victims=Count('victim'),
         total_points=Sum('points'),
-        centre_victims=Count('killer', filter=Q(killer__esplai=F('victim__esplai'))),
-        territori_victims=Count('killer', filter=Q(killer__territori_zona=F('victim__territori_zona'))),
-        mcecc_victims=Count('killer', filter=~Q(killer__esplai=F('victim__esplai')) & ~Q(killer__territori_zona=F('victim__territori_zona')))
     ).order_by('-total_points')
 
     player_details = []
@@ -125,6 +122,24 @@ def ranking_view(request):
         })
 
     return render(request, 'ranking.html', {'player_details': player_details})
+
+@login_required
+def cemetery_view(request):
+    assassinations = Assassination.objects.values('victim', 'timestamp').order_by('-timestamp')
+
+    victim_details = []
+    for entry in assassinations:
+        victim = Player.objects.get(id=entry['victim'])
+        victim_details.append({
+            'victim': victim,
+            'full_name': f"{victim.first_name} {victim.last_name}",
+            'profile_picture_url': victim.profile_picture_url,
+            'esplai': victim.esplai,
+            'territori_zona': victim.territori_zona,
+            'timestamp': localtime(entry['timestamp']).strftime('%d/%m/%Y %H:%M h'),
+        })
+    
+    return render(request, 'cemetery.html', {'victim_details': victim_details})
 
 def logout_view(request):
     logout(request)

@@ -100,13 +100,11 @@ button {
     box-shadow: none;
 }
 
-/* Logout Button Styles */
-.logout-button {
+/* Button Styles */
+.logout-button, .ranking-button, .cemetery-button {
     display: inline-block;
     padding: 10px 20px;
     color: white;
-    background-color: #cc0000;
-    border: 1px solid #cc0000;
     border-radius: 4px;
     text-decoration: none;
     text-align: center;
@@ -118,6 +116,11 @@ button {
     width: calc(210px - 40px - 2px);
 }
 
+.logout-button {
+    background-color: #cc0000;
+    border: 1px solid #cc0000;
+}
+
 .logout-button:hover {
     background-color: #990000;
     border-color: #990000;
@@ -126,6 +129,36 @@ button {
 .logout-button:active {
     background-color: #660000;
     border-color: #660000;
+}
+
+.ranking-button {
+    background-color: #004085;
+    border: 1px solid #004085;
+}
+
+.ranking-button:hover {
+    background-color: #003366;
+    border-color: #003366;
+}
+
+.ranking-button:active {
+    background-color: #00264d;
+    border-color: #00264d;
+}
+
+.cemetery-button {
+    background-color: #333;
+    border: 1px solid #333;
+}
+
+.cemetery-button:hover {
+    background-color: #292929;
+    border-color: #292929;
+}
+
+.cemetery-button:active {
+    background-color: #1f1f1f;
+    border-color: #1f1f1f;
 }
 
 /* Responsive Styles */

@@ -2,39 +2,60 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/ranking.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}?v=1.0">
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
     </div>
-    <div class="container">
-        <h1>Ranking</h1>
-        <table class="ranking-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Assassí</th>
-                    <th>Morts</th>
-                    <th>Punts</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entry in player_details %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>
-                        <a href="{% url 'profile' %}">{{ entry.full_name }}</a>
-                        {% if entry.player.status == "dead" %}
-                        <span class="dead-player">✝</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ entry.total_victims }}</td>
-                    <td><b>{{ entry.total_points }}</b></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+
+    {% if player_details %}
+        <div class="container">
+            <h1>Ranking</h1>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Assassí</th>
+                            <th>Morts</th>
+                            <th>Punts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in player_details %}
+                            <tr class="{% if forloop.first %}gold{% elif forloop.counter == 2 %}silver{% elif forloop.counter == 3 %}bronze{% endif %}">
+                                <td>
+                                    {% if forloop.first %}
+                                        🥇
+                                    {% elif forloop.counter == 2 %}
+                                        🥈
+                                    {% elif forloop.counter == 3 %}
+                                        🥉
+                                    {% else %}
+                                        {{ forloop.counter }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'profile' %}">{{ entry.full_name }}</a>
+                                    {% if entry.player.status == "dead" %}
+                                    <span class="dead-player">✝</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ entry.total_victims }}</td>
+                                <td><b>{{ entry.total_points }}</b></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <h1>Ranking</h1>
+            <p>Encara no s'ha registrat cap assassinat.</p>
+        </div>
+    {% endif %}
 </body>
 {% include 'footer.html' %}

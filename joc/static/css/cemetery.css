@@ -1,7 +1,7 @@
 /* Container Styles */
 .container {
     max-width: 600px;
-    max-height: 600px;
+    max-height: 800px;
     text-align: center;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .table-container {
-    max-height: 500px;
+    max-height: 700px;
 }
 
 a {
@@ -19,20 +19,15 @@ a {
     color: inherit;
 }
 
-.dead-player {
-    color: orange;
+.profile-picture {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.gold {
-    background-color: gold !important;
-}
-
-.silver {
-    background-color: silver !important;
-}
-
-.bronze {
-    background-color: #cd7f32 !important;
+.profile-picture-column {
+    width: 35%;
 }
 
 /* Responsive Styles */

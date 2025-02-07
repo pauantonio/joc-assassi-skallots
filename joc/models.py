@@ -16,6 +16,7 @@ class Player(AbstractUser):
         ('alive', _('Viu')),
         ('pending_death_confirmation', _('Pendent de confirmació de mort')),
         ('dead', _('Mort')),
+        ('last_player_standing', _('Últim jugador viu')),
     ]
 
     # Remove unused fields from AbstractUser
@@ -119,13 +120,12 @@ class AssassinationCircle(models.Model):
             cls.objects.create(player=players[i], target=players[(i + 1) % len(players)])
 
     @classmethod
-    def update_circle(cls, killer):
+    def request_kill(cls, killer):
         killer_circle = cls.objects.get(player=killer)
         victim = killer_circle.target
         if victim.status == 'alive':
             victim.status = 'pending_death_confirmation'
             victim.save()
-            Assassination.objects.create(killer=killer, victim=victim)
         else:
             raise ValidationError('Your victim is already dead or pending death confirmation.')
 
@@ -133,14 +133,24 @@ class AssassinationCircle(models.Model):
     def confirm_death(cls, victim):
         victim_circle = cls.objects.get(player=victim)
         killer_circle = cls.objects.get(target=victim)
-        killer_circle.target = victim_circle.target
+
+        killer = killer_circle.player
+        
+        # Check if the victim is the last standing player
+        if killer == victim_circle.target:
+            killer.status = 'last_player_standing'
+            killer.save()
+            killer_circle.delete()
+
+        else:
+            killer_circle.target = victim_circle.target
+            killer_circle.save()
+        
         victim_circle.delete()
-        killer_circle.save()
         victim.status = 'dead'
         victim.save()
 
         # Assign points based on the specified criteria
-        killer = killer_circle.player
         if killer.esplai == victim.esplai:
             points = 100
         elif killer.territori_zona == victim.territori_zona:

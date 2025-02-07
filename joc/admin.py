@@ -137,9 +137,6 @@ class AssassinationCircleAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
@@ -169,7 +166,4 @@ class AssassinationAdmin(admin.ModelAdmin):
     readonly_fields = ('timestamp',)
 
     def has_add_permission(self, request):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
         return False

@@ -1,0 +1,47 @@
+{% include 'header.html' %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/cemetery.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/tables.css' %}?v=1.0">
+</head>
+<body>
+    <!-- Go Back Button Section -->
+    <div class="go-back-container">
+        <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+    </div>
+
+    {% if victim_details %}
+        <div class="container">
+            <h1>Cementiri</h1>
+            <div class="table-container">
+                <table class="table">
+                    <tbody>
+                        {% for victim in victim_details %}
+                        <tr>
+                            <td class="profile-picture-column">
+                                {% if victim.profile_picture_url %}
+                                    <img class="profile-picture" src="{{ victim.profile_picture_url }}" alt="Imatge de Perfil" loading="lazy">
+                                {% else %}
+                                    <img class="profile-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
+                                {% endif %}
+                            </td>
+                            <td>
+                                <p><b>{{ victim.full_name }}</b></p>
+                                <p>{{ victim.esplai }}</p>
+                                <p>{{ victim.territori_zona }}</p>
+                                <p>{{ victim.timestamp }}</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <h1>Cementiri</h1>
+            <p>No hi ha víctimes registrades.</p>
+        </div>
+    {% endif %}
+</body>
+{% include 'footer.html' %}

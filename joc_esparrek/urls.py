@@ -26,6 +26,7 @@ urlpatterns = [
     path('perfil/', views.profile_view, name='profile'),
     path('victim/', views.victim_view, name='victim'),
     path('ranking/', views.ranking_view, name='ranking'),
+    path('cemetery/', views.cemetery_view, name='cemetery'),
     path('logout/', views.logout_view, name='logout'),
     path('api/game-settings/', views.game_settings, name='game-settings'),
     path('request_kill/', views.request_kill, name='request_kill'),

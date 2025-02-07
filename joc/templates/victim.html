@@ -57,7 +57,23 @@
                 {% csrf_token %}
                 <button type="submit" class="confirm-death-button">Confirmar Mort</button>
             </form>
+          {% else %}
+            <div>
+              <a href="{% url 'ranking' %}" class="ranking-button">Veure Rànquing</a>
+              <a href="{% url 'cemetery' %}" class="cemetery-button">Veure Cementiri</a>
+            </div>
           {% endif %}
+
+        <!-- Last Player Standing Section -->
+        {% elif status == "last_player_standing" %}
+          <h1>Felicitats! Ets l'últim jugador viu!</h1>
+          <div class="last-standing">
+              <img class="profile-picture victim-picture" src="{% static 'img/trofeu.png' %}" alt="Últim Jugador Viu" loading="lazy">
+          </div>
+          <div>
+              <a href="{% url 'ranking' %}" class="ranking-button">Veure Rànquing</a>
+              <a href="{% url 'cemetery' %}" class="cemetery-button">Veure Cementiri</a>
+          </div>
         {% endif %}
     </div>
 </body>
