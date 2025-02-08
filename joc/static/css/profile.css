@@ -96,12 +96,8 @@ button {
     padding: 2em;
 }
 
-.victim-picture {
-    box-shadow: none;
-}
-
 /* Button Styles */
-.logout-button, .ranking-button, .cemetery-button {
+.logout-button, .profile-button, .ranking-button, .cemetery-button, .request-kill-button, .confirm-kill-button {
     display: inline-block;
     padding: 10px 20px;
     color: white;
@@ -116,19 +112,34 @@ button {
     width: calc(210px - 40px - 2px);
 }
 
-.logout-button {
+.logout-button, .confirm-kill-button {
     background-color: #cc0000;
     border: 1px solid #cc0000;
 }
 
-.logout-button:hover {
+.logout-button:hover, .confirm-kill-button:hover {
     background-color: #990000;
     border-color: #990000;
 }
 
-.logout-button:active {
+.logout-button:active, .confirm-kill-button:active {
     background-color: #660000;
     border-color: #660000;
+}
+
+.profile-button {
+    background-color: #5f7d46;
+    border: 1px solid #5f7d46;
+}
+
+.profile-button:hover {
+    background-color: #4b6234;
+    border-color: #4b6234;
+}
+
+.profile-button:active {
+    background-color: #394d28;
+    border-color: #394d28;
 }
 
 .ranking-button {

@@ -41,6 +41,8 @@
                                     <a href="{% url 'profile' %}">{{ entry.full_name }}</a>
                                     {% if entry.player.status == "dead" %}
                                     <span class="dead-player">✝</span>
+                                    {% elif entry.player.status == "last_player_standing" %}
+                                    <span class="last-player-standing">🏆</span>
                                     {% endif %}
                                 </td>
                                 <td>{{ entry.total_victims }}</td>
@@ -54,7 +56,8 @@
     {% else %}
         <div class="container">
             <h1>Ranking</h1>
-            <p>Encara no s'ha registrat cap assassinat.</p>
+            <h2>Encara no s'ha registrat cap assassinat...</h2>
+            <img class="symbol-picture" src="{% static 'img/espera.png' %}" alt="Imatge d'Espera" loading="lazy">
         </div>
     {% endif %}
 </body>

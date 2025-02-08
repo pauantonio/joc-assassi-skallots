@@ -22,7 +22,7 @@
                                 {% if victim.profile_picture_url %}
                                     <img class="profile-picture" src="{{ victim.profile_picture_url }}" alt="Imatge de Perfil" loading="lazy">
                                 {% else %}
-                                    <img class="profile-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
+                                    <img class="symbol-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
                                 {% endif %}
                             </td>
                             <td>
@@ -40,7 +40,8 @@
     {% else %}
         <div class="container">
             <h1>Cementiri</h1>
-            <p>No hi ha víctimes registrades.</p>
+            <h2>Encara no hi ha víctimes registrades...</h2>
+            <img class="symbol-picture" src="{% static 'img/espera.png' %}" alt="Imatge d'Espera" loading="lazy">
         </div>
     {% endif %}
 </body>

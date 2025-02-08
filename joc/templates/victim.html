@@ -2,7 +2,7 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
-    <script src="{% static 'js/profile.js' %}" defer></script>
+    <script src="{% static 'js/victim.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
@@ -10,9 +10,35 @@
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
     </div>
     <div class="container">
+        <!-- Player Pending Registration Section -->
+        {% if status == "pending_registration" %}
+          <h1>Penja una fotografia!</h1>
+          <p>Un cop pengis la teva fotografia, formaràs part del joc quan arribi l'hora de començar.</p>
+          <div class="no-victim">
+            <img class="symbol-picture" src="{% static 'img/alerta.png' %}" alt="Imatge d'Alerta" loading="lazy">
+          </div>
+          <a href="{% url 'profile' %}" class="profile-button">Anar al Perfil</a>
+
+        <!-- Player Waiting for Game to Start Section -->
+        {% elif status == "waiting_for_circle" %}
+          <h1>Esperant a que comenci el joc...</h1>
+          <p>Quan comenci el joc podràs veure la informació de la teva víctima.</p>
+          <div class="no-victim">
+            <h2 id="countdown" start-time="{{ start_time }}"></h2>
+            <img class="symbol-picture" src="{% static 'img/rellotge.png' %}" alt="Imatge de Rellotge" loading="lazy">
+          </div>
+
+        <!-- Player Not Playing Section -->
+        {% elif status == "not_playing" %}
+          <h1>No estàs jugant</h1>
+          <p>No pots participar al joc perquè no has penjat una fotografia.</p>
+          <div class="no-victim">
+            <img class="symbol-picture" src="{% static 'img/prohibit.png' %}" alt="Imatge de Parada" loading="lazy">
+          </div>
+          <p>Si creus que això és un error, contacta amb l'organització.</p>
 
         <!-- Player Alive - Victim Information Section -->
-        {% if status == "alive" and victim %}
+        {% elif status == "alive" and victim %}
           <h1>Perfil de la Víctima</h1>
           <div id="player-info">
               <h2>{{ victim.first_name }} {{ victim.last_name }}</h2>
@@ -36,7 +62,11 @@
                 <button type="submit" class="request-kill-button">Confirmar Assassinat</button>
             </form>
           {% else %}
-            <button type="submit" class="request-kill-button" disabled>Esperant Confirmació d'Assassinat</button>
+            <form method="post" action="{% url 'revert_kill' %}">
+              {% csrf_token %}
+              <button type="submit" class="request-kill-button" disabled>Esperant Confirmació d'Assassinat</button>
+              <button type="submit" class="request-kill-button">Revertir Assassinat</button>
+            </form>
           {% endif %}
 
         <!-- Profile Pending Death Confirmation Section -->
@@ -47,7 +77,7 @@
             <h1>Oops! Estàs mort...</h1>
           {% endif %}
           <div class="no-victim">
-              <img class="profile-picture victim-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
+              <img class="symbol-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
           </div>
           <div id="killer-info">
               <h2>Assassí: {{ killer.first_name }} {{ killer.last_name }}</h2>
@@ -55,7 +85,7 @@
           {% if status == "pending_death_confirmation" %}
             <form method="post" action="{% url 'confirm_death' %}">
                 {% csrf_token %}
-                <button type="submit" class="confirm-death-button">Confirmar Mort</button>
+                <button type="submit" class="confirm-kill-button">Confirmar Mort</button>
             </form>
           {% else %}
             <div>
@@ -68,7 +98,7 @@
         {% elif status == "last_player_standing" %}
           <h1>Felicitats! Ets l'últim jugador viu!</h1>
           <div class="last-standing">
-              <img class="profile-picture victim-picture" src="{% static 'img/trofeu.png' %}" alt="Últim Jugador Viu" loading="lazy">
+              <img class="symbol-picture" src="{% static 'img/trofeu.png' %}" alt="Últim Jugador Viu" loading="lazy">
           </div>
           <div>
               <a href="{% url 'ranking' %}" class="ranking-button">Veure Rànquing</a>

@@ -71,6 +71,7 @@ def victim_view(request):
     player = request.user
     victim = None
     killer = None
+    start_time = localtime(GameConfig.objects.first().disable_until).isoformat()
     try:
         if player.status == 'alive':
             victim = AssassinationCircle.objects.get(player=player).target
@@ -80,7 +81,7 @@ def victim_view(request):
             killer = Assassination.objects.get(victim=player).killer
     except AssassinationCircle.DoesNotExist:
         pass
-    return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer})
+    return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer, 'start_time': start_time})
 
 @login_required
 @require_POST
@@ -89,6 +90,17 @@ def request_kill(request):
     player = request.user
     try:
         AssassinationCircle.request_kill(player)
+        return redirect('victim')
+    except AssassinationCircle.DoesNotExist:
+        return JsonResponse({'error': 'No assassination circle found.'}, status=400)
+
+@login_required
+@require_POST
+@game_not_paused
+def revert_kill(request):
+    player = request.user
+    try:
+        AssassinationCircle.revert_kill(player)
         return redirect('victim')
     except AssassinationCircle.DoesNotExist:
         return JsonResponse({'error': 'No assassination circle found.'}, status=400)

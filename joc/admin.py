@@ -47,7 +47,7 @@ class PlayerAdmin(admin.ModelAdmin):
     change_list_template = "admin/player_changelist.html"
     list_display = (
         'code_display', 'first_name_display', 'last_name_display', 
-        'birth_date_display', 'territori_zona_display', 'esplai_display'
+        'birth_date_display', 'territori_zona_display', 'esplai_display', 'status'
     )
     form = PlayerAdminForm
 
@@ -148,6 +148,7 @@ class AssassinationCircleAdmin(admin.ModelAdmin):
         if request.method == "POST":
             try:
                 AssassinationCircle.create_circle()
+                GameConfig.objects.update(game_status='playing')
                 self.message_user(request, "Assassination circle generated successfully")
             except ValidationError as e:
                 self.message_user(request, f"Error: {e}", level='error')

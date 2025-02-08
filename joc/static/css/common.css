@@ -81,6 +81,14 @@ button:disabled, button:disabled:hover, button:disabled:active {
     background-color: #e6d7c0;
 }
 
+/* Symbol Pictures Styles */
+.symbol-picture {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
 /* Footer Styles */
 footer {
     padding: 1.5rem;

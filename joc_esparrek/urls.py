@@ -30,6 +30,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('api/game-settings/', views.game_settings, name='game-settings'),
     path('request_kill/', views.request_kill, name='request_kill'),
+    path('revert_kill/', views.revert_kill, name='revert_kill'),
     path('confirm_death/', views.confirm_death, name='confirm_death'),
 ]
 

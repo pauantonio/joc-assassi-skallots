@@ -13,6 +13,9 @@ import os
 # Custom Player model extending AbstractUser
 class Player(AbstractUser):
     PLAYER_STATUS_CHOICES = [
+        ('pending_registration', _('Pendent de registre')),
+        ('waiting_for_circle', _('Esperant a formar part del cercle')),
+        ('not_playing', _('No jugant')),
         ('alive', _('Viu')),
         ('pending_death_confirmation', _('Pendent de confirmació de mort')),
         ('dead', _('Mort')),
@@ -39,7 +42,7 @@ class Player(AbstractUser):
     profile_picture_url = models.URLField(blank=True, null=True)
     territori_zona = models.CharField(max_length=50, default="")
     esplai = models.CharField(max_length=100, default="")
-    status = models.CharField(max_length=30, choices=PLAYER_STATUS_CHOICES, default='alive')
+    status = models.CharField(max_length=30, choices=PLAYER_STATUS_CHOICES, default='pending_registration')
 
     def save(self, *args, **kwargs):
         # Validate code length
@@ -51,6 +54,7 @@ class Player(AbstractUser):
             if old_instance.profile_picture != self.profile_picture:
                 ext = self.profile_picture.name.split('.')[-1]
                 self.profile_picture.name = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}.{ext}"
+                self.status = 'waiting_for_circle'
                 if os.getenv('CLOUDINARY_CLOUD_NAME'):
                     public_id = f"{self.code}_{now().strftime('%Y%m%d%H%M%S')}"
                     upload_result = cloudinary.uploader.upload(self.profile_picture, public_id=public_id)
@@ -86,9 +90,9 @@ class Player(AbstractUser):
 # Game settings model
 class GameConfig(models.Model):
     GAME_STATUS_CHOICES = [
-        ('playing', 'Playing'),
-        ('disabled_until_time', 'Disabled Until Time'),
-        ('paused', 'Paused'),
+        ('disabled_until_time', 'Esperant a començar'),
+        ('playing', 'Jugant'),
+        ('paused', 'Pausat'),
     ]
     
     disable_until = models.DateTimeField(default=now().replace(year=2025, month=3, day=22, hour=12, minute=0, second=0))
@@ -111,16 +115,27 @@ class AssassinationCircle(models.Model):
 
     @classmethod
     def create_circle(cls):
-        players = list(Player.objects.all())
+        players = list(Player.objects.filter(status='waiting_for_circle'))
         if len(players) < 2:
             raise ValidationError('At least two players are required to create an assassination circle.')
         
         random.shuffle(players)
         for i in range(len(players)):
             cls.objects.create(player=players[i], target=players[(i + 1) % len(players)])
+            players[i].status = 'alive'
+            players[i].save()
+
+        players_not_enrolled = Player.objects.filter(status='pending_registration')
+
+        for player in players_not_enrolled:
+            player.status = 'not_playing'
+            player.save()
 
     @classmethod
     def request_kill(cls, killer):
+        if killer.status != 'alive':
+            return
+
         killer_circle = cls.objects.get(player=killer)
         victim = killer_circle.target
         if victim.status == 'alive':
@@ -128,9 +143,25 @@ class AssassinationCircle(models.Model):
             victim.save()
         else:
             raise ValidationError('Your victim is already dead or pending death confirmation.')
+        
+    @classmethod
+    def revert_kill(cls, killer):
+        if killer.status != 'alive':
+            return
+
+        killer_circle = cls.objects.get(player=killer)
+        victim = killer_circle.target
+        if victim.status == 'pending_death_confirmation':
+            victim.status = 'alive'
+            victim.save()
+        else:
+            raise ValidationError('Your victim is not pending death confirmation.')
 
     @classmethod
     def confirm_death(cls, victim):
+        if victim.status != 'pending_death_confirmation':
+            return
+
         victim_circle = cls.objects.get(player=victim)
         killer_circle = cls.objects.get(target=victim)
 
@@ -151,7 +182,9 @@ class AssassinationCircle(models.Model):
         victim.save()
 
         # Assign points based on the specified criteria
-        if killer.esplai == victim.esplai:
+        if killer.status == 'last_player_standing':
+            points = 1000
+        elif killer.esplai == victim.esplai:
             points = 100
         elif killer.territori_zona == victim.territori_zona:
             points = 150
@@ -165,6 +198,7 @@ class Assassination(models.Model):
         (100, '100 - Esplai'),
         (150, '150 - Territori/Zona'),
         (200, '200 - MCECC'),
+        (1000, '1000 - Últim jugador viu'),
     ]
 
     killer = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='kills')
