@@ -4,17 +4,19 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .forms import PlayerProfileForm, PlayerLoginForm
 from .models import GameConfig, AssassinationCircle, Assassination, Player
-from django.utils.timezone import localtime, now
+from django.utils.timezone import localtime
 from functools import wraps
 from django.views.decorators.http import require_POST
-from django.db.models import Count, Q, F, Sum
+from django.db.models import Count, Sum
 
 def game_not_paused(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         settings = GameConfig.objects.first()
-        if settings is not None and (settings.game_status == 'paused' or (settings.game_status == 'disabled_until_time' and now() < settings.disable_until)):
-            return JsonResponse({'error': 'Game is paused or disabled until a certain time.'}, status=403)
+        if settings is not None and settings.game_status == 'paused':
+            if view_func.__name__ == 'request_kill':
+                return redirect('victim')
+            return render(request, '404.html')
         return view_func(request, *args, **kwargs)
     return _wrapped_view
 
@@ -66,12 +68,10 @@ def handle_profile_post(request):
     return render(request, 'profile.html', {'form': form})
 
 @login_required
-@game_not_paused
 def victim_view(request):
     player = request.user
     victim = None
     killer = None
-    start_time = localtime(GameConfig.objects.first().disable_until).isoformat()
     try:
         if player.status == 'alive':
             victim = AssassinationCircle.objects.get(player=player).target
@@ -81,7 +81,7 @@ def victim_view(request):
             killer = Assassination.objects.get(victim=player).killer
     except AssassinationCircle.DoesNotExist:
         pass
-    return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer, 'start_time': start_time})
+    return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer})
 
 @login_required
 @require_POST
@@ -92,29 +92,27 @@ def request_kill(request):
         AssassinationCircle.request_kill(player)
         return redirect('victim')
     except AssassinationCircle.DoesNotExist:
-        return JsonResponse({'error': 'No assassination circle found.'}, status=400)
+        return redirect('victim')
 
 @login_required
 @require_POST
-@game_not_paused
 def revert_kill(request):
     player = request.user
     try:
         AssassinationCircle.revert_kill(player)
         return redirect('victim')
     except AssassinationCircle.DoesNotExist:
-        return JsonResponse({'error': 'No assassination circle found.'}, status=400)
+        return redirect('victim')
 
 @login_required
 @require_POST
-@game_not_paused
 def confirm_death(request):
     player = request.user
     try:
         AssassinationCircle.confirm_death(player)
         return redirect('victim')
     except AssassinationCircle.DoesNotExist:
-        return JsonResponse({'error': 'No assassination circle found.'}, status=400)
+        return redirect('victim')
 
 @login_required
 def ranking_view(request):
@@ -163,10 +161,10 @@ def game_settings(request):
     settings = GameConfig.objects.first()
     if settings is None:
         return JsonResponse({
-            'disable_until': None,
+            'start_time': None,
             'game_status': 'playing',
         })
     return JsonResponse({
-        'disable_until': localtime(settings.disable_until).isoformat(),
+        'start_time': localtime(settings.disable_until).isoformat(),
         'game_status': settings.game_status,
     })

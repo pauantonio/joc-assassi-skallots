@@ -24,7 +24,7 @@
           <h1>Esperant a que comenci el joc...</h1>
           <p>Quan comenci el joc podràs veure la informació de la teva víctima.</p>
           <div class="no-victim">
-            <h2 id="countdown" start-time="{{ start_time }}"></h2>
+            <h2 id="countdown"></h2>
             <img class="symbol-picture" src="{% static 'img/rellotge.png' %}" alt="Imatge de Rellotge" loading="lazy">
           </div>
 
@@ -59,8 +59,9 @@
           {% if victim.status == "alive" %}
             <form method="post" action="{% url 'request_kill' %}">
                 {% csrf_token %}
-                <button type="submit" class="request-kill-button">Confirmar Assassinat</button>
+                <button type="submit" id="kill-button" class="request-kill-button">Confirmar Assassinat</button>
             </form>
+            <p id="pause-message" hidden>No pots confirmar assassinats mentre el joc està pausat.</p>
           {% else %}
             <form method="post" action="{% url 'revert_kill' %}">
               {% csrf_token %}
