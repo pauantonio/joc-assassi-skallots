@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
                         {% for entry in player_details %}
-                            <tr class="{% if forloop.first %}gold{% elif forloop.counter == 2 %}silver{% elif forloop.counter == 3 %}bronze{% endif %}">
+                            <tr class="{% if forloop.first %}gold{% elif forloop.counter == 2 %}silver{% elif forloop.counter == 3 %}bronze{% elif entry.is_self %}self-user{% endif %}">
                                 <td>
                                     {% if forloop.first %}
                                         🥇

@@ -129,6 +129,7 @@ def ranking_view(request):
             'full_name': f"{player.first_name} {player.last_name}",
             'total_victims': entry['victims'],
             'total_points': entry['total_points'],
+            'is_self': player == request.user,
         })
 
     return render(request, 'ranking.html', {'player_details': player_details})
