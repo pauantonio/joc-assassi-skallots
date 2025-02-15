@@ -3,12 +3,30 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/ranking.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/tables.css' %}?v=1.0">
+    <script src="{% static 'js/ranking.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+        <button class="info-button" onclick="toggleInfoPopup()">ℹ️ Puntuació</button>
     </div>
+
+    <!-- Info Popup -->
+    <div id="info-popup" class="info-popup">
+        <h2>Càlcul de la puntuació</h2>
+        <p>La puntuació de cada jugador es calcula com una suma ponderada en funció del caràcter de les seves víctimes:</p>
+        <ul>
+            <li><b>100</b> - Companys de centre d'esplai</li>
+            <li><b>150</b> - Companys de territori/zona</li>
+            <li><b>200</b> - Cas general</li>
+            <li><b>1000</b> - Últim jugador viu</li>
+        </ul>
+        <button class="close-button" onclick="toggleInfoPopup()">Tancar</button>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="backdrop"></div>
 
     {% if player_details %}
         <div class="container">

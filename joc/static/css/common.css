@@ -59,8 +59,8 @@ button:disabled, button:disabled:hover, button:disabled:active {
     cursor: not-allowed;
 }
 
-/* Go Back Button Styles */
-.go-back-button {
+/* Go Back and Info Button Styles */
+.go-back-button, .info-button {
     display: inline-block;
     margin: 20px 0 10px 0;
     padding: 10px 20px;
@@ -73,11 +73,11 @@ button:disabled, button:disabled:hover, button:disabled:active {
     transition: background 0.3s;
 }
 
-.go-back-button:hover {
+.go-back-button:hover, .info-button:hover {
     background-color: #fff5e6;
 }
 
-.go-back-button:active {
+.go-back-button:active, .info-button:active {
     background-color: #e6d7c0;
 }
 
