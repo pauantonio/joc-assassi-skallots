@@ -9,6 +9,10 @@
     width: calc(600px + 4rem); /* form width = 600px + 2rem padding on each side */
 }
 
+.dead-player {
+    color: orange;
+}
+
 /* File Input Styles */
 input[type="file"] {
     font-size: 1rem;

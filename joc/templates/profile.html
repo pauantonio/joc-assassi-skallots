@@ -14,7 +14,13 @@
 
         <!-- Player Information Section -->
         <div id="player-info">
-            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <h2>{{ user.first_name }} {{ user.last_name }}
+                {% if user.status == "dead" %}
+                <span class="dead-player">✝</span>
+                {% elif user.status == "last_player_standing" %}
+                <span>🏆</span>
+                {% endif %}
+            </h2>
             <p>{{ user.esplai }}</p>
             <p>{{ user.territori_zona }}</p>
         </div>

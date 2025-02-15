@@ -38,12 +38,13 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{% url 'profile' %}">{{ entry.full_name }}</a>
-                                    {% if entry.player.status == "dead" %}
-                                    <span class="dead-player">✝</span>
-                                    {% elif entry.player.status == "last_player_standing" %}
-                                    <span class="last-player-standing">🏆</span>
-                                    {% endif %}
+                                    <a href="{% url 'profile' %}">{{ entry.full_name }}
+                                        {% if entry.player.status == "dead" %}
+                                        <span class="dead-player">✝</span>
+                                        {% elif entry.player.status == "last_player_standing" %}
+                                        <span>🏆</span>
+                                        {% endif %}
+                                    </a>
                                 </td>
                                 <td>{{ entry.total_victims }}</td>
                                 <td><b>{{ entry.total_points }}</b></td>
