@@ -3,17 +3,18 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/ranking.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/tables.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
     <script src="{% static 'js/ranking.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
-        <button class="info-button" onclick="toggleInfoPopup()">ℹ️ Puntuació</button>
+        <button class="popup-button" onclick="toggleInfoPopup()">ℹ️ Puntuació</button>
     </div>
 
     <!-- Info Popup -->
-    <div id="info-popup" class="info-popup">
+    <div id="popup-container" class="popup-container">
         <h2>Càlcul de la puntuació</h2>
         <p>La puntuació de cada jugador es calcula com una suma ponderada en funció del caràcter de les seves víctimes:</p>
         <ul>
@@ -22,11 +23,13 @@
             <li><b>200</b> - Cas general</li>
             <li><b>1000</b> - Últim jugador viu</li>
         </ul>
-        <button class="close-button" onclick="toggleInfoPopup()">Tancar</button>
+        <div id="popup-button-container" class="popup-button-container">
+            <button class="main-button" onclick="toggleInfoPopup()">Tancar</button>
+        </div>
     </div>
 
     <!-- Backdrop -->
-    <div id="backdrop" class="backdrop"></div>
+    <div id="backdrop" class="backdrop" onclick="toggleInfoPopup()"></div>
 
     {% if player_details %}
         <div class="container">

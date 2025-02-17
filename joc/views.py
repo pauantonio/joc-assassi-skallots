@@ -79,9 +79,10 @@ def victim_view(request):
             killer = AssassinationCircle.objects.get(target=player).player
         elif player.status == 'dead':
             killer = Assassination.objects.get(victim=player).killer
+        victims_history = Assassination.objects.filter(killer=player).order_by('-timestamp')
     except AssassinationCircle.DoesNotExist:
         pass
-    return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer})
+    return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer, 'victims_history': victims_history})
 
 @login_required
 @require_POST

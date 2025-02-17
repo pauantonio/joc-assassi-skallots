@@ -7,6 +7,8 @@
 /* Go Back Container Styles */
 .go-back-container {
     width: calc(600px + 4rem); /* form width = 600px + 2rem padding on each side */
+    display: flex;
+    justify-content: space-between;
 }
 
 .dead-player {

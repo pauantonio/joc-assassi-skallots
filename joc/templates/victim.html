@@ -2,13 +2,39 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
     <script src="{% static 'js/victim.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
-        <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+      <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+      <button class="popup-button" onclick="toggleVictimsPopup()">💀 Víctimes</button>
     </div>
+
+    <!-- Info Popup -->
+    <div id="popup-container" class="popup-container">
+        <h2>Les teves víctimes</h2>
+        {% if victims_history %}
+        <p>Aquí pots veure les víctimes que has assassinat durant el joc:</p>
+        <ul>
+            {% for victim in victims_history %}
+              <li><b>{{ victim.victim.first_name }} {{ victim.victim.last_name }}</b> ({{ victim.victim.esplai }})</li>
+            {% endfor %}
+        </ul>
+        {% elif status == "dead" %}
+          <p>No has assassinat a cap jugador.</p>
+        {% else %}
+          <p>No has assassinat a cap jugador encara.</p>
+        {% endif %}
+        <div id="popup-button-container" class="popup-button-container">
+          <button class="main-button" onclick="toggleVictimsPopup()">Tancar</button>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="backdrop" onclick="toggleVictimsPopup()"></div>
+
     <div class="container">
         <!-- Player Pending Registration Section -->
         {% if status == "pending_registration" %}
