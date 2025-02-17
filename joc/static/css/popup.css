@@ -10,7 +10,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1001;
@@ -20,14 +20,28 @@
     display: block;
 }
 
+.popup-picture-container {
+    text-align: center;
+}
+
+.popup-picture {
+    max-width: 15%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
 .popup-button-container {
     display: flex;
     justify-content: flex-end;
 }
 
+.multiple-options {
+    justify-content: space-evenly;
+}
+
 .main-button {
     background-color: #ff5c5c;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
 }
 
 .main-button:hover {
@@ -55,6 +69,9 @@
 /* Responsive Styles */
 @media (max-width: 768px) {
     .popup-container {
-        width: calc(75% + 3rem);
+        width: calc(80%);
+    }
+    .popup-picture {
+        max-width: 20%;
     }
 }

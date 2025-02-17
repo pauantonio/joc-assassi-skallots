@@ -25,6 +25,12 @@ h2 {
     margin-bottom: 1rem;
 }
 
+h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
 /* Container Styles */
 .container {
     background: #f4f8f1;

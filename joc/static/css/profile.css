@@ -103,7 +103,7 @@ button {
 }
 
 /* Button Styles */
-.logout-button, .profile-button, .ranking-button, .cemetery-button, .request-kill-button, .confirm-kill-button {
+.profile-button, .ranking-button, .cemetery-button, .request-kill-button, .confirm-kill-button {
     display: inline-block;
     padding: 10px 20px;
     color: white;
@@ -118,17 +118,17 @@ button {
     width: calc(210px - 40px - 2px);
 }
 
-.logout-button, .confirm-kill-button {
+.confirm-kill-button {
     background-color: #cc0000;
     border: 1px solid #cc0000;
 }
 
-.logout-button:hover, .confirm-kill-button:hover {
+.confirm-kill-button:hover {
     background-color: #990000;
     border-color: #990000;
 }
 
-.logout-button:active, .confirm-kill-button:active {
+.confirm-kill-button:active {
     background-color: #660000;
     border-color: #660000;
 }
@@ -188,8 +188,5 @@ button {
     }
     .profile-picture-placeholder p {
         padding: 1em;
-    }
-    .logout-button {
-        width: auto;
     }
 }

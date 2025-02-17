@@ -2,13 +2,31 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
     <script src="{% static 'js/profile.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+        <button class="popup-button" onclick="toggleLogoutPopup()">Tancar Sessió</button>
     </div>
+
+    <!-- Logout Popup -->
+    <div id="popup-container" class="popup-container">
+        <div class="popup-picture-container">
+            <img class="popup-picture" src="{% static 'img/logout.png' %}" alt="Imatge de Tancar Sessió" loading="lazy">
+        </div>
+        <h3>Estàs segur que vols tancar sessió?</h3>
+        <div id="popup-button-container" class="popup-button-container multiple-options">
+            <button class="secondary-button" onclick="toggleLogoutPopup()">Cancel·lar</button>
+            <button class="main-button" onclick="location.href='{% url 'logout' %}'">Tancar Sessió</button>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="backdrop" onclick="toggleLogoutPopup()"></div>
+
     <form method="post" enctype="multipart/form-data" id="profile-form" class="container">
         <h1>Perfil del Jugador</h1>
 
@@ -35,10 +53,9 @@
         {% endif %}
         {% csrf_token %}
         
-        <!-- File Input and Logout Button Section -->
+        <!-- File Input Section -->
         <div>
             <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input" data-content="{% if user.profile_picture %}Actualitzar{% else %}Penjar{% endif %} Fotografia">
-            <a href="{% url 'logout' %}" class="logout-button">Tancar Sessió</a>
         </div>
     </form>
 </body>
