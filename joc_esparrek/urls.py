@@ -23,7 +23,7 @@ from joc import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('perfil/', views.profile_view, name='profile'),
+    path('profile/', views.profile_view, name='profile'),
     path('victim/', views.victim_view, name='victim'),
     path('ranking/', views.ranking_view, name='ranking'),
     path('cemetery/', views.cemetery_view, name='cemetery'),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('request_kill/', views.request_kill, name='request_kill'),
     path('revert_kill/', views.revert_kill, name='revert_kill'),
     path('confirm_death/', views.confirm_death, name='confirm_death'),
+    path('player/<int:id>/', views.player_view, name='player'),
 ]
 
 if settings.DEBUG:

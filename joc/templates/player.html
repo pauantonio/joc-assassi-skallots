@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
+</head>
+<body>
+    <!-- Go Back Button Section -->
+    <div class="go-back-container">
+      <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+    </div>
+
+    <div class="container">
+        <h1>Perfil del Jugador</h1>
+
+        <!-- Player Information Section -->
+        <div id="player-info">
+            <h2>{{ player.first_name }} {{ player.last_name }}
+                {% if player.status == "dead" %}
+                <span class="dead-player">✝</span>
+                {% elif player.status == "last_player_standing" %}
+                <span>🏆</span>
+                {% endif %}
+            </h2>
+            <p>{{ player.esplai }}</p>
+            <p>{{ player.territori_zona }}</p>
+        </div>
+
+        <!-- Profile Picture Section -->
+        {% if player.profile_picture %}
+            <img class="profile-picture" src="{{ player.profile_picture_url }}" alt="Imatge de Perfil" loading="lazy">
+        {% else %}
+            <div class="profile-picture-placeholder">
+                <p>El jugador no té una fotografia de perfil.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+{% include 'footer.html' %}

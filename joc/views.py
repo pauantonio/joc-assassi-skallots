@@ -170,3 +170,7 @@ def game_settings(request):
         'start_time': localtime(settings.disable_until).isoformat(),
         'game_status': settings.game_status,
     })
+
+def player_view(request, id):
+    player = Player.objects.get(id=id)
+    return render(request, 'player.html', {'player': player})

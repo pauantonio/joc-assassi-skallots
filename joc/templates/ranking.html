@@ -59,7 +59,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{% url 'profile' %}">{{ entry.full_name }}
+                                    <a href="{% url 'player' entry.player.id %}">{{ entry.full_name }}
                                         {% if entry.player.status == "dead" %}
                                         <span class="dead-player">✝</span>
                                         {% elif entry.player.status == "last_player_standing" %}
