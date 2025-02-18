@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/rules.css' %}?v=1.0">
+</head>
+<body>
+    <!-- Go Back Button Section -->
+    <div class="go-back-container">
+      <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+    </div>
+
+    <div class="container">
+        <h1>Normativa del Joc</h1>
+
+        <div class="rules-container">
+            <h2>1. Norma 1</h2>
+            <p>Descripción de la norma 1.</p>
+
+            <h2>2. Norma 2</h2>
+            <p>Descripción de la norma 2.</p>
+
+            <h2>3. Norma 3</h2>
+            <p>Descripción de la norma 3.</p>
+
+            <h2>4. Norma 4</h2>
+            <p>Descripción de la norma 4.</p>
+
+            <h2>5. Norma 5</h2>
+            <p>Descripción de la norma 5.</p>
+
+            <h2>6. Norma 6</h2>
+            <p>Descripción de la norma 6.</p>
+        </div>
+    </div>
+</body>
+{% include 'footer.html' %}

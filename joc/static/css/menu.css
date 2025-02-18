@@ -20,6 +20,18 @@ button {
     width: 10rem;
 }
 
+.rules {
+    background: #ff6347;
+}
+
+.rules:hover {
+    background: #ff4500;
+}
+
+.rules:active {
+    background: #cc3600;
+}
+
 .victim {
     background: #721c24;
 }

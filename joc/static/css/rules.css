@@ -1,0 +1,19 @@
+/* Container Styles */
+.container {
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Go Back Container Styles */
+.go-back-container {
+    width: calc(600px + 4rem); /* form width = 600px + 2rem padding on each side */
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .go-back-container {
+        width: calc(75% + 3rem); /* form width = 75% + 1.5rem padding on each side */
+    }
+}

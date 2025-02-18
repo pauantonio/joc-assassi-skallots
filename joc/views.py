@@ -53,6 +53,10 @@ def menu_view(request):
     return render(request, 'menu.html')
 
 @login_required
+def rules_view(request):
+    return render(request, 'rules.html')
+
+@login_required
 def profile_view(request):
     if request.method == 'POST':
         return handle_profile_post(request)
