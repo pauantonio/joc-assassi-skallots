@@ -17,10 +17,10 @@
         <h2>Les teves víctimes</h2>
         {% if victims_history %}
         <p>Aquí pots veure les víctimes que has assassinat durant el joc:</p>
-        <ul>
-            {% for victim in victims_history %}
-              <li><b>{{ victim.victim.first_name }} {{ victim.victim.last_name }}</b> ({{ victim.victim.esplai }})</li>
-            {% endfor %}
+        <ul class="victim-history">
+          {% for victim in victims_history %}
+            <li><b>{{ victim.victim.first_name }} {{ victim.victim.last_name }}</b> ({{ victim.victim.esplai }})</li>
+          {% endfor %}
         </ul>
         {% elif status == "dead" %}
           <p>No has assassinat a cap jugador.</p>
