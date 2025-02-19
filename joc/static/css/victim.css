@@ -1,0 +1,112 @@
+/* Button Styles */
+.profile-button, .ranking-button, .cemetery-button, .request-kill-button, .confirm-kill-button, .discard-kill-button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin: 10px;
+    width: calc(210px - 40px - 2px);
+}
+
+.request-kill-button, .confirm-kill-button {
+    background-color: #cc0000;
+    border: 1px solid #cc0000;
+}
+
+.request-kill-button:hover, .confirm-kill-button:hover {
+    background-color: #990000;
+    border-color: #990000;
+}
+
+.request-kill-button:active, .confirm-kill-button:active {
+    background-color: #660000;
+    border-color: #660000;
+}
+
+.discard-kill-button {
+    background-color: #333;
+    border: 1px solid #333;
+}
+
+.discard-kill-button:hover {
+    background-color: #292929;
+    border-color: #292929;
+}
+
+.discard-kill-button:active {
+    background-color: #1f1f1f;
+    border-color: #1f1f1f;
+}
+
+.profile-button {
+    background-color: #5f7d46;
+    border: 1px solid #5f7d46;
+}
+
+.profile-button:hover {
+    background-color: #4b6234;
+    border-color: #4b6234;
+}
+
+.profile-button:active {
+    background-color: #394d28;
+    border-color: #394d28;
+}
+
+.ranking-button {
+    background-color: #004085;
+    border: 1px solid #004085;
+}
+
+.ranking-button:hover {
+    background-color: #003366;
+    border-color: #003366;
+}
+
+.ranking-button:active {
+    background-color: #00264d;
+    border-color: #00264d;
+}
+
+.cemetery-button {
+    background-color: #333;
+    border: 1px solid #333;
+}
+
+.cemetery-button:hover {
+    background-color: #292929;
+    border-color: #292929;
+}
+
+.cemetery-button:active {
+    background-color: #1f1f1f;
+    border-color: #1f1f1f;
+}
+
+.victim-history {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.victim-history li {
+    margin-bottom: 1em;
+}
+
+.victim-history::-webkit-scrollbar {
+    width: 5px;
+}
+
+.victim-history::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 10px;
+}
+
+.victim-history::-webkit-scrollbar-track {
+    background-color: #f9f9f9;
+}

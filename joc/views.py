@@ -120,6 +120,16 @@ def confirm_death(request):
         return redirect('victim')
 
 @login_required
+@require_POST
+def discard_death(request):
+    player = request.user
+    try:
+        AssassinationCircle.discard_death(player)
+        return redirect('victim')
+    except AssassinationCircle.DoesNotExist:
+        return redirect('victim')
+
+@login_required
 def ranking_view(request):
     assassinations = Assassination.objects.values('killer').annotate(
         victims=Count('victim'),

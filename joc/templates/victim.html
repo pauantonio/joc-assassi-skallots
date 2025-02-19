@@ -2,6 +2,7 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/victim.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
     <script src="{% static 'js/victim.js' %}" defer></script>
 </head>
@@ -91,7 +92,7 @@
           {% else %}
             <form method="post" action="{% url 'revert_kill' %}">
               {% csrf_token %}
-              <button type="submit" class="request-kill-button" disabled>Esperant Confirmació d'Assassinat</button>
+              <button type="submit" class="request-kill-button" disabled>Esperant Confirmació...</button>
               <button type="submit" class="request-kill-button">Revertir Assassinat</button>
             </form>
           {% endif %}
@@ -113,6 +114,10 @@
             <form method="post" action="{% url 'confirm_death' %}">
                 {% csrf_token %}
                 <button type="submit" class="confirm-kill-button">Confirmar Mort</button>
+            </form>
+            <form method="post" action="{% url 'discard_death' %}">
+                {% csrf_token %}
+                <button type="submit" class="discard-kill-button">Descartar Mort</button>
             </form>
           {% else %}
             <div>

@@ -33,6 +33,7 @@ urlpatterns = [
     path('request_kill/', views.request_kill, name='request_kill'),
     path('revert_kill/', views.revert_kill, name='revert_kill'),
     path('confirm_death/', views.confirm_death, name='confirm_death'),
+    path('discard_death/', views.discard_death, name='discard_death'),
     path('player/<int:id>/', views.player_view, name='player'),
 ]
 

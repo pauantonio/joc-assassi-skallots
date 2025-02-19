@@ -193,6 +193,14 @@ class AssassinationCircle(models.Model):
 
         Assassination.objects.create(killer=killer, victim=victim, points=points)
 
+    @classmethod
+    def discard_death(cls, victim):
+        if victim.status != 'pending_death_confirmation':
+            return
+
+        victim.status = 'alive'
+        victim.save()
+
 class Assassination(models.Model):
     ASSASSINATION_POINTS_CHOICES = [
         (100, '100 - Esplai'),
