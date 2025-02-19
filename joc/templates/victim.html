@@ -23,9 +23,9 @@
           {% endfor %}
         </ul>
         {% elif status == "dead" %}
-          <p>No has assassinat a cap jugador.</p>
+          <p>No has assassinat a cap jugador/a.</p>
         {% else %}
-          <p>No has assassinat a cap jugador encara.</p>
+          <p>Encara no has assassinat a cap jugador/a.</p>
         {% endif %}
         <div id="popup-button-container" class="popup-button-container">
           <button class="main-button" onclick="toggleVictimsPopup()">Tancar</button>
@@ -123,7 +123,7 @@
 
         <!-- Last Player Standing Section -->
         {% elif status == "last_player_standing" %}
-          <h1>Felicitats! Ets l'últim jugador viu!</h1>
+          <h1>Felicitats! Ets l'últim jugador/a viu!</h1>
           <div class="last-standing">
               <img class="symbol-picture" src="{% static 'img/trofeu.png' %}" alt="Últim Jugador Viu" loading="lazy">
           </div>
