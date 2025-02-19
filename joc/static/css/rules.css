@@ -1,7 +1,7 @@
 /* Container Styles */
 .container {
     max-width: 600px;
-    text-align: center;
+    text-align: justify;
 }
 
 /* Go Back Container Styles */
@@ -9,6 +9,20 @@
     width: calc(600px + 4rem); /* form width = 600px + 2rem padding on each side */
     display: flex;
     justify-content: space-between;
+}
+
+.rules-container {
+    padding: 1rem;
+    margin-bottom: -1.5rem;
+}
+
+p {
+    margin-bottom: 2rem;
+}
+
+a {
+    text-decoration: none;
+    color: #2e4620;
 }
 
 /* Responsive Styles */
