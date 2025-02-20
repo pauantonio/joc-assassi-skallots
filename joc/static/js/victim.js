@@ -41,6 +41,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 pauseMessage = document.querySelector('#pause-message');
                 pauseMessage.style.display = 'block';
             }
+
+            else if (gameStatus === 'finished') {
+                buttonsToDisable = document.querySelector('#kill-button');
+                buttonsToDisable.disabled = true;
+
+                finishMessage = document.querySelector('#finish-message');
+                finishMessage.style.display = 'block';
+            }
         });
 });
 

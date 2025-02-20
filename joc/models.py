@@ -98,9 +98,10 @@ class GameConfig(models.Model):
         ('disabled_until_time', 'Esperant a començar'),
         ('playing', 'Jugant'),
         ('paused', 'Pausat'),
+        ('finished', 'Finalitzat')
     ]
     
-    disable_until = models.DateTimeField(default=now().replace(year=2025, month=3, day=22, hour=12, minute=0, second=0))
+    disable_until = models.DateTimeField(default=now().replace(year=2025, month=3, day=22, hour=11, minute=0, second=0))
     game_status = models.CharField(max_length=20, choices=GAME_STATUS_CHOICES, default='disabled_until_time')
     
     def save(self, *args, **kwargs):

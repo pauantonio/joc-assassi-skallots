@@ -89,6 +89,7 @@
                 <button type="submit" id="kill-button" class="request-kill-button">Confirmar Assassinat</button>
             </form>
             <p id="pause-message" hidden>⚠️<b>Recorda</b>: No pots confirmar assassinats mentre el joc està pausat.</p>
+            <p id="finish-message" hidden>⚠️<b>Recorda</b>: No pots confirmar assassinats perquè el joc ha acabat.</p>
           {% else %}
             <form method="post" action="{% url 'revert_kill' %}">
               {% csrf_token %}
