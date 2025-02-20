@@ -20,6 +20,7 @@ class Player(AbstractUser):
         ('pending_death_confirmation', _('Pendent de confirmació de mort')),
         ('dead', _('Mort')),
         ('last_player_standing', _('Últim jugador viu')),
+        ('banned', _('Expulsat'))
     ]
 
     # Remove unused fields from AbstractUser
@@ -62,6 +63,10 @@ class Player(AbstractUser):
                     self.profile_picture_url = optimized_url
                 else:
                     self.profile_picture_url = self.profile_picture.url
+
+            if old_instance.status != self.status and self.status == 'banned':
+                AssassinationCircle.ban_player(self)
+
         super().save(*args, **kwargs)
 
     @classmethod
@@ -200,6 +205,26 @@ class AssassinationCircle(models.Model):
 
         victim.status = 'alive'
         victim.save()
+
+    @classmethod
+    def ban_player(cls, player):
+        player_circle = cls.objects.get(player=player)
+        victim = player_circle.target
+        player_circle.delete()
+
+        player_target_circle = cls.objects.get(target=player)
+
+        if player_target_circle.player == victim:
+            victim.status = 'last_player_standing'
+            victim.save()
+
+        else:
+            if victim.status == 'pending_death_confirmation':
+                victim.status = 'alive'
+                victim.save()
+
+            player_target_circle.target = victim
+            player_target_circle.save()
 
 class Assassination(models.Model):
     ASSASSINATION_POINTS_CHOICES = [
