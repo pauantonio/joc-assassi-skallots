@@ -9,7 +9,10 @@
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
-        <button class="popup-button" onclick="toggleLogoutPopup()">Tancar Sessió</button>
+        <button class="popup-button" onclick="toggleLogoutPopup()">
+            <img src="{% static 'img/logout.svg' %}" alt="Logout Icon" class="popup-button-icon">
+            Tancar Sessió
+        </button>
     </div>
 
     <!-- Logout Popup -->

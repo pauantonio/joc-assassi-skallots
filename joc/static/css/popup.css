@@ -52,6 +52,11 @@
     background-color: #cc0000;
 }
 
+.popup-button-icon {
+    vertical-align: text-bottom;
+    height: 1em;
+}
+
 /* Backdrop Styles */
 .backdrop {
     display: none;
