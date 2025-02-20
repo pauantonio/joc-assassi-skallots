@@ -177,12 +177,13 @@ class AssassinationCircle(models.Model):
             killer.status = 'last_player_standing'
             killer.save()
             killer_circle.delete()
+            victim_circle.delete()
 
         else:
             killer_circle.target = victim_circle.target
+            victim_circle.delete()
             killer_circle.save()
         
-        victim_circle.delete()
         victim.status = 'dead'
         victim.save()
 
