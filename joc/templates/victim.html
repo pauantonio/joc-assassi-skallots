@@ -23,7 +23,7 @@
             <li><b>{{ victim.victim.first_name }} {{ victim.victim.last_name }}</b> ({{ victim.victim.esplai }})</li>
           {% endfor %}
         </ul>
-        {% elif status == "dead" %}
+        {% elif status == "dead" or status == "banned" %}
           <p>No has assassinat a cap jugador/a.</p>
         {% else %}
           <p>Encara no has assassinat a cap jugador/a.</p>
@@ -100,7 +100,7 @@
           {% endif %}
 
         <!-- Profile Pending Death Confirmation Section -->
-        {% elif status == "pending_death_confirmation" or status == "dead" %}
+        {% elif status == "pending_death_confirmation" or status == "dead" or status == "banned" %}
           {% if status == "pending_death_confirmation" %}
             <h1>Assassinat pendent de confirmació...</h1>
           {% else %}
@@ -109,9 +109,11 @@
           <div class="no-victim">
               <img class="symbol-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
           </div>
+          {% if status != "banned" %}
           <div id="killer-info">
               <h2>Assassí: {{ killer.first_name }} {{ killer.last_name }}</h2>
           </div>
+          {% endif %}
           {% if status == "pending_death_confirmation" %}
             <form method="post" action="{% url 'confirm_death' %}">
                 {% csrf_token %}

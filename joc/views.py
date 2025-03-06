@@ -83,7 +83,7 @@ def victim_view(request):
             killer = AssassinationCircle.objects.get(target=player).player
         elif player.status == 'dead':
             killer = Assassination.objects.get(victim=player).killer
-        victims_history = Assassination.objects.filter(killer=player).order_by('-timestamp')
+        victims_history = Assassination.objects.filter(killer=player, points__gt=0).order_by('-timestamp')
     except AssassinationCircle.DoesNotExist:
         pass
     return render(request, 'victim.html', {'status': player.status, 'victim': victim, 'killer': killer, 'victims_history': victims_history})
@@ -131,7 +131,7 @@ def discard_death(request):
 
 @login_required
 def ranking_view(request):
-    assassinations = Assassination.objects.values('killer').annotate(
+    assassinations = Assassination.objects.filter(points__gt=0).values('killer').annotate(
         victims=Count('victim'),
         total_points=Sum('points'),
     ).order_by('-total_points')

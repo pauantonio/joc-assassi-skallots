@@ -36,7 +36,7 @@
         <!-- Player Information Section -->
         <div id="player-info">
             <h2>{{ user.first_name }} {{ user.last_name }}
-                {% if user.status == "dead" %}
+                {% if user.status == "dead" or user.status == "banned" %}
                 <span class="dead-player">✝</span>
                 {% elif user.status == "last_player_standing" %}
                 <span>🏆</span>

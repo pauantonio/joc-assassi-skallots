@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     <a href="{% url 'player' entry.player.id %}">{{ entry.full_name }}
-                                        {% if entry.player.status == "dead" %}
+                                        {% if entry.player.status == "dead" or entry.player.status == "banned" %}
                                         <span class="dead-player">✝</span>
                                         {% elif entry.player.status == "last_player_standing" %}
                                         <span>🏆</span>

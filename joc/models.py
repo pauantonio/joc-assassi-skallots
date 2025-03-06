@@ -228,8 +228,11 @@ class AssassinationCircle(models.Model):
             player_target_circle.target = victim
             player_target_circle.save()
 
+        Assassination.objects.create(killer=player, victim=player, points=0)
+
 class Assassination(models.Model):
     ASSASSINATION_POINTS_CHOICES = [
+        (0, '0 - Expulsat'),
         (100, '100 - Esplai'),
         (150, '150 - Territori/Zona'),
         (200, '200 - MCECC'),
