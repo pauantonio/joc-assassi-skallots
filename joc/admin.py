@@ -131,8 +131,13 @@ class GameConfigAdmin(admin.ModelAdmin):
 @admin.register(AssassinationCircle)
 class AssassinationCircleAdmin(admin.ModelAdmin):
     change_list_template = "admin/assassinationcircle_changelist.html"
-    list_display = ('player', 'target')
+    list_display = ('player', 'target', 'target_status')
     search_fields = ('player', 'player__first_name', 'player__last_name', 'target', 'target__first_name', 'target__last_name')
+    actions = ['request_kill_action', 'confirm_death_action', 'cancel_death_action']
+
+    def target_status(self, obj):
+        return obj.target.status
+    target_status.short_description = 'Victim Status'
 
     def has_add_permission(self, request):
         return False
@@ -159,7 +164,37 @@ class AssassinationCircleAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['generate_circle_url'] = 'admin:generate_circle'
         return super().changelist_view(request, extra_context=extra_context)
-    
+
+    def request_kill_action(self, request, queryset):
+        for circle in queryset:
+            try:
+                AssassinationCircle.request_kill(circle.player)
+                self.message_user(request, f"Kill requested for {circle.player}")
+            except ValidationError as e:
+                self.message_user(request, f"Error: {e}", level='error')
+
+    request_kill_action.short_description = "Request Kill"
+
+    def confirm_death_action(self, request, queryset):
+        for circle in queryset:
+            try:
+                AssassinationCircle.confirm_death(circle.target)
+                self.message_user(request, f"Death confirmed for {circle.target}")
+            except ValidationError as e:
+                self.message_user(request, f"Error: {e}", level='error')
+
+    confirm_death_action.short_description = "Confirm Death"
+
+    def cancel_death_action(self, request, queryset):
+        for circle in queryset:
+            try:
+                AssassinationCircle.discard_death(circle.target)
+                self.message_user(request, f"Death canceled for {circle.target}")
+            except ValidationError as e:
+                self.message_user(request, f"Error: {e}", level='error')
+
+    cancel_death_action.short_description = "Cancel Death"
+
 @admin.register(Assassination)
 class AssassinationAdmin(admin.ModelAdmin):
     list_display = ('killer', 'victim', 'timestamp', 'points')
