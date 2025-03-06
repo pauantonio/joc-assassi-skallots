@@ -2,7 +2,6 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/menu.css' %}?v=1.0">
-    <script src="{% static 'js/menu.js' %}" defer></script>
 </head>
 <body>
     <div class="container">
@@ -10,11 +9,11 @@
         
         <!-- Buttons List Section -->
         <div class="buttons-list">
-            <button type="button" class="rules" data-url="{% url 'rules' %}">Normativa</button>
-            <button type="button" class="profile" data-url="{% url 'profile' %}">Perfil</button>
-            <button type="button" class="victim" data-url="{% url 'victim' %}">Víctima</button>
-            <button type="button" class="ranking" data-url="{% url 'ranking' %}">Rànquing</button>
-            <button type="button" class="cemetery" data-url="{% url 'cemetery' %}">Cementiri</button>
+            <a href="{% url 'rules' %}" class="rules">Normativa</a>
+            <a href="{% url 'profile' %}" class="profile">Perfil</a>
+            <a href="{% url 'victim' %}" class="victim">Víctima</a>
+            <a href="{% url 'ranking' %}" class="ranking">Rànquing</a>
+            <a href="{% url 'cemetery' %}" class="cemetery">Cementiri</a>
         </div>
     </div>
 </body>

@@ -15,9 +15,15 @@
 }
 
 /* Buttons Styles */
-button {
+.rules, .profile, .victim, .ranking, .cemetery {
     padding: 1rem 2rem;
-    width: 10rem;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    width: 6rem;
 }
 
 .rules {
@@ -30,6 +36,18 @@ button {
 
 .rules:active {
     background: #cc3600;
+}
+
+.profile {
+    background: #5f7d46;
+}
+
+.profile:hover {
+    background: #4b6234;
+}
+
+.profile:active {
+    background: #394d28;
 }
 
 .victim {
