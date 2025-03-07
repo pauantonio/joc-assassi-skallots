@@ -7,7 +7,7 @@ from .models import GameConfig, AssassinationCircle, Assassination, Player
 from django.utils.timezone import localtime
 from functools import wraps
 from django.views.decorators.http import require_POST
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Q
 
 def game_not_paused(view_func):
     @wraps(view_func)
@@ -164,8 +164,23 @@ def cemetery_view(request):
             'territori_zona': victim.territori_zona,
             'timestamp': localtime(entry['timestamp']).strftime('%d/%m/%Y %H:%M h'),
         })
-    
-    return render(request, 'cemetery.html', {'victim_details': victim_details})
+
+    territori_stats = Player.objects.values('territori_zona').annotate(
+        total=Count('id'),
+        dead=Count('id', filter=Q(status__in=['dead', 'banned'])),
+        total_players=Count('id', filter=Q(status__in=['dead', 'banned', 'pending_death_confirmation', 'alive', 'last_player_standing'])),
+    ).order_by('territori_zona')
+
+    total_players = sum(stat['total_players'] for stat in territori_stats)
+    total_dead = sum(stat['dead'] for stat in territori_stats)
+
+    stats = {
+        'territori_stats': territori_stats,
+        'total_players': total_players,
+        'total_dead': total_dead
+    }
+
+    return render(request, 'cemetery.html', {'victim_details': victim_details, 'stats': stats})
 
 def logout_view(request):
     logout(request)

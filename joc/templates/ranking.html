@@ -4,13 +4,13 @@
     <link rel="stylesheet" href="{% static 'css/ranking.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/tables.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
-    <script src="{% static 'js/ranking.js' %}" defer></script>
+    <script src="{% static 'js/popup.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
-        <button class="popup-button" onclick="toggleInfoPopup()">ℹ️ Puntuació</button>
+        <button class="popup-button" onclick="togglePopup()">ℹ️ Puntuació</button>
     </div>
 
     <!-- Info Popup -->
@@ -24,12 +24,12 @@
             <li><b>1000</b> - Últim jugador/a viu</li>
         </ul>
         <div id="popup-button-container" class="popup-button-container">
-            <button class="main-button" onclick="toggleInfoPopup()">Tancar</button>
+            <button class="main-button" onclick="togglePopup()">Tancar</button>
         </div>
     </div>
 
     <!-- Backdrop -->
-    <div id="backdrop" class="backdrop" onclick="toggleInfoPopup()"></div>
+    <div id="backdrop" class="backdrop" onclick="togglePopup()"></div>
 
     {% if player_details %}
         <div class="container">

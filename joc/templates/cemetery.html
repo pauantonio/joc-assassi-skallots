@@ -3,12 +3,52 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/cemetery.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/tables.css' %}?v=1.0">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
+    <script src="{% static 'js/popup.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
+        <button class="popup-button" onclick="togglePopup()">📊 Estadístiques</button>
     </div>
+
+    <!-- Stats Popup -->
+    <div id="popup-container" class="popup-container">
+        <h2>Estadístiques de les Víctimes</h2>
+        <p>Nombre de víctimes i jugadors totals per territori/zona:</p>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Territori/Zona</th>
+                        <th>Víctimes</th>
+                        <th>Jugadors Totals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for territori in stats.territori_stats %}
+                    <tr>
+                        <td>{{ territori.territori_zona }}</td>
+                        <td>{{ territori.dead }}</td>
+                        <td>{{ territori.total_players }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><b>Total</b></td>
+                        <td>{{ stats.total_dead }}</td>
+                        <td>{{ stats.total_players }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="popup-button-container" class="popup-button-container">
+            <button class="main-button" onclick="togglePopup()">Tancar</button>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="backdrop" class="backdrop" onclick="togglePopup()"></div>
 
     {% if victim_details %}
         <div class="container">

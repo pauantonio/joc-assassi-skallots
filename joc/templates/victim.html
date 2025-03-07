@@ -5,12 +5,13 @@
     <link rel="stylesheet" href="{% static 'css/victim.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
     <script src="{% static 'js/victim.js' %}" defer></script>
+    <script src="{% static 'js/popup.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
       <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
-      <button class="popup-button" onclick="toggleVictimsPopup()">💀 Víctimes</button>
+      <button class="popup-button" onclick="togglePopup()">💀 Víctimes</button>
     </div>
 
     <!-- Victims Popup -->
@@ -29,12 +30,12 @@
           <p>Encara no has assassinat a cap jugador/a.</p>
         {% endif %}
         <div id="popup-button-container" class="popup-button-container">
-          <button class="main-button" onclick="toggleVictimsPopup()">Tancar</button>
+          <button class="main-button" onclick="togglePopup()">Tancar</button>
         </div>
     </div>
 
     <!-- Backdrop -->
-    <div id="backdrop" class="backdrop" onclick="toggleVictimsPopup()"></div>
+    <div id="backdrop" class="backdrop" onclick="togglePopup()"></div>
 
     <div class="container">
         <!-- Player Pending Registration Section -->

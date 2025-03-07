@@ -4,12 +4,13 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=1.0">
     <link rel="stylesheet" href="{% static 'css/popup.css' %}?v=1.0">
     <script src="{% static 'js/profile.js' %}" defer></script>
+    <script src="{% static 'js/popup.js' %}" defer></script>
 </head>
 <body>
     <!-- Go Back Button Section -->
     <div class="go-back-container">
         <a href="{% url 'index' %}" class="go-back-button">❮ Tornar al Menú</a>
-        <button class="popup-button" onclick="toggleLogoutPopup()">
+        <button class="popup-button" onclick="togglePopup()">
             <img src="{% static 'img/logout.svg' %}" alt="Logout Icon" class="popup-button-icon">
             Tancar Sessió
         </button>
@@ -22,13 +23,13 @@
         </div>
         <h3>Estàs segur que vols tancar sessió?</h3>
         <div id="popup-button-container" class="popup-button-container multiple-options">
-            <button class="secondary-button" onclick="toggleLogoutPopup()">Cancel·lar</button>
+            <button class="secondary-button" onclick="togglePopup()">Cancel·lar</button>
             <button class="main-button" onclick="location.href='{% url 'logout' %}'">Tancar Sessió</button>
         </div>
     </div>
 
     <!-- Backdrop -->
-    <div id="backdrop" class="backdrop" onclick="toggleLogoutPopup()"></div>
+    <div id="backdrop" class="backdrop" onclick="togglePopup()"></div>
 
     <form method="post" enctype="multipart/form-data" id="profile-form" class="container">
         <h1>El teu perfil</h1>
