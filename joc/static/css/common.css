@@ -107,6 +107,7 @@ footer {
 .logo {
     display: block;
     max-width: 200px;
+    max-height: 150px;
     height: auto;
 }
 
@@ -118,6 +119,7 @@ footer {
     }
     .logo {
         max-width: 40%;
+        max-height: 200px;
     }
     .go-back-button, .popup-button {
         padding: 0.75rem 1rem;
