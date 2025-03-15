@@ -9,11 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/game-settings/')
         .then(response => response.json())
         .then(data => {
-            const gameStatus = data.game_status;
-
-            if (gameStatus === 'finished') {
-                const buttonsToDisable = document.querySelector('#profile-picture-input');
-                buttonsToDisable.style.display = 'none';
+            if (data.game_status === 'finished') {
+                profilePictureInput.style.display = 'none';
             }
         });
 });
