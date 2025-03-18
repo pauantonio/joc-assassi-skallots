@@ -99,7 +99,7 @@ class GameConfig(models.Model):
         ('finished', 'Finalitzat')
     ]
     
-    disable_until = models.DateTimeField(default=now().replace(year=2025, month=3, day=22, hour=11, minute=0, second=0))
+    disable_until = models.DateTimeField(default=datetime(2025, 3, 22, 11, 0, 0))
     game_status = models.CharField(max_length=20, choices=GAME_STATUS_CHOICES, default='disabled_until_time')
     
     def save(self, *args, **kwargs):
@@ -244,12 +244,3 @@ class Assassination(models.Model):
 
     def __str__(self):
         return f"{self.killer} killed {self.victim} on {self.timestamp}"
-
-from django.db.models.signals import post_migrate
-from django.dispatch import receiver
-
-# Ensure a GameConfig instance is created after migrations
-@receiver(post_migrate)
-def create_game_settings(sender, **kwargs):
-    if not GameConfig.objects.exists():
-        GameConfig.objects.create()
