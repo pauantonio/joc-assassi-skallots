@@ -21,8 +21,7 @@ class PlayerAdminForm(forms.ModelForm):
         }
         labels = {
             'code': 'Codi',
-            'first_name': 'Nom',
-            'last_name': 'Cognoms',
+            'name': 'Nom i Cognoms',
             'birth_date': 'Data de Naixement',
             'profile_picture': 'Foto de Perfil',
             'territori_zona': 'Territori/Zona',
@@ -46,8 +45,7 @@ class PlayerAdminForm(forms.ModelForm):
 class PlayerAdmin(admin.ModelAdmin):
     change_list_template = "admin/player_changelist.html"
     list_display = (
-        'code_display', 'first_name_display', 'last_name_display', 
-        'birth_date_display', 'territori_zona_display', 'esplai_display', 'status'
+        'code_display', 'name_display', 'birth_date_display', 'territori_zona_display', 'esplai_display', 'status'
     )
     form = PlayerAdminForm
 
@@ -56,13 +54,9 @@ class PlayerAdmin(admin.ModelAdmin):
         return obj.code
     code_display.short_description = 'Codi'
 
-    def first_name_display(self, obj):
-        return obj.first_name
-    first_name_display.short_description = 'Nom'
-
-    def last_name_display(self, obj):
-        return obj.last_name
-    last_name_display.short_description = 'Cognoms'
+    def name_display(self, obj):
+        return obj.name
+    name_display.short_description = 'Nom i Cognoms'
 
     def birth_date_display(self, obj):
         return obj.birth_date.strftime('%d/%m/%Y')
@@ -101,7 +95,7 @@ class PlayerAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         player = self.get_object(request, object_id)
         extra_context['title'] = f"Modificar Jugador"
-        extra_context['subtitle'] = f'{player.first_name} {player.last_name}'
+        extra_context['subtitle'] = f'{player.name}'
         extra_context['show_save_and_add_another'] = False
         extra_context['show_save_and_continue'] = False
         return super().change_view(request, object_id, form_url, extra_context=extra_context)
@@ -132,7 +126,7 @@ class GameConfigAdmin(admin.ModelAdmin):
 class AssassinationCircleAdmin(admin.ModelAdmin):
     change_list_template = "admin/assassinationcircle_changelist.html"
     list_display = ('player', 'target', 'target_status')
-    search_fields = ('player', 'player__first_name', 'player__last_name', 'target', 'target__first_name', 'target__last_name')
+    search_fields = ('player', 'player__name', 'target', 'target__name')
     actions = ['request_kill_action', 'confirm_death_action', 'cancel_death_action']
 
     def target_status(self, obj):
@@ -198,7 +192,7 @@ class AssassinationCircleAdmin(admin.ModelAdmin):
 @admin.register(Assassination)
 class AssassinationAdmin(admin.ModelAdmin):
     list_display = ('killer', 'victim', 'timestamp', 'points')
-    search_fields = ('killer', 'killer__first_name', 'killer__last_name', 'victim__code', 'victim__first_name', 'victim__last_name')
+    search_fields = ('killer', 'killer__name', 'victim__code', 'victim__name')
     readonly_fields = ('timestamp',)
 
     def has_add_permission(self, request):

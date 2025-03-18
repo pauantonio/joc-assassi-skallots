@@ -21,7 +21,7 @@
         <p>Aquí pots veure les víctimes que has assassinat durant el joc:</p>
         <ul class="victim-history">
           {% for victim in victims_history %}
-            <li><b>{{ victim.victim.first_name }} {{ victim.victim.last_name }}</b> ({{ victim.victim.esplai }})</li>
+            <li><b>{{ victim.victim.name }}</b> ({{ victim.victim.esplai }})</li>
           {% endfor %}
         </ul>
         {% elif status == "dead" or status == "banned" %}
@@ -69,7 +69,7 @@
         {% elif status == "alive" and victim %}
           <h1>Perfil de la Víctima</h1>
           <div id="player-info">
-              <h2>{{ victim.first_name }} {{ victim.last_name }}</h2>
+              <h2>{{ victim.name }}</h2>
               <p>{{ victim.esplai }}</p>
               <p>{{ victim.territori_zona }}</p>
           </div>
@@ -112,7 +112,7 @@
           </div>
           {% if status != "banned" %}
           <div id="killer-info">
-              <h2>Assassí: {{ killer.first_name }} {{ killer.last_name }}</h2>
+              <h2>Assassí: {{ killer.name }}</h2>
           </div>
           {% endif %}
           {% if status == "pending_death_confirmation" %}

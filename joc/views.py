@@ -141,7 +141,7 @@ def ranking_view(request):
         player = Player.objects.get(id=entry['killer'])
         player_details.append({
             'player': player,
-            'full_name': f"{player.first_name} {player.last_name}",
+            'name': player.name,
             'total_victims': entry['victims'],
             'total_points': entry['total_points'],
             'is_self': player == request.user,
@@ -158,7 +158,7 @@ def cemetery_view(request):
         victim = Player.objects.get(id=entry['victim'])
         victim_details.append({
             'victim': victim,
-            'full_name': f"{victim.first_name} {victim.last_name}",
+            'name': victim.name,
             'profile_picture_url': victim.profile_picture_url,
             'esplai': victim.esplai,
             'territori_zona': victim.territori_zona,

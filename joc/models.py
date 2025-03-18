@@ -36,8 +36,7 @@ class Player(AbstractUser):
 
     # Custom fields for Player model
     code = models.CharField(max_length=5, unique=True)
-    first_name = models.CharField(max_length=30, null=False)
-    last_name = models.CharField(max_length=150, null=False)
+    name = models.CharField(max_length=200, null=False, default="")
     birth_date = models.DateField()
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     profile_picture_url = models.URLField(blank=True, null=True)
@@ -76,8 +75,7 @@ class Player(AbstractUser):
         for row in reader:
             try:
                 player = cls(
-                    first_name=row['Nom'],
-                    last_name=row['Cognoms'],
+                    name=row['Nom i Cognoms'],
                     birth_date=datetime.strptime(row['Data de Naixement'], '%d/%m/%Y').date(),
                     code=row['Codi'],
                     esplai=row['Centre'],
@@ -85,12 +83,12 @@ class Player(AbstractUser):
                 )
                 player.save()
             except ValidationError as e:
-                print(f"Error saving player {row['Nom']} {row['Cognoms']}: {e}")
+                print(f"Error saving player {row['Nom i Cognoms']}: {e}")
             except ValueError as e:
-                print(f"Error parsing date for player {row['Nom']} {row['Cognoms']}: {e}")
+                print(f"Error parsing date for player {row['Nom i Cognoms']}: {e}")
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.esplai} - {self.territori_zona})"
+        return f"{self.name} ({self.esplai} - {self.territori_zona})"
 
 # Game settings model
 class GameConfig(models.Model):
