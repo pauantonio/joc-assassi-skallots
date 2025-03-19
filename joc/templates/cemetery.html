@@ -59,8 +59,8 @@
                         {% for victim in victim_details %}
                         <tr>
                             <td class="profile-picture-column">
-                                {% if victim.profile_picture_url %}
-                                    <img class="profile-picture" src="{{ victim.profile_picture_url }}" alt="Imatge de Perfil" loading="lazy">
+                                {% if victim.profile_picture %}
+                                    <img class="profile-picture" src="{{ victim.profile_picture }}" alt="Imatge de Perfil" loading="lazy">
                                 {% else %}
                                     <img class="symbol-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
                                 {% endif %}

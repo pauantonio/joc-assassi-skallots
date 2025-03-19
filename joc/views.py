@@ -159,7 +159,7 @@ def cemetery_view(request):
         victim_details.append({
             'victim': victim,
             'name': victim.name,
-            'profile_picture_url': victim.profile_picture_url,
+            'profile_picture': victim.profile_picture,
             'esplai': victim.esplai,
             'territori_zona': victim.territori_zona,
             'timestamp': localtime(entry['timestamp']).strftime('%d/%m/%Y %H:%M h'),
