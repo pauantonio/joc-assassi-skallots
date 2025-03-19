@@ -47,6 +47,8 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = (
         'code_display', 'name_display', 'birth_date_display', 'territori_zona_display', 'esplai_display', 'status'
     )
+    search_fields = ('code', 'name', 'esplai', 'territori_zona')
+    list_filter = ('status', 'territori_zona', 'esplai')
     form = PlayerAdminForm
 
     # Display methods for list_display fields
@@ -126,7 +128,7 @@ class GameConfigAdmin(admin.ModelAdmin):
 class AssassinationCircleAdmin(admin.ModelAdmin):
     change_list_template = "admin/assassinationcircle_changelist.html"
     list_display = ('player', 'target', 'target_status')
-    search_fields = ('player', 'player__name', 'target', 'target__name')
+    search_fields = ('player', 'player__code' , 'player__name', 'target', 'target__code', 'target__name')
     actions = ['request_kill_action', 'confirm_death_action', 'cancel_death_action']
 
     def target_status(self, obj):
@@ -192,8 +194,9 @@ class AssassinationCircleAdmin(admin.ModelAdmin):
 @admin.register(Assassination)
 class AssassinationAdmin(admin.ModelAdmin):
     list_display = ('killer', 'victim', 'timestamp', 'points')
-    search_fields = ('killer', 'killer__name', 'victim__code', 'victim__name')
+    search_fields = ('killer', 'killer__code', 'killer__name', 'victim', 'victim__code', 'victim__name')
     readonly_fields = ('timestamp',)
+    list_filter = ('points',) 
 
     def has_add_permission(self, request):
         return False
