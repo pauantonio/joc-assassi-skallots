@@ -24,6 +24,8 @@ class Player(AbstractUser):
     ]
 
     # Remove unused fields from AbstractUser
+    first_name = None
+    last_name = None
     password = None
     is_staff = None
     is_active = None
