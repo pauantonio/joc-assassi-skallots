@@ -35,6 +35,7 @@ urlpatterns = [
     path('confirm_death/', views.confirm_death, name='confirm_death'),
     path('discard_death/', views.discard_death, name='discard_death'),
     path('player/<int:id>/', views.player_view, name='player'),
+    path('api/player-victim-status/', views.player_victim_status, name='player-victim-status'),
 ]
 
 if settings.DEBUG:

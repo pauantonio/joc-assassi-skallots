@@ -103,7 +103,7 @@ class PlayerAdmin(admin.ModelAdmin):
             status_dict[status['status']] = status['count']
 
         status_counts = [(dict(Player.PLAYER_STATUS_CHOICES)[status], count, (count / total_players) * 100) for status, count in status_dict.items()]
-        registered_players = total_players - status_dict['pending_registration']
+        registered_players = total_players - status_dict['pending_registration'] - status_dict['not_playing']
 
         context = {
             'total_players': total_players,

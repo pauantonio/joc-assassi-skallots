@@ -207,3 +207,13 @@ def game_settings(request):
 def player_view(request, id):
     player = Player.objects.get(id=id)
     return render(request, 'player.html', {'player': player})
+
+@login_required
+def player_victim_status(request):
+    player = request.user
+    player_status = player.status
+    try:
+        victim = AssassinationCircle.objects.get(player=player).target
+        return JsonResponse({'player_status': player_status, 'victim_status': victim.status})
+    except AssassinationCircle.DoesNotExist:
+        return JsonResponse({'player_status': player_status, 'victim_status': 'dead'})
