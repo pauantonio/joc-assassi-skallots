@@ -67,7 +67,11 @@ def profile_view(request):
 def handle_profile_post(request):
     form = PlayerProfileForm(request.POST, request.FILES, instance=request.user)
     if form.is_valid():
+        old_status = request.user.status
         form.save()
+        new_status = request.user.status
+        if old_status == 'pending_registration' and new_status == 'waiting_for_circle':
+            return redirect('victim')
         return redirect('profile')
     return render(request, 'profile.html', {'form': form})
 

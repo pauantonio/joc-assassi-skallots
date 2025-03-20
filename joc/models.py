@@ -51,6 +51,9 @@ class Player(AbstractUser):
                 file_name = f"profile_pictures/{self.pk}{now().strftime('%Y%m%d%H%M%S')}.{ext}"
                 profile_picture_url = upload_to_s3(self.profile_picture, file_name)
                 self.profile_picture = profile_picture_url
+
+                if self.status == 'pending_registration':
+                    self.status = 'waiting_for_circle'
                 
             if old_instance.status != self.status and self.status == 'banned':
                 AssassinationCircle.ban_player(self)
