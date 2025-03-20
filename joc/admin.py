@@ -4,6 +4,7 @@ from django.urls import path
 from django.shortcuts import render
 from django import forms
 import random
+from django.db.models import Count
 from .models import Player, GameConfig, AssassinationCircle, Assassination
 from django.core.exceptions import ValidationError
 
@@ -77,6 +78,7 @@ class PlayerAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path('import-csv/', self.admin_site.admin_view(self.import_csv), name='player_import_csv'),
+            path('player-stats/', self.admin_site.admin_view(self.player_stats), name='player_stats'),
         ]
         return custom_urls + urls
 
@@ -91,6 +93,27 @@ class PlayerAdmin(admin.ModelAdmin):
         form = CsvImportForm()
         payload = {"form": form}
         return render(request, "admin/csv_form.html", payload)
+
+    def player_stats(self, request):
+        total_players = Player.objects.count()
+        logged_in_players = Player.objects.filter(last_login__isnull=False).count()
+        status_counts = Player.objects.values('status').annotate(count=Count('status'))
+        status_dict = {status: 0 for status, _ in Player.PLAYER_STATUS_CHOICES}
+        for status in status_counts:
+            status_dict[status['status']] = status['count']
+
+        status_counts = [(dict(Player.PLAYER_STATUS_CHOICES)[status], count, (count / total_players) * 100) for status, count in status_dict.items()]
+        registered_players = total_players - status_dict['pending_registration']
+
+        context = {
+            'total_players': total_players,
+            'logged_in_players': logged_in_players,
+            'logged_in_percentage': (logged_in_players / total_players) * 100,
+            'status_counts': status_counts,
+            'registered_players': registered_players,
+            'registered_percentage': (registered_players / total_players) * 100,
+        }
+        return render(request, 'admin/player_stats.html', context)
 
     # Custom change view
     def change_view(self, request, object_id, form_url='', extra_context=None):

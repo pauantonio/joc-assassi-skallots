@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <h1>Estadístiques de Jugadors</h1>
+  <p><b>Jugadors totals</b>: {{ total_players }}</p>
+  <p><b>Jugadors que han iniciat sessió</b>: {{ logged_in_players }} ({{ logged_in_percentage|floatformat:2 }}%)</p>
+  <p><b>Jugadors registrats al joc</b>: {{ registered_players }} ({{ registered_percentage|floatformat:2 }}%)</p>
+  <h2>Recompte d'estats dels jugadors</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Estat</th>
+        <th>Recompte</th>
+        <th>Percentatge</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for status, count, percentage in status_counts %}
+        <tr>
+          <td>{{ status }}</td>
+          <td>{{ count }}</td>
+          <td>{{ percentage|floatformat:2 }}%</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
