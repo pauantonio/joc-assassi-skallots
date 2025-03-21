@@ -11,7 +11,7 @@ Joc Esparrek és una aplicació web desenvolupada en Django per jugar al "Joc de
 
 ## Requisits del sistema
 
-- Python 3.8 o superior
+- Python 3.11 o superior
 - pip (gestor de paquets de Python)
 - git (per gestionar el repositori)
 
@@ -47,7 +47,6 @@ No cal configuració addicional per a SQLite, ja que Django la configura automà
 ### 5. Aplica les migracions de la base de dades
 
 ```bash
-python manage.py makemigrations
 python manage.py migrate
 ```
 
@@ -58,7 +57,14 @@ Crea un fitxer `.env` al directori arrel del projecte amb el següent contingut:
 ```
 DEBUG=True
 SECRET_KEY="your-secret-key"
+AWS_ACCESS_KEY_ID="your-aws-access-key-id"
+AWS_SECRET_ACCESS_KEY="your-aws-secret-access-key"
+AWS_STORAGE_BUCKET_NAME="your-aws-storage-bucket-name"
+AWS_S3_REGION_NAME="your-aws-s3-region-name"
+DATABASE_URL=postgres://user:password@hostname:port/dbname
 ```
+
+Nota: La variable `DATABASE_URL` només és necessària si no vols utilitzar SQLite com a base de dades.
 
 ### 7. Executa el servidor de desenvolupament
 
@@ -84,6 +90,34 @@ python manage.py createsuperuser
 
 Segueix les instruccions per crear un usuari administrador.
 
+## Configuració de la base de dades de producció
+
+Per configurar una base de dades de producció, com PostgreSQL, segueix aquests passos:
+
+1. Actualitza el fitxer `.env` amb la URL de la base de dades:
+
+```
+DATABASE_URL=postgres://user:password@hostname:port/dbname
+```
+
+2. Aplica les migracions de la base de dades:
+
+```bash
+python manage.py migrate
+```
+
+## Procfile
+
+El fitxer `Procfile` és utilitzat per especificar els processos que han de ser executats per l'aplicació en un entorn de producció. En aquest projecte, el `Procfile` conté les següents línies:
+
+```
+release: python manage.py migrate
+web: gunicorn joc_esparrek.wsgi:application --log-file -
+```
+
+- `release`: Executa les migracions de la base de dades abans de llançar l'aplicació.
+- `web`: Utilitza Gunicorn per servir l'aplicació Django.
+
 ## Mode de Debug
 
 Si vols establir la configuració `DEBUG` a `False`, utilitza el flag `--insecure` en `runserver` per poder carregar el contingut estàtic:
@@ -98,34 +132,40 @@ python manage.py runserver --insecure
 joc_esparrek/
 ├── env/                # Entorn virtual
 ├── joc_esparrek/       # Configuració del projecte
+│   ├── __init__.py
+│   ├── asgi.py
 │   ├── settings.py     # Configuració principal
 │   ├── urls.py         # Rutes del projecte
 │   ├── wsgi.py         # Entrades per a servidors web
 ├── joc/                # Aplicació principal del joc
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── authentication.py
+│   ├── forms.py
+│   ├── middleware.py
 │   ├── migrations/     # Migracions de la base de dades
-│   ├── templates/      # Templates HTML
+│   ├── models.py
 │   ├── static/         # Fitxers CSS i JavaScript
+│   ├── templates/      # Templates HTML
+│   ├── tests.py
+│   ├── utils.py
+│   ├── views.py
 ├── manage.py           # Eina per gestionar el projecte
 ├── requirements.txt    # Llista de dependències
 ├── .gitignore          # Fitxers i carpetes ignorats per Git
+├── Procfile            # Fitxer per especificar els processos de l'aplicació
+├── .env                # Configuració d'entorn
+└── README.md           # Documentació del projecte
 ```
 
-## Contribució
+## Nota sobre les migracions
 
-1. Fes un fork del repositori.
-2. Crea una branca per la teva funcionalitat o correcció:
-   ```bash
-   git checkout -b nom-branca
-   ```
-3. Fes commit dels teus canvis:
-   ```bash
-   git commit -m "Descripció del canvi"
-   ```
-4. Puja els teus canvis:
-   ```bash
-   git push origin nom-branca
-   ```
-5. Obre una pull request.
+Quan facis canvis als models, és necessari executar `makemigrations` per generar els fitxers de migració. Aquests fitxers de migració han de ser pujats al repositori git per assegurar que els canvis es despleguen correctament a producció.
+
+```bash
+python manage.py makemigrations
+```
 
 ## Llicència
 
