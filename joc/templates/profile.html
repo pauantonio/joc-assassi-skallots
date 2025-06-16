@@ -31,7 +31,7 @@
     <!-- Backdrop -->
     <div id="backdrop" class="backdrop" onclick="togglePopup()"></div>
 
-    <form method="post" enctype="multipart/form-data" id="profile-form" class="container">
+    <div class="container">
         <h1>El teu perfil</h1>
 
         <!-- Player Information Section -->
@@ -43,24 +43,17 @@
                 <span>🏆</span>
                 {% endif %}
             </h2>
-            <p>{{ user.esplai }}</p>
-            <p>{{ user.territori_zona }}</p>
         </div>
 
-        <!-- Profile Picture Section -->
-        {% if user.profile_picture %}
-            <img class="profile-picture" src="{{ user.profile_picture }}" alt="Imatge de Perfil" loading="lazy">
+        {% if user.status == "pending_registration" %}
+        <img class="symbol-picture" src="{% static 'img/alerta.png' %}" alt="Imatge d'Alerta" loading="lazy">
+        <form method="post" action="{% url 'register_to_game' %}">
+            {% csrf_token %}
+            <button type="submit" class="main-button">Confirmar inscripció al Joc</button>
+        </form>
         {% else %}
-            <div class="profile-picture-placeholder">
-                <p>Penja una fotografia al teu perfil per a poder participar al joc.</p>
-            </div>
+        <img class="symbol-picture" src="{% static 'img/assassi-pinça.png' %}" alt="Imatge de Pinça" loading="lazy">
         {% endif %}
-        {% csrf_token %}
-        
-        <!-- File Input Section -->
-        <div>
-            <input type="file" name="profile_picture" accept="image/*" capture="user" id="profile-picture-input" data-content="{% if user.profile_picture %}Actualitzar{% else %}Penjar{% endif %} Fotografia">
-        </div>
-    </form>
+    </div>
 </body>
 {% include 'footer.html' %}

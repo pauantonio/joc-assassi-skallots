@@ -26,6 +26,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('rules/', views.rules_view, name='rules'),
     path('profile/', views.profile_view, name='profile'),
+    path('register-to-game/', views.register_to_game, name='register_to_game'),
     path('victim/', views.victim_view, name='victim'),
     path('ranking/', views.ranking_view, name='ranking'),
     path('cemetery/', views.cemetery_view, name='cemetery'),

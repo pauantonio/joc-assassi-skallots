@@ -21,11 +21,10 @@ a {
     color: inherit;
 }
 
-.profile-picture {
-    max-width: 100%;
+.cemetery-picture {
+    max-width: 50%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .profile-picture-column {
@@ -34,11 +33,15 @@ a {
 
 .table-container {
     max-height: 500px;
+    text-align: center;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
     .go-back-container {
         width: calc(75% + 3rem); /* form width = 75% + 1.5rem padding on each side */
+    }
+    .cemetery-picture {
+        max-width: 80%;
     }
 }

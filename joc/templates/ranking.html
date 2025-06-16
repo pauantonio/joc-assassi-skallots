@@ -16,12 +16,10 @@
     <!-- Info Popup -->
     <div id="popup-container" class="popup-container">
         <h2>Càlcul de la puntuació</h2>
-        <p>La puntuació de cada jugador/a es calcula com una suma ponderada en funció del caràcter de les seves víctimes:</p>
+        <p>La puntuació de cada jugador/a es calcula sumant:</p>
         <ul>
-            <li><b>100</b> - Companys/es de centre d'esplai</li>
-            <li><b>150</b> - Companys/es de territori/zona</li>
-            <li><b>200</b> - Cas general</li>
-            <li><b>1000</b> - Últim jugador/a viu</li>
+            <li><b>200</b> punts per cada víctima</li>
+            <li><b>1000</b> punts si és l'últim jugador/a viu</li>
         </ul>
         <div id="popup-button-container" class="popup-button-container">
             <button class="main-button" onclick="togglePopup()">Tancar</button>
@@ -59,13 +57,12 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{% url 'player' entry.player.id %}">{{ entry.name }}
-                                        {% if entry.player.status == "dead" or entry.player.status == "banned" %}
-                                        <span class="dead-player">✝</span>
-                                        {% elif entry.player.status == "last_player_standing" %}
-                                        <span>🏆</span>
-                                        {% endif %}
-                                    </a>
+                                    {{ entry.name }}
+                                    {% if entry.player.status == "dead" or entry.player.status == "banned" %}
+                                    <span class="dead-player">✝</span>
+                                    {% elif entry.player.status == "last_player_standing" %}
+                                    <span>🏆</span>
+                                    {% endif %}
                                 </td>
                                 <td>{{ entry.total_victims }}</td>
                                 <td><b>{{ entry.total_points }}</b></td>

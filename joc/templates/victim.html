@@ -21,7 +21,7 @@
         <p>Aquí pots veure les víctimes que has assassinat durant el joc:</p>
         <ul class="victim-history">
           {% for victim in victims_history %}
-            <li><b>{{ victim.victim.name }}</b> ({{ victim.victim.esplai }})</li>
+            <li><b>{{ victim.victim.name }}</b></li>
           {% endfor %}
         </ul>
         {% elif status == "dead" or status == "banned" %}
@@ -40,8 +40,8 @@
     <div class="container">
         <!-- Player Pending Registration Section -->
         {% if status == "pending_registration" %}
-          <h1>Penja una fotografia!</h1>
-          <p>Un cop pengis la teva fotografia, formaràs part del joc quan arribi l'hora de començar.</p>
+          <h1>Confirma la teva participació!</h1>
+          <p>Un cop <b>confirmis que jugaràs</b>, formaràs part del joc quan arribi l'hora de començar.</p>
           <div class="no-victim">
             <img class="symbol-picture" src="{% static 'img/alerta.png' %}" alt="Imatge d'Alerta" loading="lazy">
           </div>
@@ -59,7 +59,7 @@
         <!-- Player Not Playing Section -->
         {% elif status == "not_playing" %}
           <h1>No estàs jugant</h1>
-          <p>No pots participar al joc perquè no has penjat una fotografia.</p>
+          <p>No pots participar al joc perquè no has confirmat la teva participació.</p>
           <div class="no-victim">
             <img class="symbol-picture" src="{% static 'img/prohibit.png' %}" alt="Imatge de Parada" loading="lazy">
           </div>
@@ -70,18 +70,10 @@
           <h1>Perfil de la Víctima</h1>
           <div id="player-info">
               <h2>{{ victim.name }}</h2>
-              <p>{{ victim.esplai }}</p>
-              <p>{{ victim.territori_zona }}</p>
           </div>
 
           <!-- Profile Picture Section -->
-          {% if victim.profile_picture %}
-              <img class="profile-picture" src="{{ victim.profile_picture }}" alt="Imatge de Perfil" loading="lazy">
-          {% else %}
-              <div class="profile-picture-placeholder">
-                  <p>La víctima no té una fotografia de perfil.</p>
-              </div>
-          {% endif %}
+          <img class="symbol-picture" src="{% static 'img/assassi-pinça.png' %}" alt="Imatge de Pinça" loading="lazy">
           
           <!-- Kill Confirmation Section -->
           {% if victim.status == "alive" %}

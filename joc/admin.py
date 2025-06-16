@@ -24,9 +24,6 @@ class PlayerAdminForm(forms.ModelForm):
             'code': 'Codi',
             'name': 'Nom i Cognoms',
             'birth_date': 'Data de Naixement',
-            'profile_picture': 'Foto de Perfil',
-            'territori_zona': 'Territori/Zona',
-            'esplai': 'Centre',
         }
 
     def __init__(self, *args, **kwargs):
@@ -46,11 +43,12 @@ class PlayerAdminForm(forms.ModelForm):
 class PlayerAdmin(admin.ModelAdmin):
     change_list_template = "admin/player_changelist.html"
     list_display = (
-        'code_display', 'name_display', 'birth_date_display', 'territori_zona_display', 'esplai_display', 'status'
+        'code_display', 'name_display', 'birth_date_display', 'status'
     )
-    search_fields = ('code', 'name', 'esplai', 'territori_zona')
-    list_filter = ('status', 'territori_zona', 'esplai')
+    search_fields = ('code', 'name')
+    list_filter = ('status',)
     form = PlayerAdminForm
+    actions = ['reset_status']
 
     # Display methods for list_display fields
     def code_display(self, obj):
@@ -64,14 +62,6 @@ class PlayerAdmin(admin.ModelAdmin):
     def birth_date_display(self, obj):
         return obj.birth_date.strftime('%d/%m/%Y')
     birth_date_display.short_description = 'Data de Naixement'
-
-    def territori_zona_display(self, obj):
-        return obj.territori_zona
-    territori_zona_display.short_description = 'Territori/Zona'
-
-    def esplai_display(self, obj):
-        return obj.esplai
-    esplai_display.short_description = 'Centre'
 
     # Custom admin URLs
     def get_urls(self):
@@ -101,17 +91,18 @@ class PlayerAdmin(admin.ModelAdmin):
         status_dict = {status: 0 for status, _ in Player.PLAYER_STATUS_CHOICES}
         for status in status_counts:
             status_dict[status['status']] = status['count']
+        total_players_safe = total_players if total_players else 1  # Avoid division by zero
 
-        status_counts = [(dict(Player.PLAYER_STATUS_CHOICES)[status], count, (count / total_players) * 100) for status, count in status_dict.items()]
+        status_counts = [(dict(Player.PLAYER_STATUS_CHOICES)[status], count, (count / total_players_safe) * 100) for status, count in status_dict.items()]
         registered_players = total_players - status_dict['pending_registration'] - status_dict['not_playing']
 
         context = {
             'total_players': total_players,
             'logged_in_players': logged_in_players,
-            'logged_in_percentage': (logged_in_players / total_players) * 100,
+            'logged_in_percentage': (logged_in_players / total_players_safe) * 100,
             'status_counts': status_counts,
             'registered_players': registered_players,
-            'registered_percentage': (registered_players / total_players) * 100,
+            'registered_percentage': (registered_players / total_players_safe) * 100,
         }
         return render(request, 'admin/player_stats.html', context)
 
@@ -132,6 +123,11 @@ class PlayerAdmin(admin.ModelAdmin):
         extra_context['show_save_and_add_another'] = False
         extra_context['show_save_and_continue'] = False
         return super().add_view(request, form_url, extra_context=extra_context)
+
+    def reset_status(self, request, queryset):
+        updated = queryset.update(status='pending_registration')
+        self.message_user(request, f"{updated} jugador(s) reestablerts a 'pendent d'inscripció'.")
+    reset_status.short_description = "Reset player status"
 
 # Admin configuration for GameConfig model
 @admin.register(GameConfig)

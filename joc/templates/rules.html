@@ -14,16 +14,25 @@
     
         <div class="rules-container">
             <h2>📸 Registre</h2>
-            <p>Abans que comenci el joc, <b>penja una foto teva</b> al <b><a href="{% url 'profile' %}">Perfil</a></b> per validar la teva participació.</p>
+            <p>Abans que comenci el joc, <b>confirma la teva inscripció</b> al <b><a href="{% url 'profile' %}">Perfil</a></b> per validar la teva participació.</p>
 
             <h2>🎯 Assignació</h2>
             <p>Quan el joc comenci, la web t'assignarà una <b>víctima a qui hauràs d'eliminar</b>.</p>
 
             <h2>💀 Eliminació</h2>
-            <p>Has de <b>tocar</b> la teva víctima amb un <b>espàrrec de cara</b>. Tots dos heu de <b>confirmar-ho a la web</b> a l'apartat de <b><a href="{% url 'victim' %}">Víctima</a></b>.</p>
+            <p>
+                Per eliminar la teva víctima, <b>has de penjar una pinça a la roba de la persona a qui has d'eliminar</b>. 
+                Tots dos heu de <b>confirmar-ho a la web</b> a l'apartat de <b><a href="{% url 'victim' %}">Víctima</a></b>.
+            </p>
+
+            <h2>🛡️ Protecció</h2>
+            <p>No et poden eliminar si tens agafat amb la mà el <b>got del joc de l'assassí de la pinça</b>.</p>
 
             <h2>⏳ Duració</h2>
-            <p>El joc es desenvolupa entre les <b>11:00 h i les 23:30 h</b>. Totes les eliminacions s'han de realitzar dins d'aquest horari.</p>
+            <p>
+                El joc es desenvolupa <b>des de dilluns 14 de juliol a les 18:00 h fins divendres 19 de juliol a les 21:00 h</b>.
+                Totes les eliminacions s'han de realitzar dins d'aquest període.
+            </p>
 
             <h2>🏆 Guanyador/a</h2>
             <p>Guanya l'<b>últim jugador/a en peu</b> i/o qui hagi acumulat <b>més víctimes</b> quan acabi el temps.</p>

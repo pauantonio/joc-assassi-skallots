@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .forms import PlayerProfileForm, PlayerLoginForm
+from .forms import PlayerLoginForm
 from .models import GameConfig, AssassinationCircle, Assassination, Player
 from django.utils.timezone import localtime
 from functools import wraps
 from django.views.decorators.http import require_POST
-from django.db.models import Count, Sum, Q
+from django.db.models import Count, Sum
 
 def game_not_paused(view_func):
     @wraps(view_func)
@@ -58,22 +58,16 @@ def rules_view(request):
 
 @login_required
 def profile_view(request):
-    if request.method == 'POST':
-        return handle_profile_post(request)
-    else:
-        form = PlayerProfileForm(instance=request.user)
-    return render(request, 'profile.html', {'form': form})
+    return render(request, 'profile.html')
 
-def handle_profile_post(request):
-    form = PlayerProfileForm(request.POST, request.FILES, instance=request.user)
-    if form.is_valid():
-        old_status = request.user.status
-        form.save()
-        new_status = request.user.status
-        if old_status == 'pending_registration' and new_status == 'waiting_for_circle':
-            return redirect('victim')
-        return redirect('profile')
-    return render(request, 'profile.html', {'form': form})
+@require_POST
+@login_required
+def register_to_game(request):
+    user = request.user
+    if user.status == 'pending_registration':
+        user.status = 'waiting_for_circle'
+        user.save()
+    return redirect('profile')
 
 @login_required
 def victim_view(request):
@@ -163,23 +157,13 @@ def cemetery_view(request):
         victim_details.append({
             'victim': victim,
             'name': victim.name,
-            'profile_picture': victim.profile_picture,
-            'esplai': victim.esplai,
-            'territori_zona': victim.territori_zona,
             'timestamp': localtime(entry['timestamp']).strftime('%d/%m/%Y %H:%M h'),
         })
 
-    territori_stats = Player.objects.values('territori_zona').annotate(
-        total=Count('id'),
-        dead=Count('id', filter=Q(status__in=['dead', 'banned'])),
-        total_players=Count('id', filter=Q(status__in=['dead', 'banned', 'pending_death_confirmation', 'alive', 'last_player_standing'])),
-    ).order_by('territori_zona')
-
-    total_players = sum(stat['total_players'] for stat in territori_stats)
-    total_dead = sum(stat['dead'] for stat in territori_stats)
+    total_players = Player.objects.filter(status__in=['dead', 'banned', 'pending_death_confirmation', 'alive', 'last_player_standing']).count()
+    total_dead = Player.objects.filter(status__in=['dead', 'banned']).count()
 
     stats = {
-        'territori_stats': territori_stats,
         'total_players': total_players,
         'total_dead': total_dead
     }

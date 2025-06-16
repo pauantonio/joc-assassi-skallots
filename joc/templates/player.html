@@ -21,18 +21,9 @@
                 <span>🏆</span>
                 {% endif %}
             </h2>
-            <p>{{ player.esplai }}</p>
-            <p>{{ player.territori_zona }}</p>
         </div>
 
-        <!-- Profile Picture Section -->
-        {% if player.profile_picture %}
-            <img class="profile-picture" src="{{ player.profile_picture }}" alt="Imatge de Perfil" loading="lazy">
-        {% else %}
-            <div class="profile-picture-placeholder">
-                <p>El jugador/a no té una fotografia de perfil.</p>
-            </div>
-        {% endif %}
+        <img class="symbol-picture" src="{% static 'img/assassi-pinça.png' %}" alt="Imatge de Pinça" loading="lazy">
     </div>
 </body>
 {% include 'footer.html' %}

@@ -16,26 +16,16 @@
     <!-- Stats Popup -->
     <div id="popup-container" class="popup-container">
         <h2>Estadístiques de les Víctimes</h2>
-        <p>Nombre de víctimes i jugadors totals per territori/zona:</p>
         <div class="table-container">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Territori/Zona</th>
-                        <th>Víctimes</th>
-                        <th>Jugadors Totals</th>
+                        <th>Total Víctimes</th>
+                        <th>Total Jugadors</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for territori in stats.territori_stats %}
                     <tr>
-                        <td>{{ territori.territori_zona }}</td>
-                        <td>{{ territori.dead }}</td>
-                        <td>{{ territori.total_players }}</td>
-                    </tr>
-                    {% endfor %}
-                    <tr>
-                        <td><b>Total</b></td>
                         <td>{{ stats.total_dead }}</td>
                         <td>{{ stats.total_players }}</td>
                     </tr>
@@ -59,16 +49,10 @@
                         {% for victim in victim_details %}
                         <tr>
                             <td class="profile-picture-column">
-                                {% if victim.profile_picture %}
-                                    <img class="profile-picture" src="{{ victim.profile_picture }}" alt="Imatge de Perfil" loading="lazy">
-                                {% else %}
-                                    <img class="symbol-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
-                                {% endif %}
+                                <img class="cemetery-picture" src="{% static 'img/calavera_mort.png' %}" alt="Imatge de Mort" loading="lazy">
                             </td>
                             <td>
                                 <p><b>{{ victim.name }}</b></p>
-                                <p>{{ victim.esplai }}</p>
-                                <p>{{ victim.territori_zona }}</p>
                                 <p>{{ victim.timestamp }}</p>
                             </td>
                         </tr>

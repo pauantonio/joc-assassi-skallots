@@ -2,11 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.utils.timezone import now
 import csv
 from datetime import datetime
 import random
-from .utils import upload_to_s3
 
 class Player(AbstractUser):
     PLAYER_STATUS_CHOICES = [
@@ -35,9 +33,6 @@ class Player(AbstractUser):
     code = models.CharField(max_length=5, unique=True)
     name = models.CharField(max_length=200, null=False, default="")
     birth_date = models.DateField()
-    profile_picture = models.ImageField(upload_to='', blank=True, null=True)
-    territori_zona = models.CharField(max_length=50, default="")
-    esplai = models.CharField(max_length=100, default="")
     status = models.CharField(max_length=30, choices=PLAYER_STATUS_CHOICES, default='pending_registration')
 
     def save(self, *args, **kwargs):
@@ -46,15 +41,6 @@ class Player(AbstractUser):
         
         if self.pk:
             old_instance = Player.objects.get(pk=self.pk)
-            if old_instance.profile_picture != self.profile_picture:
-                if self.profile_picture:
-                    ext = self.profile_picture.name.split('.')[-1]
-                    file_name = f"profile_pictures/{self.pk}{now().strftime('%Y%m%d%H%M%S')}.{ext}"
-                    profile_picture_url = upload_to_s3(self.profile_picture, file_name)
-                    self.profile_picture = profile_picture_url
-
-                    if self.status == 'pending_registration':
-                        self.status = 'waiting_for_circle'
                 
             if old_instance.status != self.status and self.status == 'banned':
                 AssassinationCircle.ban_player(self)
@@ -71,8 +57,6 @@ class Player(AbstractUser):
                     name=row['Nom i Cognoms'],
                     birth_date=datetime.strptime(row['Data de Naixement'], '%d/%m/%Y').date(),
                     code=row['Codi'],
-                    esplai=row['Centre'],
-                    territori_zona=row['Territori/Zona'],
                 )
                 player.save()
             except ValidationError as e:
@@ -81,7 +65,7 @@ class Player(AbstractUser):
                 print(f"Error parsing date for player {row['Nom i Cognoms']}: {e}")
 
     def __str__(self):
-        return f"{self.name} ({self.esplai} - {self.territori_zona})"
+        return f"{self.name}"
 
 # Game settings model
 class GameConfig(models.Model):
@@ -92,7 +76,7 @@ class GameConfig(models.Model):
         ('finished', 'Finalitzat')
     ]
     
-    disable_until = models.DateTimeField(default=datetime(2025, 3, 22, 11, 0, 0))
+    disable_until = models.DateTimeField(default=datetime(2025, 7, 14, 18, 0, 0))
     game_status = models.CharField(max_length=20, choices=GAME_STATUS_CHOICES, default='disabled_until_time')
     
     def save(self, *args, **kwargs):
@@ -182,10 +166,6 @@ class AssassinationCircle(models.Model):
         # Assign points based on the specified criteria
         if killer.status == 'last_player_standing':
             points = 1000
-        elif killer.esplai == victim.esplai:
-            points = 100
-        elif killer.territori_zona == victim.territori_zona:
-            points = 150
         else:
             points = 200
 
@@ -224,9 +204,7 @@ class AssassinationCircle(models.Model):
 class Assassination(models.Model):
     ASSASSINATION_POINTS_CHOICES = [
         (0, '0 - Expulsat'),
-        (100, '100 - Esplai'),
-        (150, '150 - Territori/Zona'),
-        (200, '200 - MCECC'),
+        (200, '200 - Cas general'),
         (1000, '1000 - Últim jugador viu'),
     ]
 
