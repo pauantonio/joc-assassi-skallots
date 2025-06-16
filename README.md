@@ -1,6 +1,6 @@
-# Joc de l'Espàrrek
+# Joc de l'Assassí de la Pinça
 
-Joc Esparrek és una aplicació web desenvolupada en Django per jugar al "Joc de l'Espàrrek" en el context d'activitats amb el MCECC. Aquest projecte inclou una interfície per als jugadors, lògica de joc i un panell d'administració per gestionar les partides.
+Joc de l'Assassí de la Pinça és una aplicació web desenvolupada en Django per jugar al joc en el context de la Festa Major Alternativa de Sant Vicenç dels Horts, organitzada per Skallots. Aquest projecte inclou una interfície per als jugadors, lògica de joc i un panell d'administració per gestionar les partides.
 
 ## Funcionalitats
 
