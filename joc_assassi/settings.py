@@ -41,7 +41,7 @@ MIDDLEWARE = [
     'joc.middleware.AdminPanelLogoutMiddleware',
 ]
 
-ROOT_URLCONF = 'joc_esparrek.urls'
+ROOT_URLCONF = 'joc_assassi.urls'
 
 TEMPLATES = [
     {
@@ -59,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'joc_esparrek.wsgi.application'
+WSGI_APPLICATION = 'joc_assassi.wsgi.application'
 
 
 # Database

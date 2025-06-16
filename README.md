@@ -22,14 +22,14 @@ Segueix aquests passos per configurar el projecte al teu ordinador:
 ### 1. Clona el repositori
 
 ```bash
-git clone https://github.com/pauantonio/joc_esparrek.git
-cd joc_esparrek
+git clone https://github.com/pauantonio/joc-assassi-skallots.git
+cd joc-assassi-skallots
 ```
 
 ### 2. Crea i activa un entorn virtual
 
 ```bash
-python3 -m venv env
+python -m venv env
 source env/bin/activate  # Linux/Mac
 env\Scripts\activate  # Windows
 ```
@@ -112,7 +112,7 @@ El fitxer `Procfile` és utilitzat per especificar els processos que han de ser 
 
 ```
 release: python manage.py migrate
-web: gunicorn joc_esparrek.wsgi:application --log-file -
+web: gunicorn joc_assassi.wsgi:application --log-file -
 ```
 
 - `release`: Executa les migracions de la base de dades abans de llançar l'aplicació.
@@ -129,9 +129,9 @@ python manage.py runserver --insecure
 ## Estrutura del projecte
 
 ```
-joc_esparrek/
+joc-assassi-skallots/
 ├── env/                # Entorn virtual
-├── joc_esparrek/       # Configuració del projecte
+├── joc_assassi/       # Configuració del projecte
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings.py     # Configuració principal
