@@ -163,11 +163,7 @@ class AssassinationCircle(models.Model):
         victim.status = 'dead'
         victim.save()
 
-        # Assign points based on the specified criteria
-        if killer.status == 'last_player_standing':
-            points = 1000
-        else:
-            points = 200
+        points = 1
 
         Assassination.objects.create(killer=killer, victim=victim, points=points)
 
@@ -204,8 +200,7 @@ class AssassinationCircle(models.Model):
 class Assassination(models.Model):
     ASSASSINATION_POINTS_CHOICES = [
         (0, '0 - Expulsat'),
-        (200, '200 - Cas general'),
-        (1000, '1000 - Últim jugador viu'),
+        (1, '1 - Assassinat'),
     ]
 
     killer = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='kills')
