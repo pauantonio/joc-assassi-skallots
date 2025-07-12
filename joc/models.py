@@ -76,7 +76,7 @@ class GameConfig(models.Model):
         ('finished', 'Finalitzat')
     ]
     
-    disable_until = models.DateTimeField(default=datetime(2025, 7, 14, 18, 0, 0))
+    disable_until = models.DateTimeField(default=datetime(2025, 7, 13, 18, 0, 0))
     game_status = models.CharField(max_length=20, choices=GAME_STATUS_CHOICES, default='disabled_until_time')
     
     def save(self, *args, **kwargs):
